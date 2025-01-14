@@ -1,0 +1,25 @@
+{
+    "name": "nicotc/datatable",
+    "description": "My datatable livewire",
+    "license": "MIT",
+    "version": "1.0.0",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+              "Nicotc\\Datatable\\": "src/"
+        }
+    },
+
+    "authors": [
+        {
+            "name": "Nicolas Testagrossa",
+            "email": "nicotestagrossa@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^11.34.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

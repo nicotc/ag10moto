@@ -1,0 +1,6 @@
+{
+    "Acl": true,
+    "User": true,
+    "Pedidos": true,
+    "Email": true
+}
