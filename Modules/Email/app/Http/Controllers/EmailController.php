@@ -2,11 +2,23 @@
 
 namespace Modules\Email\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Modules\Email\Emails\CustomEmail;
+use Modules\Email\Models\EmailTemplate;
+use Modules\Email\Services\EmailService;
 
 class EmailController extends Controller
 {
+
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -61,5 +73,21 @@ class EmailController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function sendEmail($emailConfigId, $templateName, $to, $variables)
+    {
+        $this->emailService->setMailConfig($emailConfigId);
+        $template = EmailTemplate::where('name', $templateName)->first();
+
+        if ($template) {
+            $processedBody = $template->processTemplate($variables);
+            Mail::to($to)->send(new CustomEmail($template->subject, $processedBody));
+            return 'Email sent successfully';
+        }else{
+            return 'Email template not found';
+        }
+
     }
 }

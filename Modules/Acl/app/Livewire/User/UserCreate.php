@@ -17,6 +17,12 @@ class UserCreate extends Component
     public $roleslist = [];
     public $password;
     public $password_confirmation;
+    public $lang;
+    public $langlist = [
+        'en' => 'English',
+        'es' => 'Spanish',
+        'fr' => 'French'
+        ];
 
 
 
@@ -37,7 +43,8 @@ class UserCreate extends Component
             'name' => 'required|alpha_dash|unique:users,user_name'. $this->user->id,
             'email' => 'required|email|unique:users,email',
             'role' => 'required',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'lang' => 'required'
         ]);
 
         $this->user = User::create([

@@ -22,7 +22,7 @@ class Account extends Component
     public $address;
     public $state;
     public $country;
-    public $language;
+    // public $language;
     public $timezone;
 
     public $photo;
@@ -43,7 +43,7 @@ class Account extends Component
         $this->address = auth()->user()->address;
         $this->state = auth()->user()->state;
         $this->country = auth()->user()->country;
-        $this->language = auth()->user()->language;
+        // $this->language = auth()->user()->language;
         $this->timezone = auth()->user()->timezone;
         $this->photo_path = auth()->user()->profile_photo_path;
     }
@@ -94,7 +94,7 @@ class Account extends Component
             'address' => 'required',
             'state' => 'required',
             'country' => 'required',
-            'language' => 'required',
+            // 'language' => 'required',
             'timezone' => 'required',
         ]);
 
@@ -109,7 +109,7 @@ class Account extends Component
             'address' => $this->address,
             'state' => $this->state,
             'country' => $this->country,
-            'language' => $this->language,
+            // 'language' => $this->language,
             'timezone' => $this->timezone,
         ]);
 

@@ -124,8 +124,34 @@
           </li>
         </ul>
       </li>
+      {{-- ACL --}}
+      <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-shield"></i>
+          <div data-i18n="Email">Email</div>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{{ route('roles-list') }}" class="menu-link">
+              <div data-i18n="Cuentas">Cuentas</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="{{ route('permission-list') }}" class="menu-link">
+              <div data-i18n="Templates">Templates</div>
+            </a>
+          </li>
 
+        </ul>
+      </li>
 
+      {{-- Pedidos --}}
+
+        <li class="menu-item">
+            <a href="{{ route('pedidos-list') }}" class="menu-link">
+            <div data-i18n="Pedidos">Pedidos</div>
+            </a>
+        </li>
 
 
     </ul>

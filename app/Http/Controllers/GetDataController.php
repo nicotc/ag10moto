@@ -60,6 +60,7 @@ class GetDataController extends Controller
             }
 
 
+           
             foreach ($data as $key => $value) {
                 $pedidos = Pedidos::create([
                     'id_pedidos' => $key,

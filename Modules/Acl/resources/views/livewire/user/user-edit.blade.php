@@ -54,6 +54,23 @@
               </select>
             </div>
 
+
+            <div class="col-12 col-md-6">
+                <label class="form-label">Idioma</label>
+                  <select
+                      id="modalCrateUserLanguage"
+                      name="modalCrateUserLanguage"
+                      class="form-select"
+                      wire:model.live="language"
+                      aria-label="Default select example">
+                      <option value="">Select Language</option>
+                      @foreach ($langlist as $key => $language)
+                      <option value="{{ $key }}">{{ $language }}</option>
+                      @endforeach
+                  </select>
+              </div>
+              
+
             <div class="mt-4 text-center col-12">
               <button type="submit"
                class="btn btn-primary me-sm-3 me-1"

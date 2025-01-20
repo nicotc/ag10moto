@@ -14,6 +14,7 @@ use Modules\Pedidos\Http\Controllers\PedidosController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('pedidos', PedidosController::class)->names('pedidos');
+Route::group(['middleware' => 'auth', 'prefix' => 'pedidos'], function () {
+    Route::view('pedidos', 'pedidos::index')->name('pedidos-list');
+    // Route::get('/', [PedidosController::class, 'index'])->names('pedidos');
 });

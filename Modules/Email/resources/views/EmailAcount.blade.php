@@ -2,25 +2,19 @@
     <x-slot:styles>
     </x-slot:styles>
     <x-slot:title>
-        ACL / Pedidos
+        Email / Acount
     </x-slot:title>
     <x-slot:scripts>
         <script type="module">
             document.addEventListener('livewire:init', () => {
-
-                // Open modal
                 Livewire.on('edit', (event) => {
-                    var editUserModal = new bootstrap.Modal(document.getElementById('editModal'));
-                    editUserModal.show();
+                    var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+                    editModal.show();
                 });
-
-
-
                 Livewire.on('create', (event) => {
-                    var editUserModal = new bootstrap.Modal(document.getElementById('createModal'));
-                    editUserModal.show();
+                    var createModal = new bootstrap.Modal(document.getElementById('createModal'));
+                    createModal.show();
                 });
-
                 Livewire.on('delete', (event) => {
                     Swal.fire({
                         title: 'Are you sure?',
@@ -32,18 +26,10 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // enviar evento para confirmar la eliminación id
-                            // console.log('deleteUserConfirmed', event);
-
                             Livewire.dispatch('deleteConfirmed', { id: event.id });
-
                         }
-                    });
+                    })
                 });
-
-
-                // notify and close modal
-
                 Livewire.on('notify', (data) => {
                     var type = data[0].type;
                     var msg = data[0].message;
@@ -52,26 +38,20 @@
                     } else {
                         toastr.error(msg);
                     }
-                    // close modal
-                    const editUserModalInstance = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
-                        if (editUserModalInstance) {
-                            editUserModalInstance.hide();
+
+                    const createModal = bootstrap.Modal.getInstance(document.getElementById('createModal'));
+                        if (createModal) {
+                            createModal.hide();
                         }
 
-                    const editUserPasswordModalInstance = bootstrap.Modal.getInstance(document.getElementById('editUserPasswordModal'));
-                        if (editUserPasswordModalInstance) {
-                            editUserPasswordModalInstance.hide();
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                        if (editModal) {
+                            editModal.hide();
                         }
 
-                    const createUserModalInstance = bootstrap.Modal.getInstance(document.getElementById('createUserModal'));
-                        if (createUserModalInstance) {
-                            createUserModalInstance.hide();
-                        }
-
-                });
-
+                    });
             });
-    </script>
+        </script>
     </x-slot:scripts>
 
 
@@ -82,7 +62,7 @@
                     <section class="content">
                         <div class="container-xxl flex-grow-1 container-p-y">
                           <h4 class="py-3 mb-1 breadcrumb-wrapper">
-                            <span class="text-muted fw-light">ACL /</span> Users List
+                            <span class="text-muted fw-light">Email /</span> Acount
                           </h4>
 
                         </div>
@@ -90,21 +70,22 @@
 
                     <div class="card">
                         <div class="card-body">
-
-<livewire:pedidos::datatable-pedidos />
+                            <livewire:email::datatable-acount />
                         </div>
                     </div>
                 </div>
             </div>
 
+
+
+
     </div>
 
-    <livewire:pedidos::editar-pedidos />
+    <livewire:email::acount.create />
+
+    <livewire:email::acount.edit />
 
 
 
-
-    <livewire:pedidos::crear-pedidos />
 
 </x-layout>
-

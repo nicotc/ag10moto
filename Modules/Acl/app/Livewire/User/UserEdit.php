@@ -15,6 +15,12 @@ class UserEdit extends Component
     public $email;
     public $role;
     public $roleslist = [];
+    public $lang;
+    public $langlist = [
+        'en' => 'English',
+        'es' => 'Spanish',
+        'fr' => 'French'
+        ];
 
 
     protected $listeners = ['editUser'];
@@ -29,6 +35,7 @@ class UserEdit extends Component
         $this->name = $this->user->user_name;
         $this->email = $this->user->email;
         $this->role = $this->user->roles->first()->name;
+        $this->lang = $this->user->lang;
 
 
     }
@@ -48,11 +55,14 @@ class UserEdit extends Component
         $this->validate([
             'name' => 'required|alpha_dash|unique:users,user_name,'. $this->user->id,
             'email' => 'required|email|unique:users,email,' . $this->user->id,
-            'role' => 'required'
+            'role' => 'required',
+            'lang' => 'required'
         ]);
 
         $this->user->user_name = $this->name;
         $this->user->email = $this->email;
+        $this->user->lang = $this->lang;
+
         $this->user->save();
 
         // eliminar todos los roles del usuario y asignar el nuevo rol

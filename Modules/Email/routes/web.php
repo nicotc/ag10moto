@@ -15,5 +15,8 @@ use Modules\Email\Http\Controllers\EmailController;
 */
 
 Route::group([], function () {
-    Route::resource('email', EmailController::class)->names('email');
+    // Route::resource('email', EmailController::class)->names('email');
+    Route::get('email', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
+    Route::view('AcountEmail', 'email::EmailAcount');
+    Route::view('TemplateEmail', 'email::EmailTemplate');
 });
