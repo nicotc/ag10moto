@@ -9,15 +9,15 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 class DatatableUsers extends Datatable
 {
 
+    public $dropdown = true;
     protected $listeners = ['deleteUserConfirmed', 'notify'];
     public function config()
     {
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
-            'id',
+            // 'id',
             'first_name',
             'last_name',
-            'user_name',
             'email',
             'roles'
         ];
@@ -60,7 +60,6 @@ class DatatableUsers extends Datatable
             'users.id',
             'users.first_name',
             'users.last_name',
-            'users.user_name',
             'users.email',
             'users.created_at',
             'users.updated_at',
@@ -77,7 +76,6 @@ class DatatableUsers extends Datatable
         $query->where(function ($query) {
             $query->where('users.first_name', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('users.last_name', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('users.user_name', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('users.email', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('users.created_at', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('users.updated_at', 'like', '%' . $this->searchTerm . '%')
@@ -94,10 +92,6 @@ class DatatableUsers extends Datatable
 
         if($this->search['last_name'] ?? false) {
             $query->where('users.last_name', 'like', '%' . $this->search['last_name'] . '%');
-        }
-
-        if($this->search['user_name'] ?? false) {
-            $query->where('users.user_name', 'like', '%' . $this->search['user_name'] . '%');
         }
 
         if($this->search['email'] ?? false) {
@@ -150,14 +144,6 @@ class DatatableUsers extends Datatable
             ],
             'last_name' => [
                 'label' => 'Last Name',
-                'func' => function($value) {
-                    return $value;
-                 },
-                'sortable' => true,
-                'searchable' => true
-            ],
-            'user_name' => [
-                'label' => 'User Name',
                 'func' => function($value) {
                     return $value;
                  },

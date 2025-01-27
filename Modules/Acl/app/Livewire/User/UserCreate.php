@@ -10,8 +10,8 @@ class UserCreate extends Component
 {
 
     public $user;
-
-    public $name;
+    public $firstName;
+    public $lastName;
     public $email;
     public $role;
     public $roleslist = [];
@@ -24,11 +24,6 @@ class UserCreate extends Component
         'fr' => 'French'
         ];
 
-
-
-
-
-
     public function render()
     {
 
@@ -40,7 +35,8 @@ class UserCreate extends Component
     public function createUser()
     {
         $this->validate([
-            'name' => 'required|alpha_dash|unique:users,user_name'. $this->user->id,
+            'firstName' => 'required',
+            'lastName' => 'required',
             'email' => 'required|email|unique:users,email',
             'role' => 'required',
             'password' => 'required|confirmed',
@@ -48,18 +44,15 @@ class UserCreate extends Component
         ]);
 
         $this->user = User::create([
-            'user_name' => $this->name,
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
+            'user_name' =>$this->email,
             'email' => $this->email,
             'password' => bcrypt($this->password),
             'profile_photo_path' => 'assets/img/avatars/1.png'
         ]);
-
         $this->user->assignRole($this->role);
-
-        $this->reset(['name', 'email', 'role', 'password', 'password_confirmation']);
-
-
-
+        $this->reset(['firstName', 'lastName', 'email', 'role', 'password', 'password_confirmation']);
         $this->dispatch('notify', ['type' => 'success', 'message' => 'User created successfully']);
     }
 

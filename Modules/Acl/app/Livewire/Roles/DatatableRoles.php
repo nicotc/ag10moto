@@ -8,6 +8,8 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableRoles extends Datatable
 {
+    public $dropdown = true;
+
     protected $listeners = ['deleteRoleConfirmed', 'notify'];
 
 
@@ -15,7 +17,7 @@ class DatatableRoles extends Datatable
     {
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
-            'id',
+            // 'id',
             'name',
             'created_at',
             'updated_at'

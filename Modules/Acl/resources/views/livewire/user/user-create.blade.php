@@ -1,4 +1,6 @@
 <div>
+
+
     <div wire:ignore.self
         class="modal fade"
         id="createUserModal"
@@ -15,19 +17,41 @@
                 <h3>Create User Information</h3>
                 <p>Updating user details will receive a privacy audit.</p>
               </div>
+              @if ($errors->any())
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <div class="alert-body ">
+                      @foreach ($errors->all() as $error)
+                      <div>{{ $error }}</div>
+                      @endforeach
+                  </div>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              @endif
               <form id="CrateUserForm" class="row g-3" onsubmit="return false">
-                <div class="col-12">
-                  <label class="form-label" for="modalCrateUserName">User name</label>
+                <div class="col-6">
+                  <label class="form-label" for="modalCrateUserName">Nombre</label>
                   <input
                     type="text"
                     id="UserName"
-                    wire:model="name"
+                    wire:model="firstName"
                     name="name"
                     class="form-control"
                     placeholder="" />
-                    <span class="text-danger">@error('name') {{ $message }} @enderror</span>
+                    <span class="text-danger">@error('firstName') {{ $message }} @enderror</span>
 
                 </div>
+                <div class="col-6">
+                  <label class="form-label" for="modalCrateUserLastName">Apellido</label>
+                    <input
+                        type="text"
+                        id="modalCrateUserLastName"
+                        wire:model="lastName"
+                        name="lastName"
+                        class="form-control"
+                        placeholder="" />
+                        <span class="text-danger">@error('lastName') {{ $message }} @enderror</span>
+                </div>
+
                 <div class="col-12 col-md-6">
                   <label class="form-label" for="modalCrateUserEmail">Email</label>
                   <input
@@ -47,6 +71,7 @@
                     class="form-select"
                     wire:model="role"
                     aria-label="Default select example">
+                    <option value="">Selecciona el rol</option>
                     @foreach ($roleslist as $lRole)
 
                     <option value="{{ $lRole }}">{{ $lRole }}</option>
@@ -85,9 +110,9 @@
                         id="modalCrateUserLanguage"
                         name="modalCrateUserLanguage"
                         class="form-select"
-                        wire:model.live="language"
+                        wire:model.live="lang"
                         aria-label="Default select example">
-                        <option value="">Select Language</option>
+                        <option value="">Selecciona el idioma</option>
                         @foreach ($langlist as $key => $language)
                         <option value="{{ $key }}">{{ $language }}</option>
                         @endforeach

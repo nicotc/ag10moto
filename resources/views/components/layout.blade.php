@@ -20,6 +20,14 @@
         <script src="../../assets/vendor/js/helpers.js"></script>
         <script src="../../assets/vendor/js/template-customizer.js"></script>
         <script src="../../assets/js/config.js"></script>
+
+        <style>
+               .app-brand{
+                padding-left: 0px !important;
+               }
+
+        </style>
+
     </head>
     <body>
     <div class="layout-wrapper layout-content-navbar">

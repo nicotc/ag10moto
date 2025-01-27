@@ -9,6 +9,7 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 class DatatableAcount extends Datatable
 {
 
+    public $dropdown = true;
     protected $listeners = ['deleteConfirmed', 'notify'];
 
 

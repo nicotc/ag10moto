@@ -10,7 +10,8 @@ class UserEdit extends Component
 {
 
     public $user;
-
+    public $firstName;
+    public $lastName;
     public $name;
     public $email;
     public $role;
@@ -35,7 +36,11 @@ class UserEdit extends Component
         $this->name = $this->user->user_name;
         $this->email = $this->user->email;
         $this->role = $this->user->roles->first()->name;
-        $this->lang = $this->user->lang;
+        $this->lang = $this->user->language;
+        $this->firstName = $this->user->first_name;
+        $this->lastName = $this->user->last_name;
+
+
 
 
     }
@@ -52,16 +57,28 @@ class UserEdit extends Component
 
     public function updateUser()
     {
+    //     dd($this->email,
+    //     $this->lang,
+    //     $this->firstName,
+    //     $this->lastName,
+    //     $this->role
+
+    // );
+
         $this->validate([
-            'name' => 'required|alpha_dash|unique:users,user_name,'. $this->user->id,
+            'firstName' => 'required',
+            'lastName' => 'required',
             'email' => 'required|email|unique:users,email,' . $this->user->id,
             'role' => 'required',
             'lang' => 'required'
         ]);
 
-        $this->user->user_name = $this->name;
+
         $this->user->email = $this->email;
-        $this->user->lang = $this->lang;
+        $this->user->language = $this->lang;
+        $this->user->first_name = $this->firstName;
+        $this->user->last_name = $this->lastName;
+
 
         $this->user->save();
 

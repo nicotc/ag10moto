@@ -2,5 +2,6 @@
     "Acl": true,
     "User": true,
     "Pedidos": true,
-    "Email": true
+    "Email": true,
+    "Notes": true
 }

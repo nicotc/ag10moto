@@ -10,7 +10,11 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 class DatatablePedidos extends Datatable
 {
 
+    public $dropdown = false;
+
+
     protected $listeners = ['deleteUserConfirmed', 'notify'];
+
 
     public function buildQuery()
     {
@@ -159,10 +163,12 @@ class DatatablePedidos extends Datatable
 
     public function config()
     {
+        $this->sortColumn = 'id';
+        $this->sortDirection = 'desc';
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
 
-            'id_pedidos',
+            // 'id_pedidos',
             'nombre',
             'email',
             'telefono',
@@ -181,18 +187,12 @@ class DatatablePedidos extends Datatable
                 'icon' => 'bx bx-edit',
                 'params' => ['id'],
                 'event' => 'edit',
-                'isModal' => true,
+                'isModal' => false,
+                'route' => 'pedidos.edit'
             ],
-            'Delete' => [
-                'icon' => 'bx bx-trash',
-                'event' => 'deleteUser',
-                'isModal' => true,
-                'params' => ['id'],
-                'confirm' => true
-            ]
         ];
         $this->createAction = [
-            'label' => 'Create User',
+            'label' => 'Crear nuevo pedido',
             'icon' => 'bx bx-plus',
             'event' => 'createUser',
             'isModal' => true

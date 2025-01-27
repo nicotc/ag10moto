@@ -14,9 +14,9 @@ use Modules\Email\Http\Controllers\EmailController;
 |
 */
 
-Route::group([], function () {
+Route::group(['middleware' => 'auth', 'prefix' => 'email'], function () {
     // Route::resource('email', EmailController::class)->names('email');
     Route::get('email', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
-    Route::view('AcountEmail', 'email::EmailAcount');
-    Route::view('TemplateEmail', 'email::EmailTemplate');
+    Route::view('AccountEmail', 'email::EmailAcount')->name('email.AccountEmail');
+    Route::view('TemplateEmail', 'email::EmailTemplate')->name('email.TemplateEmail');
 });

@@ -8,6 +8,9 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableTemplate extends Datatable
 {
+
+    public $dropdown = true;
+    
     protected $listeners = ['deleteConfirmed', 'notify'];
 
     public function buildQuery()

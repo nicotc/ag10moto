@@ -2,19 +2,11 @@
     <x-slot:styles>
     </x-slot:styles>
     <x-slot:title>
-        ACL / Pedidos
+        Pedidos / Listado
     </x-slot:title>
     <x-slot:scripts>
         <script type="module">
             document.addEventListener('livewire:init', () => {
-
-                // Open modal
-                Livewire.on('edit', (event) => {
-                    var editUserModal = new bootstrap.Modal(document.getElementById('editModal'));
-                    editUserModal.show();
-                });
-
-
 
                 Livewire.on('create', (event) => {
                     var editUserModal = new bootstrap.Modal(document.getElementById('createModal'));
@@ -52,18 +44,10 @@
                     } else {
                         toastr.error(msg);
                     }
-                    // close modal
-                    const editUserModalInstance = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
-                        if (editUserModalInstance) {
-                            editUserModalInstance.hide();
-                        }
 
-                    const editUserPasswordModalInstance = bootstrap.Modal.getInstance(document.getElementById('editUserPasswordModal'));
-                        if (editUserPasswordModalInstance) {
-                            editUserPasswordModalInstance.hide();
-                        }
 
-                    const createUserModalInstance = bootstrap.Modal.getInstance(document.getElementById('createUserModal'));
+
+                    const createUserModalInstance = bootstrap.Modal.getInstance(document.getElementById('createModal'));
                         if (createUserModalInstance) {
                             createUserModalInstance.hide();
                         }
@@ -98,10 +82,6 @@
             </div>
 
     </div>
-
-    <livewire:pedidos::editar-pedidos />
-
-
 
 
     <livewire:pedidos::crear-pedidos />

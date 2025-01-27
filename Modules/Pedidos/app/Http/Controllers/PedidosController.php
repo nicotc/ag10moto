@@ -2,8 +2,9 @@
 
 namespace Modules\Pedidos\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Pedidos;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PedidosController extends Controller
 {
@@ -42,9 +43,12 @@ class PedidosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Pedidos $id)
     {
-        return view('pedidos::edit');
+
+
+
+        return view('pedidos::edit', ['pedido' => $id]);
     }
 
     /**

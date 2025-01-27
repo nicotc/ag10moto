@@ -10,10 +10,10 @@
         <!-- Search -->
         <div class="navbar-nav align-items-center">
           <div class="mb-0 nav-item navbar-search-wrapper">
-            <a class="px-0 nav-item nav-link search-toggler" href="javascript:void(0);">
+            {{-- <a class="px-0 nav-item nav-link search-toggler" href="javascript:void(0);">
               <i class="bx bx-search-alt bx-sm"></i>
               <span class="d-none d-md-inline-block">Search (Ctrl+/)</span>
-            </a>
+            </a> --}}
           </div>
         </div>
         <!-- /Search -->
@@ -75,7 +75,7 @@
           <!-- / Style Switcher-->
 
           <!-- Quick links  -->
-          <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
+          {{-- <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
               <i class="bx bx-grid-alt bx-sm"></i>
             </a>
@@ -153,11 +153,11 @@
                 </div>
               <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
             </div>
-          </li>
+          </li> --}}
           <!-- Quick links -->
 
           <!-- Notification -->
-          <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+          {{-- <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
               <i class="bx bx-bell bx-sm"></i>
               <span class="badge bg-danger rounded-pill badge-notifications">5</span>
@@ -177,7 +177,7 @@
                         <div class="avatar">
 
                           <img src="{{ asset("storage/".Auth::user()->profile_photo_path) }}" alt="" class="h-auto w-px-40 rounded-circle">
-                           
+
                         </div>
                       </div>
                       <div class="flex-grow-1">
@@ -343,7 +343,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
           <!--/ Notification -->
 
           <!-- User -->
@@ -387,12 +387,12 @@
               <li>
                 <div class="dropdown-divider"></div>
               </li>
-              <li>
+              {{-- <li>
                 <a class="dropdown-item" href="pages-faq.html">
                   <i class="bx bx-help-circle me-2"></i>
                   <span class="align-middle">FAQ</span>
                 </a>
-              </li>
+              </li> --}}
               <li>
                 <div class="dropdown-divider"></div>
               </li>

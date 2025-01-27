@@ -104,6 +104,7 @@
                         @endif
                         @endforeach
                         <td style="width: 5%">
+                            @if($dropdown == true)
                             <div class="dropdown">
                                 {{-- <button class="p-0 btn dropdown-toggle" data-bs-toggle="dropdown"> --}}
                                 <button class="p-0 btn" data-bs-toggle="dropdown">
@@ -128,6 +129,24 @@
 
                                 </div>
                             </div>
+                            @else
+                                @foreach ($actions as $key => $action )
+                                    @if ($action['isModal'] == true)
+                                    <button wire:click="$dispatch('{{ $action['event'] }}', { id: {{ $item->id }} })" class="btn btn-sm btn-primary">
+                                        <i class="{{ $action['icon'] }}"></i>
+                                        {{ $key }}
+                                    </button>
+                                    @else
+
+                                    <a href="{{ route($action['route'], $item->id) }}" class="btn btn-icon btn-primary">
+                                        <i class="{{ $action['icon'] }}"></i>
+                                    </a>
+                                    @endif
+
+
+
+                                @endforeach
+                            @endif
                         </td>
                     </tr>
                 @empty
