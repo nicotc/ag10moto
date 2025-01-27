@@ -13,7 +13,12 @@ class Notes extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'pedido_id',
+        'note',
+        'created_by',
+        'status'
+    ];
 
     // protected static function newFactory(): NotesFactory
     // {

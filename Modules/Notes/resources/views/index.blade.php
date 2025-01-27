@@ -5,14 +5,58 @@
         Pedidos / Editar
     </x-slot:title>
     <x-slot:scripts>
-        <script type="module">
-            document.addEventListener('livewire:init', () => {
-
-
-
+    <script type="module">
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('openEditNoteModal', (event) => {
+                var editNoteModal = new bootstrap.Modal(document.getElementById('editNoteModal'));
+                editNoteModal.show();
             });
-        </script>
-    </x-slot:scripts>
+            Livewire.on('openCreateNoteModal', (event) => {
+                var createNoteModal = new bootstrap.Modal(document.getElementById('createNoteModal'));
+                createNoteModal.show();
+            });
+            Livewire.on('deleteNote', (event) => {
+
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        Livewire.dispatch('deleteNoteConfirmed',  [event] );
+
+                    }
+                })
+            });
+            Livewire.on('notify', (data) => {
+                var type = data[0].type;
+                var msg = data[0].message;
+                if (type == 'success') {
+                    toastr.success(msg);
+                } else {
+                    toastr.error(msg);
+                }
+
+                const createNoteModal = bootstrap.Modal.getInstance(document.getElementById('createNoteModal'));
+                    if (createNoteModal) {
+                        createNoteModal.hide();
+                    }
+
+                const editNoteModal = bootstrap.Modal.getInstance(document.getElementById('editNoteModal'));
+                    if (editNoteModal) {
+                        editNoteModal.hide();
+                    }
+
+                });
+        });
+    </script>
+</x-slot:scripts>
 
 
     <div class="content">
@@ -155,58 +199,8 @@
 
                         <!-- Activity Timeline -->
 
-                        <div class="mb-4 card">
-                            <div class="card-header">
-                               {{-- titulo a la izquierda  boton a la derecha  misma linea FLEX--}}
-                              <div class="d-flex justify-content-between">
-                                <h5 class="card-title ">Notas Internas</h5>
-                                <button class="btn btn-primary">Agregar</button>
-                                </div>
-
-
-                            </div>
-
-
-
-                            <div class="card-body">
-                                <div class="py-4 app-email-view-content ps ps--active-y">
-                                    <div class="mx-2 border shadow-none card email-card-prev mx-sm-4 border-warning "
-                                        style="display: block;">
-                                        <div
-                                            class="flex-wrap card-header d-flex justify-content-between align-items-center">
-                                            <div class="mb-3 d-flex align-items-center mb-sm-0">
-                                                <div class="flex-grow-1 ms-1">
-                                                    <span class="badge bg-primary">Kimberly Fallis</span><br>
-                                                    <small class="text-muted">
-                                                        2 days ago
-                                                    </small>
-
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
-                                            </p>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between">
-
-                                            <div class="d-flex">
-                                                <button class="mx-2 btn btn-sm btn-outline-primary"
-                                                    wire:click="editActivity(1777)">Edit</button>
-                                                <button class="btn btn-sm btn-outline-danger"
-                                                    wire:click="deleteActivity(1777)">Delete</button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
+                 <livewire:notes::note-list :pedido="$pedido->id" />
+                 {{-- <livewire:pedidos::change-status /> --}}
                         <!-- /Activity Timeline -->
 
                         <!-- Invoice table -->
@@ -220,7 +214,8 @@
 
     </div>
 
-
+    <livewire:notes::create-note :pedido="$pedido->id" />
+    <livewire:notes::edit-note />
 
 
 
