@@ -22,19 +22,19 @@ class GetDataController extends Controller
 
         $Formularios = DB::connection('mysqlWeb')->select(
             'select
-        yidn2_fv_entry_meta.id,
-	    yidn2_fv_entry_meta.data_id,
-	    yidn2_fv_entry_meta.meta_key,
-	    yidn2_fv_entry_meta.meta_value from yidn2_fv_entry_meta
+        yIDN2_fv_entry_meta.id,
+	    yIDN2_fv_entry_meta.data_id,
+	    yIDN2_fv_entry_meta.meta_key,
+	    yIDN2_fv_entry_meta.meta_value from yIDN2_fv_entry_meta
         where
-        yidn2_fv_entry_meta.meta_key = "fv_form_id" and
-        yidn2_fv_entry_meta.meta_value = "b283e08" and
-        yidn2_fv_entry_meta.data_id > ' . $id
+        yIDN2_fv_entry_meta.meta_key = "fv_form_id" and
+        yIDN2_fv_entry_meta.meta_value = "b283e08" and
+        yIDN2_fv_entry_meta.data_id > ' . $id
         );
 
         // 219e7a6
 
-        // yidn2_fv_entry_meta.meta_value = "b283e08"'
+        // yIDN2_fv_entry_meta.meta_value = "b283e08"'
         $in = [];
         foreach ($Formularios as $Formulario) {
             $in[] = $Formulario->data_id;
@@ -46,12 +46,12 @@ class GetDataController extends Controller
         if (count($in) > 0) {
             $datos = DB::connection('mysqlWeb')->select(
                 'select
-        yidn2_fv_entry_meta.id,
-	    yidn2_fv_entry_meta.data_id,
-	    yidn2_fv_entry_meta.meta_key,
-	    yidn2_fv_entry_meta.meta_value from yidn2_fv_entry_meta
+        yIDN2_fv_entry_meta.id,
+	    yIDN2_fv_entry_meta.data_id,
+	    yIDN2_fv_entry_meta.meta_key,
+	    yIDN2_fv_entry_meta.meta_value from yIDN2_fv_entry_meta
         where
-        yidn2_fv_entry_meta.data_id in (' . implode(',', $in) . ')'
+        yIDN2_fv_entry_meta.data_id in (' . implode(',', $in) . ')'
 
             );
 
@@ -60,7 +60,7 @@ class GetDataController extends Controller
             }
 
 
-           
+
             foreach ($data as $key => $value) {
                 $pedidos = Pedidos::create([
                     'id_pedidos' => $key,
