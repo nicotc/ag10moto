@@ -194,7 +194,7 @@ class DatatablePedidos extends Datatable
         $this->createAction = [
             'label' => 'Crear nuevo pedido',
             'icon' => 'bx bx-plus',
-            'event' => 'createUser',
+            'event' => 'create',
             'isModal' => true
 
         ];

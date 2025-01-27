@@ -68,7 +68,7 @@
                           <h4 class="py-3 mb-1 breadcrumb-wrapper">
                             <span class="text-muted fw-light">Pedidos /</span>Listado
                           </h4>
-                   
+
                         </div>
                     </section>
 
@@ -85,6 +85,7 @@
 
 
     <livewire:pedidos::crear-pedidos />
+    
 
 </x-layout>
 
