@@ -99,11 +99,6 @@
 
 
                                     @forelse ($imagenes as $imagen)
-                                        @php
-                                            $img file_get_contents(trim($imagen));
-                                            $base64 = 'data:image/' . pathinfo($imagen, PATHINFO_EXTENSION) . ';base64,' . base64_encode($img);
-                                        @endphp
-
 
                                     <div class="carousel-item   @if ($loop->first) active @endif">
                                       <img class="d-block w-100" src="{{ trim($imagen) }}" alt="Image">
