@@ -5,7 +5,7 @@ use App\Http\Controllers\GetDataController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+   return redirect('/login');
 });
 
 Route::middleware([
