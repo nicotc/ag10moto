@@ -100,8 +100,21 @@
 
                                     @forelse ($imagenes as $imagen)
 
+                                    @php
+                                        if(strstr($imagen, 'https') == false){
+                                            $getImage = file_get_contents(trim($imagen));
+                                            $base64 = base64_encode($getImage);
+                                        }else{
+                                            $base64 = "#";
+                                        }
+
+
+
+                                    @endphp
+
+
                                     <div class="carousel-item   @if ($loop->first) active @endif">
-                                      <img class="d-block w-100" src="{{ trim($imagen) }}" alt="Image">
+                                      <img class="d-block w-100" src="{{ trim($base64) }}" alt="Image">
                                     </div>
 
                                     @empty
