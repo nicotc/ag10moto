@@ -74,19 +74,6 @@
                           <div class="card">
                             <div class="card-body">
 
-                                @php
-                                   $imagenes =  explode(',', $pedido->imagenes);
-
-
-                                   if($imagenes[0] == 'no file provided'){
-                                       $imagenes = [];
-                                   }
-
-
-
-                                @endphp
-                            {{-- @dump($imagenes) --}}
-
 
                             <div class="col-md">
                                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
@@ -98,30 +85,16 @@
                                   <div class="carousel-inner">
 
 
-                                    @forelse ($imagenes as $imagen)
-
-                                    @php
-                                        if(strstr($imagen, 'https') == false){
-                                            $getImage = file_get_contents(trim($imagen));
-                                            $base64 = base64_encode($getImage);
-                                        }else{
-                                            $base64 = "#";
-                                        }
-
-
-
-                                    @endphp
-
-
+                                    @forelse ($img as $imagen)
                                     <div class="carousel-item   @if ($loop->first) active @endif">
-                                      <img class="d-block w-100" src="{{ trim($base64) }}" alt="Image">
+                                      <img class="d-block w-100" src="{{ trim($imagen) }}" alt="Image">
                                     </div>
 
                                     @empty
-                                        <p> No hay Imagenes</p>
+                                       
                                     @endforelse
                                   </div>
-                                  @if(count($imagenes) > 0)
+                                  @if(count($img) > 0)
                                   <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
