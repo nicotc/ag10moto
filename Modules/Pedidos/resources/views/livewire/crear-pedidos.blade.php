@@ -49,10 +49,9 @@
                   <label for="imagenes" class="form-label">Imagenes</label>
                   <input type="file" class="form-control" id="imagenes" wire:model="imagenes" multiple>
                 </div>
-          
 
 
-
+       
 
 
 
