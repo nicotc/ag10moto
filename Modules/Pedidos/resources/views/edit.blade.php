@@ -75,7 +75,7 @@
                             <div class="card-body">
 
 
-                            <div class="col-md">
+                            <div class="col-md-12">
                                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
 
                                   <div class="carousel-inner">
