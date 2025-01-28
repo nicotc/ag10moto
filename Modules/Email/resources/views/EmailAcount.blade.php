@@ -2,7 +2,7 @@
     <x-slot:styles>
     </x-slot:styles>
     <x-slot:title>
-        Email / Acount
+        Email / Cuentas
     </x-slot:title>
     <x-slot:scripts>
         <script type="module">
@@ -62,7 +62,7 @@
                     <section class="content">
                         <div class="container-xxl flex-grow-1 container-p-y">
                           <h4 class="py-3 mb-1 breadcrumb-wrapper">
-                            <span class="text-muted fw-light">Email /</span> Acount
+                            <span class="text-muted fw-light">Email /</span> Cuentas
                           </h4>
 
                         </div>

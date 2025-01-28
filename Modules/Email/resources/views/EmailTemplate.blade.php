@@ -8,12 +8,12 @@
         <script type="module">
             document.addEventListener('livewire:init', () => {
                 Livewire.on('editModal', (event) => {
-                    var editPermissionModal = new bootstrap.Modal(document.getElementById('editPermissionModal'));
-                    editPermissionModal.show();
+                    var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+                    editModal.show();
                 });
                 Livewire.on('createModal', (event) => {
-                    var createPermissionModal = new bootstrap.Modal(document.getElementById('createPermissionModal'));
-                    createPermissionModal.show();
+                    var createModal = new bootstrap.Modal(document.getElementById('createModal'));
+                    createModal.show();
                 });
                 Livewire.on('deleteModal', (event) => {
                     Swal.fire({
@@ -26,7 +26,7 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Livewire.dispatch('deletePermissionConfirmed', { id: event.id });
+                            Livewire.dispatch('deleteConfirmed', { id: event.id });
                         }
                     })
                 });
@@ -40,13 +40,13 @@
                     }
 
                     const createModal = bootstrap.Modal.getInstance(document.getElementById('createModal'));
-                        if (createPermissionModal) {
-                            createPermissionModal.hide();
+                        if (createModal) {
+                            createModal.hide();
                         }
 
                     const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-                        if (editPermissionModal) {
-                            editPermissionModal.hide();
+                        if (editModal) {
+                            editModal.hide();
                         }
 
                     });
@@ -81,9 +81,9 @@
 
     </div>
 
-    <livewire:acl::permission.permission-create />
+    <livewire:email::template.create />
 
-    <livewire:acl::permission.permission-edit />
+    <livewire:email::template.edit />
 
 
 

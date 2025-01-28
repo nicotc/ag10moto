@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('mail_encryption');
             $table->string('mail_from_address');
             $table->string('mail_from_name');
+            $table->string('language')->default('es');
             $table->timestamps();
         });
     }

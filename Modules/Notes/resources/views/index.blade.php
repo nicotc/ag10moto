@@ -119,54 +119,37 @@
                         <div class="card">
                             <div class="card-body">
 
-                                @php
-                                    $imagenes = explode(',', $pedido->imagenes);
 
-                                    if ($imagenes[0] == 'no file provided') {
-                                        $imagenes = [];
-                                    }
+                            <div class="col-md-12">
+                                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
 
-                                @endphp
-                                {{-- @dump($imagenes) --}}
+                                  <div class="carousel-inner">
 
 
-                                <div class="col-md">
-                                    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                                        {{-- <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
-                                  </div> --}}
-                                        <div class="carousel-inner">
-
-
-                                            @forelse ($imagenes as $imagen)
-                                                <div
-                                                    class="carousel-item   @if ($loop->first) active @endif">
-                                                    <img class="d-block w-100" src="{{ trim($imagen) }}" alt="Image">
-                                                </div>
-
-                                            @empty
-                                                <p> No hay Imagenes</p>
-                                            @endforelse
-                                        </div>
-                                        @if (count($imagenes) > 0)
-                                            <a class="carousel-control-prev" href="#carouselExample" role="button"
-                                                data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExample" role="button"
-                                                data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </a>
-                                        @endif
+                                    @forelse ($img as $imagen)
+                                    <div class="carousel-item   @if ($loop->first) active @endif">
+                                      <img class="d-block w-100" style="width: 100% !important" src="{{ trim($imagen) }}" alt="Image">
                                     </div>
+
+                                    @empty
+
+                                    @endforelse
+                                  </div>
+                                  @if(count($img) > 0)
+                                  <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                  </a>
+                                    @endif
                                 </div>
+                              </div>
 
                             </div>
-                        </div>
+                          </div>
                         <!-- /Plan Card -->
                     </div>
                     <!--/ User Sidebar -->

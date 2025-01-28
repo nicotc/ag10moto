@@ -10,7 +10,7 @@ class DatatableTemplate extends Datatable
 {
 
     public $dropdown = true;
-    
+
     protected $listeners = ['deleteConfirmed', 'notify'];
 
     public function buildQuery()
@@ -20,6 +20,7 @@ class DatatableTemplate extends Datatable
             'name',
             'subject',
             'body',
+            'language',
             'created_at',
             'updated_at',
         );
@@ -27,7 +28,8 @@ class DatatableTemplate extends Datatable
         $query = $query->where(function ($query) {
             $query->where('name', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('subject', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('body', 'like', '%' . $this->searchTerm . '%');
+                ->orWhere('body', 'like', '%' . $this->searchTerm . '%')
+                ->orWhere('language', 'like', '%' . $this->searchTerm . '%');
         });
 
         return $query;
@@ -68,6 +70,14 @@ class DatatableTemplate extends Datatable
                 'sortable' => true,
                 'searchable' => true
             ],
+            'language' => [
+                'label' => 'Language',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
             'created_at' => [
                 'label' => 'Created At',
                 'func' => function ($value) {
@@ -95,6 +105,7 @@ class DatatableTemplate extends Datatable
             'name',
             'subject',
             'body',
+            'language',
             'created_at',
             'updated_at',
         ];
@@ -105,19 +116,19 @@ class DatatableTemplate extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editPermission'
+                'event' => 'editModal'
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'deletePermission'
+                'event' => 'deleteModal'
             ]
         ];
         $this->createAction = [
-            'label' => 'Create Permission',
+            'label' => 'Create Template',
             'icon' => 'bx bx-plus',
-            'event' => 'createPermission',
+            'event' => 'createModal',
             'isModal' => true
 
         ];
