@@ -22,3 +22,4 @@ Route::middleware([
 
 
 Route::get('/get/pedidos', [GetDataController::class, 'pedidos'])->name('getPedidos');
+Route::get('/get/otros', [GetDataController::class, 'items'])->name('getitems');

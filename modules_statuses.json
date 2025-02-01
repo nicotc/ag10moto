@@ -3,5 +3,7 @@
     "User": true,
     "Pedidos": true,
     "Email": true,
-    "Notes": true
+    "Notes": true,
+    "Estados": true,
+    "Contacproduct": true
 }

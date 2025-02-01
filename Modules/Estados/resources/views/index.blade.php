@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="../../assets/vendor/libs/quill/editor.css">
     </x-slot:styles>
     <x-slot:title>
-        Email / Template
+        Status / Lista
     </x-slot:title>
     <x-slot:scripts>
 
@@ -71,7 +71,7 @@
                     <section class="content">
                         <div class="container-xxl flex-grow-1 container-p-y">
                           <h4 class="py-3 mb-1 breadcrumb-wrapper">
-                            <span class="text-muted fw-light">Email /</span> Template
+                            <span class="text-muted fw-light">Estados /</span> Lista
                           </h4>
 
                         </div>
@@ -79,7 +79,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <livewire:email::datatable-template />
+                            <livewire:estados::datatable-estados />
                         </div>
                     </div>
                 </div>
@@ -89,11 +89,6 @@
 
 
     </div>
-
-    <livewire:email::template.create />
-
-    <livewire:email::template.edit />
-
 
 
 

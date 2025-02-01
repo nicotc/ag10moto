@@ -1,30 +1,21 @@
 <x-layout>
     <x-slot:styles>
-        {{-- <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet"> --}}
-
-        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../assets/vendor/libs/quill/typography.css">
-        <link rel="stylesheet" href="../../assets/vendor/libs/quill/katex.css">
-        <link rel="stylesheet" href="../../assets/vendor/libs/quill/editor.css">
     </x-slot:styles>
     <x-slot:title>
-        Email / Template
+        ACL / Roles List
     </x-slot:title>
     <x-slot:scripts>
-
-{{-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> --}}
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
         <script type="module">
             document.addEventListener('livewire:init', () => {
-                Livewire.on('editModal', (event) => {
-                    var editModal = new bootstrap.Modal(document.getElementById('editModal'));
-                    editModal.show();
+                Livewire.on('editRole', (event) => {
+                    var editRoleModal = new bootstrap.Modal(document.getElementById('editRolesModal'));
+                    editRoleModal.show();
                 });
-                Livewire.on('createModal', (event) => {
-                    var createModal = new bootstrap.Modal(document.getElementById('createModal'));
-                    createModal.show();
+                Livewire.on('createRole', (event) => {
+                    var createRoleModal = new bootstrap.Modal(document.getElementById('createRolesModal'));
+                    createRoleModal.show();
                 });
-                Livewire.on('deleteModal', (event) => {
+                Livewire.on('deleteRole', (event) => {
                     Swal.fire({
                         title: 'Are you sure?',
                         text: "You won't be able to revert this!",
@@ -35,7 +26,7 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Livewire.dispatch('deleteConfirmed', { id: event.id });
+                            Livewire.dispatch('deleteRoleConfirmed', { id: event.id });
                         }
                     })
                 });
@@ -48,14 +39,14 @@
                         toastr.error(msg);
                     }
 
-                    const createModal = bootstrap.Modal.getInstance(document.getElementById('createModal'));
-                        if (createModal) {
-                            createModal.hide();
+                    const createRoleModal = bootstrap.Modal.getInstance(document.getElementById('createRoleModal'));
+                        if (createRoleModal) {
+                            createRoleModal.hide();
                         }
 
-                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-                        if (editModal) {
-                            editModal.hide();
+                    const editRoleModal = bootstrap.Modal.getInstance(document.getElementById('editRoleModal'));
+                        if (editRoleModal) {
+                            editRoleModal.hide();
                         }
 
                     });
@@ -71,7 +62,7 @@
                     <section class="content">
                         <div class="container-xxl flex-grow-1 container-p-y">
                           <h4 class="py-3 mb-1 breadcrumb-wrapper">
-                            <span class="text-muted fw-light">Email /</span> Template
+                            <span class="text-muted fw-light">Productos /</span> Listado
                           </h4>
 
                         </div>
@@ -79,22 +70,19 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <livewire:email::datatable-template />
+
+<livewire:contacproduct::contact-datatable />
+
                         </div>
                     </div>
                 </div>
             </div>
 
-
-
-
     </div>
-
-    <livewire:email::template.create />
-
-    <livewire:email::template.edit />
 
 
 
 
 </x-layout>
+
+

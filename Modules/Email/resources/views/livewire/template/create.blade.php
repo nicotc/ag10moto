@@ -54,18 +54,25 @@
                       placeholder="" />
                       <span class="text-danger">@error('subject') {{ $message }} @enderror</span>
                 </div>
-                <div class="col-12">
+                <div class="col-12 form-group">
+
                     <label class="form-label " for="body">Body</label>
-                    <textarea
+
+                    <livewire:quill-text-editor
+        wire:model.live="body"
+        theme="snow" />
+
+                    {{-- <textarea
                       id="body"
                       wire:model="body"
                       name="body"
                       class="form-control"
                       placeholder=""
                       rows="5"
-                      ></textarea>
+                      ></textarea> --}}
                       <span class="text-danger">@error('body') {{ $message }} @enderror</span>
-                </div>
+               
+                    </div>
 
 
 
@@ -75,7 +82,7 @@
                 <div class="mt-4 text-center col-12">
                   <button type="submit"
                    class="btn btn-primary me-sm-3 me-1"
-                   wire:click="create"
+                   wire:click="save"
                    >Submit</button>
 
                    <button

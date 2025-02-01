@@ -1,0 +1,11 @@
+{
+    "name": "Contacproduct",
+    "alias": "contacproduct",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Contacproduct\\Providers\\ContacproductServiceProvider"
+    ],
+    "files": []
+}
