@@ -21,10 +21,13 @@ class ContactDatatable extends Datatable
     {
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
-            'id',
-            'name',
-            'created_at',
-            'updated_at'
+
+            'nombre',
+            'email',
+            'telefono',
+            'horallamada',
+            'lang',
+            'item',
         ];
 
         $this->create = true;
@@ -56,7 +59,7 @@ class ContactDatatable extends Datatable
     {
         $query =  Otros::select(
             'id',
-          'id_pedidos',
+            'id_pedidos',
             'nombre',
             'email',
             'telefono',
@@ -74,8 +77,26 @@ class ContactDatatable extends Datatable
         });
 
 
-        if($this->search['nombre'] ?? false) {
+        if ($this->search['nombre'] ?? false) {
             $query->where('nombre', 'like', '%' . $this->search['nombre'] . '%');
+        }
+
+        if ($this->search['email'] ?? false) {
+            $query->where('email', 'like', '%' . $this->search['email'] . '%');
+        }
+
+
+        if ($this->search['telefono'] ?? false) {
+            $query->where('telefono', 'like', '%' . $this->search['telefono'] . '%');
+        }
+        if ($this->search['horallamada'] ?? false) {
+            $query->where('horallamada', 'like', '%' . $this->search['horallamada'] . '%');
+        }
+        if ($this->search['lang'] ?? false) {
+            $query->where('lang', 'like', '%' . $this->search['lang'] . '%');
+        }
+        if ($this->search['item'] ?? false) {
+            $query->where('item', 'like', '%' . $this->search['item'] . '%');
         }
 
 
@@ -89,104 +110,77 @@ class ContactDatatable extends Datatable
         return [
             'id' => [
                 'label' => 'ID',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
             ],
-            'id_pedidos' => [
-                'label' => 'id_pedidos',
-                'func' => function($value) {
+            'item' => [
+                'label' => 'item',
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
-                ],
-                'nombre' => [
-                    'label' => 'nombre',
-                    'func' => function($value) {
-                        return $value;
-                     },
-                    'sortable' => true,
-                    'searchable' => true
-                    ],
-                    'email' => [
-                        'label' => 'email',
-                        'func' => function($value) {
-                            return $value;
-                         },
-                        'sortable' => true,
-                        'searchable' => true
-                        ],
-                        'telefono' => [
-                            'label' => 'telefono',
-                            'func' => function($value) {
-                                return $value;
-                             },
-                            'sortable' => true,
-                            'searchable' => true
-                            ],
-                            'horallamada' => [
-                                'label' => 'horallamada',
-                                'func' => function($value) {
-                                    return $value;
-                                 },
-                                'sortable' => true,
-                                'searchable' => true
-                                ],
-                                'lang' => [
-                                    'label' => 'lang',
-                                    'func' => function($value) {
-                                        return $value;
-                                     },
-                                    'sortable' => true,
-                                    'searchable' => true
-                                    ],
-
-                                    'item' => [
-                                        'label' => 'item',
-                                        'func' => function($value) {
-                                            return $value;
-                                         },
-                                        'sortable' => true,
-                                        'searchable' => true
-                                        ],
-
-
-
-
-
-
-
-
+            ],
+            'nombre' => [
+                'label' => 'nombre',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
+            'email' => [
+                'label' => 'email',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
+            'telefono' => [
+                'label' => 'telefono',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
+            'horallamada' => [
+                'label' => 'hora llamada',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
+            'lang' => [
+                'label' => 'lang',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
             'created_at' => [
                 'label' => 'Created At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
             ],
+
             'updated_at' => [
                 'label' => 'Updated At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
             ]
-
-
-
-
         ];
     }
-
-
-
-
-
-
 }
-
