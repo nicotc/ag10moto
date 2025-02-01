@@ -14,6 +14,6 @@ use Modules\Contacproduct\Http\Controllers\ContacproductController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('contacproduct', ContacproductController::class)->names('contacproduct');
+Route::group(['middleware' => 'auth', 'prefix' => 'contactproduct'], function () {
+    Route::get('/', [ContacproductController::class, 'index'])->name('contactproduct');
 });

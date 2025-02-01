@@ -93,6 +93,14 @@
       </li>
 
 
+      <li class="menu-item">
+        <a href="{{ route('contactproduct') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cart-alt"></i>
+          <div data-i18n="CONTACTOS PRODUCTO">CONTACTOS PRODUCTO</div>
+        </a>
+      </li>
+
+
 
 
 
