@@ -13,7 +13,7 @@ class IdiomasDatatable extends Datatable
 {
     public $dropdown = true;
 
-    protected $listeners = ['deletePermissionConfirmed', 'notify'];
+    protected $listeners = ['deleteConfirmed', 'notify'];
 
 
     public function config()
@@ -34,19 +34,19 @@ class IdiomasDatatable extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editPermission'
+                'event' => 'editModal'
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'deletePermission'
+                'event' => 'delete'
             ]
         ];
         $this->createAction = [
-            'label' => 'Create Permission',
+            'label' => 'Create ',
             'icon' => 'bx bx-plus',
-            'event' => 'createPermission',
+            'event' => 'createModal',
             'isModal' => true
 
         ];
@@ -135,9 +135,9 @@ class IdiomasDatatable extends Datatable
     }
 
 
-    public function deletePermissionConfirmed($id)
+    public function deleteConfirmed($id)
     {
         Lang::find($id)->delete();
-        $this->dispatch('notify', ['type' => 'success', 'message' => 'Permission deleted successfully']);
+        $this->dispatch('notify', ['type' => 'success', 'message' => ' deleted successfully']);
     }
 }

@@ -16,11 +16,16 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
         <script type="module">
             document.addEventListener('livewire:init', () => {
+
                 Livewire.on('editModal', (event) => {
+       
+
                     var editModal = new bootstrap.Modal(document.getElementById('editModal'));
                     editModal.show();
                 });
                 Livewire.on('createModal', (event) => {
+
+
                     var createModal = new bootstrap.Modal(document.getElementById('createModal'));
                     createModal.show();
                 });
@@ -90,7 +95,8 @@
 
     </div>
 
-
+    <livewire:idiomas::idioma-create />
+    <livewire:idiomas::idioma-edit />
 
 </x-layout>
 

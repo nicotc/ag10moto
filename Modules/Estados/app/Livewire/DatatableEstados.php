@@ -2,9 +2,9 @@
 
 namespace Modules\Estados\Livewire;
 
-use App\Models\Otros;
+
 use Modules\Estados\Models\Status;
-use Spatie\Permission\Models\Permission;
+
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 
@@ -12,7 +12,7 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 class DatatableEstados extends Datatable
 {
     public $dropdown = true;
-    protected $listeners = ['deletePermissionConfirmed', 'notify'];
+    protected $listeners = ['deleteConfirmed', 'notify'];
 
     public function config()
     {
@@ -22,7 +22,7 @@ class DatatableEstados extends Datatable
             'name',
             'color',
             'email',
-            
+
             'created_at',
             'updated_at'
         ];
@@ -34,19 +34,19 @@ class DatatableEstados extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editPermission'
+                'event' => 'editModal'
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'deletePermission'
+                'event' => 'delete'
             ]
         ];
         $this->createAction = [
-            'label' => 'Create Permission',
+            'label' => 'Create ',
             'icon' => 'bx bx-plus',
-            'event' => 'createPermission',
+            'event' => 'createModal',
             'isModal' => true
 
         ];

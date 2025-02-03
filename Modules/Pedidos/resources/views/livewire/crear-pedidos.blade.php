@@ -17,6 +17,17 @@
               </div>
               <form id="" class="row g-3" onsubmit="return false">
 
+{{-- error lista --}}
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 
 
@@ -51,7 +62,7 @@
                 </div>
 
 
-       
+
 
 
 

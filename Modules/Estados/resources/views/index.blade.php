@@ -90,6 +90,9 @@
 
     </div>
 
+    <livewire:estados::estados-create />
+    <livewire:estados::estados-edit />
+
 
 
 </x-layout>
