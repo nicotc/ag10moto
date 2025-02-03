@@ -13,7 +13,15 @@ class Status extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'id',
+        'name',
+        'color',
+        'email'
+
+
+
+    ];
 
     // protected static function newFactory(): StatusFactory
     // {

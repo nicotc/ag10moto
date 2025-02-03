@@ -55,6 +55,15 @@
       {{-- ACL --}}
 
       <li class="menu-item">
+        <a href="{{ route('idiomas') }}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-message-detail"></i>
+          <div data-i18n="Idiomas">Idiomas</div>
+        </a>
+      </li>
+
+
+
+      <li class="menu-item">
         <a href="{{ route('estados') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-station"></i>
           <div data-i18n="Estados">Estados</div>

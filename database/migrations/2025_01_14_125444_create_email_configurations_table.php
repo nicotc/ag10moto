@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('email_configurations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('langs_id')->constrained('langs')->onDelete('cascade');
             $table->string('mail_host');
             $table->string('mail_port');
             $table->string('mail_username');
@@ -20,7 +21,6 @@ return new class extends Migration
             $table->string('mail_encryption');
             $table->string('mail_from_address');
             $table->string('mail_from_name');
-            $table->string('language')->default('es');
             $table->timestamps();
         });
     }

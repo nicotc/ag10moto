@@ -1,14 +1,18 @@
 <?php
 
-namespace Modules\Acl\Livewire\Permission;
+namespace Modules\Idiomas\Livewire;
+
+use Carbon\Language;
+
+use Modules\Idiomas\Models\Lang;
 
 use Nicotc\Datatable\Http\Livewire\Datatable;
-use Spatie\Permission\Models\Permission;
 
-class DatatablePermission extends Datatable
+
+class IdiomasDatatable extends Datatable
 {
-
     public $dropdown = true;
+
     protected $listeners = ['deletePermissionConfirmed', 'notify'];
 
 
@@ -17,7 +21,8 @@ class DatatablePermission extends Datatable
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',
-            'name',
+            'lang',
+            'iso',
             'created_at',
             'updated_at'
         ];
@@ -49,9 +54,12 @@ class DatatablePermission extends Datatable
 
     public function buildQuery()
     {
-        $query =  Permission::select(
+
+
+        $query =  Lang::select(
             'id',
-            'name',
+            'lang',
+            'iso',
             'created_at',
             'updated_at',
         );
@@ -59,14 +67,14 @@ class DatatablePermission extends Datatable
 
         // where funcion group
         $query->where(function ($query) {
-            $query->where('name', 'like', '%' . $this->searchTerm . '%');
+            $query->where('lang', 'like', '%' . $this->searchTerm . '%');
         });
 
-        if($this->search['id'] ?? false) {
+        if ($this->search['id'] ?? false) {
             $query->where('id', $this->search['id']);
         }
 
-        if($this->search['name'] ?? false) {
+        if ($this->search['name'] ?? false) {
             $query->where('name', 'like', '%' . $this->search['name'] . '%');
         }
 
@@ -81,33 +89,41 @@ class DatatablePermission extends Datatable
         return [
             'id' => [
                 'label' => 'ID',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
             ],
-             'name' => [
-                'label' => 'name',
-                'func' => function($value) {
+            'lang' => [
+                'label' => 'lang',
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
-                ],
+            ],
+            'iso' => [
+                'label' => 'iso',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true
+            ],
             'created_at' => [
                 'label' => 'Created At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
             ],
             'updated_at' => [
                 'label' => 'Updated At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
                 'searchable' => true
             ]
@@ -121,11 +137,7 @@ class DatatablePermission extends Datatable
 
     public function deletePermissionConfirmed($id)
     {
-        Permission::find($id)->delete();
+        Lang::find($id)->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Permission deleted successfully']);
     }
-
-
-
 }
-

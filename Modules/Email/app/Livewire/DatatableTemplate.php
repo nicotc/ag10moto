@@ -20,7 +20,7 @@ class DatatableTemplate extends Datatable
             'name',
             'subject',
             'body',
-            'language',
+            'langs_id',
             'created_at',
             'updated_at',
         );
@@ -29,7 +29,7 @@ class DatatableTemplate extends Datatable
             $query->where('name', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('subject', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('body', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('language', 'like', '%' . $this->searchTerm . '%');
+                ->orWhere('langs_id', 'like', '%' . $this->searchTerm . '%');
         });
 
         return $query;
@@ -70,7 +70,7 @@ class DatatableTemplate extends Datatable
                 'sortable' => true,
                 'searchable' => true
             ],
-            'language' => [
+            'langs_id' => [
                 'label' => 'Language',
                 'func' => function ($value) {
                     return $value;
@@ -105,7 +105,7 @@ class DatatableTemplate extends Datatable
             'name',
             'subject',
             'body',
-            'language',
+            'langs_id',
             'created_at',
             'updated_at',
         ];

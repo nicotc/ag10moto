@@ -16,7 +16,7 @@
 
               </div>
               <form id="" class="row g-3" onsubmit="return false">
-       
+
                 <div class="col-12">
                     <label class="form-label" for="mail_host">Host</label>
                     <input
@@ -93,6 +93,22 @@
                       class="form-control"
                       placeholder="" />
                       <span class="text-danger">@error('mail_from_name') {{ $message }} @enderror</span>
+                </div>
+                <div class="col-12">
+                    <label class="form-label" for="lang">lang</label>
+                    <select id="lang" wire:model.change="lang" name="lang" class="form-select">
+                        <option>Choose...</option>
+                        @foreach ($langs as $key => $value)
+
+                            <option
+                                @if ($lang == $key)
+                                    selected
+
+                                @endif
+
+                            value="{{ $key }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
 

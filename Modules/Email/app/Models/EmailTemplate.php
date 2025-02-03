@@ -13,7 +13,7 @@ class EmailTemplate extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['language', 'name', 'subject', 'body'];
+    protected $fillable = ['langs_id', 'name', 'subject', 'body'];
 
     public function processTemplate($variables)
     {

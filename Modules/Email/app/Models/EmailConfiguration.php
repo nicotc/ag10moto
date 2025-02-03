@@ -22,7 +22,7 @@ class EmailConfiguration extends Model
         'mail_encryption',
         'mail_from_address',
         'mail_from_name',
-        'language'
+        'langs_id'
     ];
 
 // Mutator to encrypt password before saving

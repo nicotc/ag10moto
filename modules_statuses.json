@@ -5,5 +5,6 @@
     "Email": true,
     "Notes": true,
     "Estados": true,
-    "Contacproduct": true
+    "Contacproduct": true,
+    "Idiomas": true
 }

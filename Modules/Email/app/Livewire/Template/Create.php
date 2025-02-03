@@ -3,6 +3,7 @@
 namespace Modules\Email\Livewire\Template;
 
 use Livewire\Component;
+use Modules\Idiomas\Models\Lang;
 use Modules\Email\Models\EmailTemplate;
 
 class Create extends Component
@@ -15,9 +16,16 @@ class Create extends Component
     public $subject;
 
     public $body;
+    public $langs = [];
+    public $lang;
+
+
+
 
     public function render()
     {
+        $this->langs = Lang::pluck('lang', 'id')->toArray();
+
         return view('email::livewire.template.create');
     }
 
@@ -27,20 +35,23 @@ class Create extends Component
             'name' => 'required',
             'subject' => 'required',
             'body' => 'required',
-            'language' => 'required',
+            'lang' => 'required',
         ]);
 
         EmailTemplate::create([
             'name' => $this->name,
             'subject' => $this->subject,
             'body' => $this->body,
-            'language' => $this->language,
+            'langs_id' => $this->lang,
         ]);
 
         $this->dispatch('notify', [
             'message' => 'Template created successfully',
             'type' => 'success'
         ]);
+
+
+        $this->reset();
 
 
     }

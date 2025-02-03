@@ -1,0 +1,11 @@
+{
+    "name": "Idiomas",
+    "alias": "idiomas",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Idiomas\\Providers\\IdiomasServiceProvider"
+    ],
+    "files": []
+}

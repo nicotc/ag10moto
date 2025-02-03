@@ -11,21 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_templates', function (Blueprint $table) {
+        // Id	nombre	email	telefono	problema	imagenes	aceptacion	fv_form_id
+
+        Schema::create('langs', function (Blueprint $table) {
             $table->id();
-            $table->string('language')->default('es');
-            $table->string('name');
-            $table->text('subject');
-            $table->longText('body');
+            $table->text('lang')->nullable();
+            $table->text('iso')->nullable();
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_templates');
+        Schema::dropIfExists('langs');
     }
 };

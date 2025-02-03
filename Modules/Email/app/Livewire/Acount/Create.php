@@ -2,7 +2,9 @@
 
 namespace Modules\Email\Livewire\Acount;
 
+
 use Livewire\Component;
+use Modules\Idiomas\Models\Lang;
 use Modules\Email\Models\EmailConfiguration;
 
 class Create extends Component
@@ -16,7 +18,16 @@ class Create extends Component
     public $mail_encryption;
     public $mail_from_address;
     public $mail_from_name;
+    public $langs = [];
+    public $lang;
 
+
+
+    public function mount(){
+        $this->langs = Lang::pluck('lang', 'id')->toArray();
+
+
+    }
 
 
     public function create(){
@@ -28,6 +39,7 @@ class Create extends Component
             'mail_encryption' => 'required',
             'mail_from_address' => 'required',
             'mail_from_name' => 'required',
+            'lang' => 'required'
         ]);
 
         $email = new EmailConfiguration();
@@ -38,10 +50,11 @@ class Create extends Component
         $email->mail_encryption = $this->mail_encryption;
         $email->mail_from_address = $this->mail_from_address;
         $email->mail_from_name = $this->mail_from_name;
+        $email->langs_id = $this->lang;
         $email->save();
 
         $this->reset();
-        
+
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Email Configuration Updated Successfully']);
     }
 
