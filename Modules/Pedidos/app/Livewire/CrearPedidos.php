@@ -3,6 +3,7 @@
 namespace Modules\Pedidos\Livewire;
 
 use App\Models\Pedidos;
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -43,9 +44,12 @@ class CrearPedidos extends Component
 // get path of images
         if($this->imagenes != null){
 
-
+            $uuid = uniqid();
         foreach ($this->imagenes as $key => $imagen) {
-            $path = $imagen->store('public/imagenes');
+
+            // Storage disk public
+
+            $path = $imagen->store('public/imagenes/'.$uuid, 'public');
             $this->imagenes[$key] = $path;
         }
 
@@ -67,7 +71,7 @@ class CrearPedidos extends Component
             'type' => 'success',
             'message' => 'Pedido creado correctamente'
         ]);
-        
+
     }
 
 }

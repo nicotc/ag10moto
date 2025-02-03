@@ -62,10 +62,8 @@ class PedidosController extends Controller
             $base64 = base64_encode($getImage);
             $base64 = 'data:'.$mime.';base64,'.$base64;
                 $img[] = $base64;
-
-                // $img[] = $value;
-
-
+           }elseif(strstr($value, 'public/imagenes/')){
+            $img[] = asset("storage/".$value);
            }
         }
 
