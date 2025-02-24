@@ -14,6 +14,19 @@ use Modules\Estados\Http\Controllers\EstadosController;
 |
 */
 
-Route::group(['middleware' => 'auth', 'prefix' => 'status'], function () {
+Route::group([
+    'middleware' => ['auth', 'role:Admin|Super Admin'],
+    'prefix' => 'status'], function () {
     Route::get('/', [EstadosController::class, 'index' ])->name('estados');
+
 });
+
+
+Route::group([
+    'middleware' => 'auth',
+    'prefix' => 'status'], function () {
+        Route::get("/cambiarEstado/{id}", [EstadosController::class, 'cambiarEstado'])->name('cambiarEstado');
+
+});
+
+

@@ -3,63 +3,46 @@
 namespace Modules\Estados\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pedidos;
 use Illuminate\Http\Request;
 
 class EstadosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         return view('estados::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function cambiarEstado(Pedidos $id)
     {
-        return view('estados::create');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $imagenes = $id->imagenes;
 
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('estados::show');
-    }
+        $imagenes = explode(',', $imagenes);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('estados::edit');
-    }
+        $img = [];
+        foreach ($imagenes as $key => $value) {
+           if(strstr($value, 'https')){
+            $getImage = file_get_contents($value);
+            // content type
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mime = $finfo->buffer($getImage);
+            // base64 encode
+            $base64 = base64_encode($getImage);
+            $base64 = 'data:'.$mime.';base64,'.$base64;
+                $img[] = $base64;
+           }elseif(strstr($value, 'public/imagenes/')){
+            $img[] = asset("storage/".$value);
+           }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        return view('estados::cambiarEstado',
+            ['pedido'=> $id, 'img'=> $img]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+
+        // dd($id);
+
+
     }
 }

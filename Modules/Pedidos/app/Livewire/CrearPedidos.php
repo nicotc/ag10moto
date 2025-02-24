@@ -6,6 +6,7 @@ use App\Models\Pedidos;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Modules\Idiomas\Models\Lang;
 
 
 
@@ -19,10 +20,13 @@ class CrearPedidos extends Component
     public $lang;
     public $problema;
     public $imagenes = [];
+    public $languages = [];
 
 
     public function render()
     {
+        $this->languages = Lang::pluck('lang', 'iso');
+
         return view('pedidos::livewire.crear-pedidos');
     }
 
@@ -45,15 +49,22 @@ class CrearPedidos extends Component
         if($this->imagenes != null){
 
             $uuid = uniqid();
+
+
         foreach ($this->imagenes as $key => $imagen) {
+
 
             // Storage disk public
 
             $path = $imagen->store('public/imagenes/'.$uuid, 'public');
-            $this->imagenes[$key] = $path;
+            $imagenes[$key] = $path;
+
+
         }
 
-        $imagenes = implode(',', $this->imagenes);
+
+
+        $imagenes = implode(',', $imagenes);
     }else{
         $imagenes = null;
     }

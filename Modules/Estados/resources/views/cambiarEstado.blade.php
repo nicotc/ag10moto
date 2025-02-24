@@ -164,33 +164,21 @@
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript:void(0);"><i
+                                <a class="nav-link " href="/notas/{{ $pedido->id }}"><i
                                         class="bx bx-time-five me-1"></i>Notas Internas</a>
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/status/cambiarEstado/{{ $pedido->id }}"><i
+                                <a class="nav-link active" href="#"><i
                                         class="bx bx-detail me-1"></i>Cambiar Estado</a>
                             </li>
                             <box-icon name='time-five'></box-icon>
                         </ul>
-                        <!--/ User Pills -->
 
-                        <!-- Project table -->
+                        <livewire:estados::estados-email  :pedido="$pedido->id"/>
 
-                        <!-- /Project table -->
-
-                        <!-- Activity Timeline -->
-
-                 <livewire:notes::note-list :pedido="$pedido->id" />
-                 {{-- <livewire:pedidos::change-status /> --}}
-                        <!-- /Activity Timeline -->
-
-                        <!-- Invoice table -->
-
-                        <!-- /Invoice table -->
                     </div>
-                    <!--/ User Content -->
+
                 </div>
             </div>
         </div>

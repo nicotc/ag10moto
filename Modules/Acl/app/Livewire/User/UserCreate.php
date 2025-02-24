@@ -4,6 +4,7 @@ namespace Modules\Acl\Livewire\User;
 
 use App\Models\User;
 use Livewire\Component;
+use Modules\Idiomas\Models\Lang;
 use Spatie\Permission\Models\Role;
 
 class UserCreate extends Component
@@ -18,14 +19,12 @@ class UserCreate extends Component
     public $password;
     public $password_confirmation;
     public $lang;
-    public $langlist = [
-        'en' => 'English',
-        'es' => 'Spanish',
-        'fr' => 'French'
-        ];
+    public $langlist = [];
 
     public function render()
     {
+            $this->langlist = Lang::pluck('lang', 'iso');
+
 
         $this->roleslist = Role::pluck('name');
 
@@ -49,11 +48,13 @@ class UserCreate extends Component
             'user_name' =>$this->email,
             'email' => $this->email,
             'password' => bcrypt($this->password),
-            'profile_photo_path' => 'assets/img/avatars/1.png'
+            'profile_photo_path' => 'assets/img/avatars/1.png',
+            'language' => $this->lang
         ]);
         $this->user->assignRole($this->role);
         $this->reset(['firstName', 'lastName', 'email', 'role', 'password', 'password_confirmation']);
         $this->dispatch('notify', ['type' => 'success', 'message' => 'User created successfully']);
+        $this->langlist = Lang::pluck('lang', 'iso');
     }
 
 }

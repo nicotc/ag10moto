@@ -23,4 +23,9 @@ class EmailService
         }
     }
 
+    public function getMailConfig()
+    {
+        return Config::get('mail');
+    }
+
 }

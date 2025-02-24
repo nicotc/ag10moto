@@ -20,6 +20,9 @@
 
     <ul class="py-1 menu-inner">
       <!-- Dashboards -->
+
+      @role(['Admin', 'Super Admin'])
+
       <li class="menu-item">
         <a href="{{ route('dashboard') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -91,6 +94,8 @@
 
         </ul>
       </li>
+
+      @endrole
 
       {{-- Pedidos --}}
 

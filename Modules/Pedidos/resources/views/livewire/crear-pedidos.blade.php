@@ -47,8 +47,12 @@
                     <label for="lang" class="form-label">Lang</label>
                     <select id="lang" class="form-select" wire:model="lang">
                       <option selected>Choose...</option>
-                      <option value="es">Español</option>
-                      <option value="en">Ingles</option>
+                      @foreach ($languages as $key => $value)
+                      <option value="{{$key}}">{{$value}}</option>
+                      
+
+                      @endforeach
+
                     </select>
                   </div>
 

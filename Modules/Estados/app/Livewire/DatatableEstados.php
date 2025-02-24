@@ -91,7 +91,7 @@ class DatatableEstados extends Datatable
                 'searchable' => true
             ],
             'name' => [
-                'label' => 'Name',
+                'label' => 'Type',
                 'func' => function ($value) {
                     return $value;
                 },

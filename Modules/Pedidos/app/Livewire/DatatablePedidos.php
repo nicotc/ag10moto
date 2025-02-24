@@ -3,6 +3,7 @@
 namespace Modules\Pedidos\Livewire;
 
 use App\Models\Pedidos;
+use Illuminate\Support\Facades\Auth;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 
@@ -32,8 +33,8 @@ class DatatablePedidos extends Datatable
 
         );
 
-        $query->where(function ($query) {
-            $query->where('id', 'like', '%' . $this->searchTerm . '%')
+        $query =  $query->where(function ($query) {
+            $query =  $query->where('id', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('id_pedidos', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('nombre', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
@@ -45,38 +46,47 @@ class DatatablePedidos extends Datatable
                 ->orWhere('updated_at', 'like', '%' . $this->searchTerm . '%');
         });
 
+       if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('Super Admin')) {
+            // Todos los pedidos
+        }else{
+            $userLang = Auth::user()->language;
+            $query = $query->where('lang', $userLang);
+
+        }
+
+
         if($this->search['id'] ?? false) {
-            $query->where('id', $this->search['id']);
+            $query =  $query->where('id', $this->search['id']);
         }
 
         if($this->search['id_pedidos'] ?? false) {
-            $query->where('id_pedidos', 'like', '%' . $this->search['id_pedidos'] . '%');
+            $query = $query->where('id_pedidos', 'like', '%' . $this->search['id_pedidos'] . '%');
         }
 
         if($this->search['nombre'] ?? false) {
-            $query->where('nombre', 'like', '%' . $this->search['nombre'] . '%');
+            $query =  $query->where('nombre', 'like', '%' . $this->search['nombre'] . '%');
         }
 
         if($this->search['email'] ?? false) {
-            $query->where('email', 'like', '%' . $this->search['email'] . '%');
+            $query = $query->where('email', 'like', '%' . $this->search['email'] . '%');
         }
 
         if($this->search['telefono'] ?? false) {
-            $query->where('telefono', 'like', '%' . $this->search['telefono'] . '%');
+            $query =  $query->where('telefono', 'like', '%' . $this->search['telefono'] . '%');
         }
 
         if($this->search['problema'] ?? false) {
-            $query->where('problema', 'like', '%' . $this->search['problema'] . '%');
+            $query = $query->where('problema', 'like', '%' . $this->search['problema'] . '%');
         }
 
         if($this->search['imagenes'] ?? false) {
-            $query->where('imagenes', 'like', '%' . $this->search['imagenes'] . '%');
+            $query = $query->where('imagenes', 'like', '%' . $this->search['imagenes'] . '%');
         }
 
 
 
         if($this->search['lang'] ?? false) {
-            $query->where('lang', 'like', '%' . $this->search['lang'] . '%');
+            $query = $query->where('lang', 'like', '%' . $this->search['lang'] . '%');
         }
 
 
@@ -84,7 +94,7 @@ class DatatablePedidos extends Datatable
 
 
 
-        $query->orderBy($this->sortColumn, $this->sortDirection);
+        $query =  $query->orderBy($this->sortColumn, $this->sortDirection);
 
         return $query;
     }

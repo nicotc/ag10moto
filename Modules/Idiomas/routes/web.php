@@ -14,6 +14,8 @@ use Modules\Idiomas\Http\Controllers\IdiomasController;
 |
 */
 
-Route::group(['middleware' => 'auth', 'prefix' => 'idiomas'], function () {
+Route::group([
+    'middleware' => ['auth', 'role:Admin|Super Admin'],
+     'prefix' => 'idiomas'], function () {
     Route::get('/', [IdiomasController::class, 'index'])->name('idiomas');
 });

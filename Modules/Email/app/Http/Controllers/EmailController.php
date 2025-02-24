@@ -19,74 +19,19 @@ class EmailController extends Controller
         $this->emailService = $emailService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function sendEmail($emailConfigId, $to, $subject, $body)
     {
-        return view('email::index');
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('email::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('email::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('email::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        try{
 
 
-    public function sendEmail($emailConfigId, $templateName, $to, $variables)
-    {
-        $this->emailService->setMailConfig($emailConfigId);
-        $template = EmailTemplate::where('name', $templateName)->first();
+       $this->emailService->setMailConfig($emailConfigId);
 
-        if ($template) {
-            $processedBody = $template->processTemplate($variables);
-            Mail::to($to)->send(new CustomEmail($template->subject, $processedBody));
-            return 'Email sent successfully';
-        }else{
-            return 'Email template not found';
+       $config = $this->emailService->getMailConfig();
+
+            Mail::to($to)->send(new CustomEmail($subject, $body));
+        }catch(\Exception $e){
+            dd($e->getMessage());
         }
 
     }

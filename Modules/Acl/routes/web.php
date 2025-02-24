@@ -20,10 +20,16 @@ use Modules\Acl\Http\Controllers\AclController;
 
 //
 // mideleware('auth') prefix acl
+// has role
 
-Route::group(['middleware' => 'auth', 'prefix' => 'acl'], function () {
+Route::group([
+    'middleware' => ['auth', 'role:Admin|Super Admin'],
+
+    'prefix' => 'acl'
+
+], function () {
     Route::view('user-list', 'acl::Users.list')->name('user-list');
     Route::view('roles-list', 'acl::Roles.list')->name('roles-list');
     Route::view('permission-list', 'acl::Permission.list')->name('permission-list');
-    
+
 });

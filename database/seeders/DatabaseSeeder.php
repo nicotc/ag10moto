@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Idiomas\Models\Lang;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,19 +34,21 @@ class DatabaseSeeder extends Seeder
         $rol = \Spatie\Permission\Models\Role::create(['name' => 'Admin']);
         $rol = \Spatie\Permission\Models\Role::create(['name' => 'User']);
 
-        // crar 100 usuarios con rol user
+        Lang::create([
+            'lang' => 'Español',
+            'iso' => 'es',
+        ]);
 
-        User::factory(1000)->withPersonalTeam()->create()->each(function ($user) {
-            $user->assignRole('User');
-        });
-
-        // crar 10 usuarios con rol admin
-
-        User::factory(10)->withPersonalTeam()->create()->each(function ($user) {
-            $user->assignRole('Admin');
-        });
+        Lang::create([
+            'lang' => 'Inglés',
+            'iso' => 'en',
+        ]);
 
 
+        Lang::create([
+            'lang' => 'Francés',
+            'iso' => 'fr',
+        ]);
 
     }
 }

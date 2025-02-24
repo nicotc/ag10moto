@@ -17,31 +17,34 @@
               </div>
               <form id="CrateUserForm" class="row g-3" onsubmit="return false">
                 <div class="col-12">
-                    <label class="form-label" for="modalCrateUserName">Name</label>
-                    <input
-                      type="text"
-                      id="UserName"
-                      wire:model="name"
-                      name="name"
-                      class="form-control"
-                      placeholder="" />
+                    <label class="form-label" for="modalCrateUserName">type</label>
+                    <select wire:model.change="name" class="form-select">
+                        <option value="">Select</option>
+                        <option value="Pedido">Pedido</option>
+                        <option value="Producto">Producto</option>
+                    </select>
+
+
                       <span class="text-danger">@error('name') {{ $message }} @enderror</span>
                 </div>
                 <div class="col-12">
                     <label class="form-label " for="modalCrateUserName">Color</label>
+                    {{-- selector de color html --}}
                     <input
-                      type="text"
+                      type="color"
                       id="UserName"
                       wire:model="color"
                       name="color"
                       class="form-control"
                       placeholder="" />
                       <span class="text-danger">@error('color') {{ $message }} @enderror</span>
+
+
                 </div>
 
                 <div class="col-12">
                     <label class="form-label " for="modalCrateUserName">Email</label>
-                    <select wire:model="email" class="form-select">
+                    <select wire:model.change="email" class="form-select">
                         <option value="">Select</option>
                         @foreach ($emails as $emailvalue)
                             <option value="{{ $emailvalue}}">{{ $emailvalue }}</option>
