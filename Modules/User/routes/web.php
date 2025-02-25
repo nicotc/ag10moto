@@ -20,6 +20,3 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/account-security', 'user::account-security')->name('account-security');
 }
 );
-
-
-

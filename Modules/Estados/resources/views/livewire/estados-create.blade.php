@@ -27,9 +27,9 @@
 
                       <span class="text-danger">@error('name') {{ $message }} @enderror</span>
                 </div>
-                <div class="col-12">
+                {{-- <div class="col-12">
                     <label class="form-label " for="modalCrateUserName">Color</label>
-                    {{-- selector de color html --}}
+
                     <input
                       type="color"
                       id="UserName"
@@ -40,7 +40,7 @@
                       <span class="text-danger">@error('color') {{ $message }} @enderror</span>
 
 
-                </div>
+                </div> --}}
 
                 <div class="col-12">
                     <label class="form-label " for="modalCrateUserName">Email</label>

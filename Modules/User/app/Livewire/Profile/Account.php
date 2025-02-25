@@ -5,27 +5,34 @@ namespace Modules\User\Livewire\Profile;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use phpDocumentor\Reflection\Types\This;
-use PhpParser\Node\Scalar\MagicConst\Namespace_;
 
 class Account extends Component
 {
-
     use WithFileUploads;
 
     public $first_name;
+
     public $last_name;
+
     public $user_name;
+
     public $email;
+
     public $phone_number;
+
     public $organization;
+
     public $address;
+
     public $state;
+
     public $country;
+
     // public $language;
     public $timezone;
 
     public $photo;
+
     public $photo_path;
 
     protected $listeners = ['deleteUser'];
@@ -63,26 +70,20 @@ class Account extends Component
         $path = $this->photo->storeAs('images/'.auth()->id(), $name, 'public');
 
         User::find(auth()->id())->update([
-            'profile_photo_path' => $path
+            'profile_photo_path' => $path,
         ]);
 
         $this->photo_path = $path;
 
-
         $this->dispatch('refresh-user', [
             'type' => 'success',
-            'message' => 'Profile photo updated successfully.'
+            'message' => 'Profile photo updated successfully.',
         ]);
-
-
-
-
-
 
     }
 
-
-    public function save(){
+    public function save()
+    {
         // validate
         $this->validate([
             'first_name' => 'required',
@@ -113,13 +114,10 @@ class Account extends Component
             'timezone' => $this->timezone,
         ]);
 
-
         $this->dispatch('refresh-user', [
             'type' => 'success',
-            'message' => 'Profile updated successfully.'
+            'message' => 'Profile updated successfully.',
         ]);
-
-
 
     }
 
@@ -129,7 +127,7 @@ class Account extends Component
 
         $this->dispatch('refresh-user', [
             'type' => 'success',
-            'message' => 'Profile deleted successfully.'
+            'message' => 'Profile deleted successfully.',
         ]);
 
         return redirect()->route('login');

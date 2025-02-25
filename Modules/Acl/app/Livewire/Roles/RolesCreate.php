@@ -6,11 +6,11 @@ use Livewire\Component;
 
 class RolesCreate extends Component
 {
-
     public $name;
-    public $permissions = [];
-    public $perm = [];
 
+    public $permissions = [];
+
+    public $perm = [];
 
     public function mount()
     {
@@ -22,8 +22,6 @@ class RolesCreate extends Component
         }
     }
 
-
-
     public function render()
     {
 
@@ -33,10 +31,8 @@ class RolesCreate extends Component
     public function storeRole()
     {
 
-
-
         $this->validate([
-            'name' => 'required|unique:roles,name'
+            'name' => 'required|unique:roles,name',
         ]);
 
         $role = \Spatie\Permission\Models\Role::create(['name' => $this->name]);
@@ -51,7 +47,7 @@ class RolesCreate extends Component
 
         $this->dispatch('notify', [
             'type' => 'success',
-            'message' => 'Role created successfully'
+            'message' => 'Role created successfully',
         ]);
     }
 }

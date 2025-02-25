@@ -3,15 +3,14 @@
 namespace Modules\Acl\Livewire\Roles;
 
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use Nicotc\Datatable\Http\Livewire\Datatable;
+use Spatie\Permission\Models\Role;
 
 class DatatableRoles extends Datatable
 {
     public $dropdown = true;
 
     protected $listeners = ['deleteRoleConfirmed', 'notify'];
-
 
     public function config()
     {
@@ -20,7 +19,7 @@ class DatatableRoles extends Datatable
             // 'id',
             'name',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
 
         $this->create = true;
@@ -31,58 +30,48 @@ class DatatableRoles extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editRole'
+                'event' => 'editRole',
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'deleteRole'
+                'event' => 'deleteRole',
 
-            ]
+            ],
         ];
         $this->createAction = [
             'label' => 'Create Role',
             'icon' => 'bx bx-plus',
             'event' => 'createRole',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
 
     public function buildQuery()
     {
-        $query =  Role::select(
+        $query = Role::select(
             'id',
             'name',
             'created_at',
             'updated_at',
         )->where('name', '!=', 'Super Admin');
 
-
         // where funcion group
         $query->where(function ($query) {
-            $query->where('name', 'like', '%' . $this->searchTerm . '%');
+            $query->where('name', 'like', '%'.$this->searchTerm.'%');
         });
 
-        if($this->search['id'] ?? false) {
+        if ($this->search['id'] ?? false) {
             $query->where('id', $this->search['id']);
         }
 
-        if($this->search['name'] ?? false) {
-            $query->where('name', 'like', '%' . $this->search['name'] . '%');
+        if ($this->search['name'] ?? false) {
+            $query->where('name', 'like', '%'.$this->search['name'].'%');
         }
 
-
-
-
         $query->orderBy($this->sortColumn, $this->sortDirection);
-
-
-
-
-
-
 
         return $query;
     }
@@ -92,43 +81,39 @@ class DatatableRoles extends Datatable
         return [
             'id' => [
                 'label' => 'ID',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
-             'name' => [
+            'name' => [
                 'label' => 'name',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-                ],
+                'searchable' => true,
+            ],
             'created_at' => [
                 'label' => 'Created At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'updated_at' => [
                 'label' => 'Updated At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-            ]
-
-
-
+                'searchable' => true,
+            ],
 
         ];
     }
-
 
     public function deleteRoleConfirmed($id)
     {
@@ -136,11 +121,12 @@ class DatatableRoles extends Datatable
 
         $users = User::role($id)->count();
 
-        if($users > 0){
+        if ($users > 0) {
             $this->dispatch('notify', [
                 'type' => 'error',
-                'message' => 'There are active users with this role'
+                'message' => 'There are active users with this role',
             ]);
+
             return;
         }
 
@@ -148,11 +134,7 @@ class DatatableRoles extends Datatable
         $role->delete();
         $this->dispatch('notify', [
             'type' => 'success',
-            'message' => 'Role deleted successfully'
+            'message' => 'Role deleted successfully',
         ]);
     }
-
-
-
-
 }

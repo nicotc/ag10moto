@@ -25,7 +25,7 @@ use Modules\Acl\Http\Controllers\AclController;
 Route::group([
     'middleware' => ['auth', 'role:Admin|Super Admin'],
 
-    'prefix' => 'acl'
+    'prefix' => 'acl',
 
 ], function () {
     Route::view('user-list', 'acl::Users.list')->name('user-list');

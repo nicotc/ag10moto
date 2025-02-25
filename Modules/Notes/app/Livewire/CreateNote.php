@@ -8,33 +8,37 @@ use Modules\Notes\Models\Notes;
 class CreateNote extends Component
 {
     public $pedido;
+
     public $note;
+
+    public $model;
 
     public function render()
     {
         return view('notes::livewire.create-note');
     }
 
-
     public function store()
     {
         // dd($this->pedido);
 
         $this->validate([
-            'note' => 'required'
+            'note' => 'required',
         ]);
 
-       Notes::create([
+        Notes::create([
             'pedido_id' => $this->pedido,
+            'pedido_model' => $this->model,
+
             'note' => $this->note,
             'created_by' => auth()->id(),
-            'status' => 1
+            'status' => 1,
         ]);
 
         $this->note = '';
         $this->dispatch('notify', [
             'message' => 'Note created successfully',
-            'type' => 'success'
+            'type' => 'success',
         ]);
 
     }

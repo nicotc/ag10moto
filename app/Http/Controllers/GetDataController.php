@@ -30,7 +30,7 @@ class GetDataController extends Controller
         where
         yIDN2_fv_entry_meta.meta_key = "fv_form_id" and
         yIDN2_fv_entry_meta.meta_value = "b283e08" and
-        yIDN2_fv_entry_meta.data_id > ' . $id
+        yIDN2_fv_entry_meta.data_id > '.$id
         );
 
         // 219e7a6
@@ -41,9 +41,6 @@ class GetDataController extends Controller
             $in[] = $Formulario->data_id;
         }
 
-
-
-
         if (count($in) > 0) {
             $datos = DB::connection('mysqlWeb')->select(
                 'select
@@ -52,15 +49,13 @@ class GetDataController extends Controller
 	    yIDN2_fv_entry_meta.meta_key,
 	    yIDN2_fv_entry_meta.meta_value from yIDN2_fv_entry_meta
         where
-        yIDN2_fv_entry_meta.data_id in (' . implode(',', $in) . ')'
+        yIDN2_fv_entry_meta.data_id in ('.implode(',', $in).')'
 
             );
 
             foreach ($datos as $dato) {
                 $data[$dato->data_id][$dato->meta_key] = $dato->meta_value;
             }
-
-
 
             foreach ($data as $key => $value) {
                 $pedidos = Pedidos::create([
@@ -73,20 +68,22 @@ class GetDataController extends Controller
                     'aceptacion' => $value['aceptacion'],
                     'lang' => $value['lang'] ?? null,
                     'fv_form_id' => $value['fv_form_id'],
+                    'status' => 0,
                 ]);
             }
         }
 
-        dd("Datos guardados correctamente");
+        dd('Datos guardados correctamente');
     }
 
-    public static function items(){
-       $monos = GetDataController::otros('Monos', '219e7a6' );
-       $monos = GetDataController::otros('Chaquetas', '0ae026d' );
-       $monos = GetDataController::otros('Caferacer', '1b3d82c' );
-       $monos = GetDataController::otros('Guantes', '140cacc' );
-       $monos = GetDataController::otros('Botas', '60ea4ce' );
-       $monos = GetDataController::otros('Airbags', '3e7a75d' );
+    public static function items()
+    {
+        $monos = GetDataController::otros('Monos', '219e7a6');
+        $monos = GetDataController::otros('Chaquetas', '0ae026d');
+        $monos = GetDataController::otros('Caferacer', '1b3d82c');
+        $monos = GetDataController::otros('Guantes', '140cacc');
+        $monos = GetDataController::otros('Botas', '60ea4ce');
+        $monos = GetDataController::otros('Airbags', '3e7a75d');
 
         // 219e7a6 monos
         // 0ae026d chaquetas
@@ -96,19 +93,13 @@ class GetDataController extends Controller
         // 3e7a75d airbags
     }
 
+    public static function otros($item, $form)
+    {
 
-
-
-
-
-
-
-    public static function otros($item, $form){
-
-        $id =  null;
-        $id = Otros::select("id_pedidos")
-        ->where('item', $item)
-        ->orderBy("id_pedidos", 'desc')->first();
+        $id = null;
+        $id = Otros::select('id_pedidos')
+            ->where('item', $item)
+            ->orderBy('id_pedidos', 'desc')->first();
 
         if ($id != null) {
             $id = $id->id_pedidos;
@@ -127,15 +118,13 @@ class GetDataController extends Controller
         where
         yIDN2_fv_entry_meta.meta_key = "fv_form_id" and
         yIDN2_fv_entry_meta.meta_value = "'.$form.'" and
-        yIDN2_fv_entry_meta.data_id > ' . $id
+        yIDN2_fv_entry_meta.data_id > '.$id
         );
-
 
         $in = [];
         foreach ($Formularios as $Formulario) {
             $in[] = $Formulario->data_id;
         }
-
 
         if (count($in) > 0) {
             $datos = DB::connection('mysqlWeb')->select(
@@ -145,7 +134,7 @@ class GetDataController extends Controller
 	    yIDN2_fv_entry_meta.meta_key,
 	    yIDN2_fv_entry_meta.meta_value from yIDN2_fv_entry_meta
         where
-        yIDN2_fv_entry_meta.data_id in (' . implode(',', $in) . ')'
+        yIDN2_fv_entry_meta.data_id in ('.implode(',', $in).')'
 
             );
 
@@ -162,23 +151,13 @@ class GetDataController extends Controller
                     'lang' => $value['lang'] ?? null,
                     'item' => $item,
                     'fv_form_id' => $value['fv_form_id'],
+                    'status' => 0,
                 ]);
             }
 
-
         }
 
-
-// dd($data);
-
-
-
-
-
+        // dd($data);
 
     }
-
-
-
-
 }

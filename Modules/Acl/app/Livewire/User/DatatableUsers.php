@@ -5,12 +5,12 @@ namespace Modules\Acl\Livewire\User;
 use App\Models\User;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
-
 class DatatableUsers extends Datatable
 {
-
     public $dropdown = true;
+
     protected $listeners = ['deleteUserConfirmed', 'notify'];
+
     public function config()
     {
         $this->itmesPerPage = 10;
@@ -19,7 +19,7 @@ class DatatableUsers extends Datatable
             'first_name',
             'last_name',
             'email',
-            'roles'
+            'roles',
         ];
 
         $this->create = true;
@@ -42,21 +42,21 @@ class DatatableUsers extends Datatable
                 'event' => 'deleteUser',
                 'isModal' => true,
                 'params' => ['id'],
-                'confirm' => true
-            ]
+                'confirm' => true,
+            ],
         ];
         $this->createAction = [
             'label' => 'Create User',
             'icon' => 'bx bx-plus',
             'event' => 'createUser',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
 
     public function buildQuery()
     {
-        $query =  User::select(
+        $query = User::select(
             'users.id',
             'users.first_name',
             'users.last_name',
@@ -67,58 +67,49 @@ class DatatableUsers extends Datatable
             'roles.name as roles'
 
         )
-        ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-        ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-        ->where('model_has_roles.model_type', 'App\Models\User');
-
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->where('model_has_roles.model_type', 'App\Models\User');
 
         // where funcion group
         $query->where(function ($query) {
-            $query->where('users.first_name', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('users.last_name', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('users.email', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('users.created_at', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('users.updated_at', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('roles.name', 'like', '%' . $this->searchTerm . '%');
+            $query->where('users.first_name', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('users.last_name', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('users.email', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('users.created_at', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('users.updated_at', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('roles.name', 'like', '%'.$this->searchTerm.'%');
         });
 
-        if($this->search['id'] ?? false) {
+        if ($this->search['id'] ?? false) {
             $query->where('users.id', $this->search['id']);
         }
 
-        if($this->search['first_name'] ?? false) {
-            $query->where('users.first_name', 'like', '%' . $this->search['first_name'] . '%');
+        if ($this->search['first_name'] ?? false) {
+            $query->where('users.first_name', 'like', '%'.$this->search['first_name'].'%');
         }
 
-        if($this->search['last_name'] ?? false) {
-            $query->where('users.last_name', 'like', '%' . $this->search['last_name'] . '%');
+        if ($this->search['last_name'] ?? false) {
+            $query->where('users.last_name', 'like', '%'.$this->search['last_name'].'%');
         }
 
-        if($this->search['email'] ?? false) {
-            $query->where('users.email', 'like', '%' . $this->search['email'] . '%');
+        if ($this->search['email'] ?? false) {
+            $query->where('users.email', 'like', '%'.$this->search['email'].'%');
         }
 
-        if($this->search['created_at'] ?? false) {
-            $query->where('users.created_at', 'like', '%' . $this->search['created_at'] . '%');
+        if ($this->search['created_at'] ?? false) {
+            $query->where('users.created_at', 'like', '%'.$this->search['created_at'].'%');
         }
 
-        if($this->search['updated_at'] ?? false) {
-            $query->where('users.updated_at', 'like', '%' . $this->search['updated_at'] . '%');
+        if ($this->search['updated_at'] ?? false) {
+            $query->where('users.updated_at', 'like', '%'.$this->search['updated_at'].'%');
         }
 
-        if($this->search['roles'] ?? false) {
-            $query->where('roles.name', 'like', '%' . $this->search['roles'] . '%');
+        if ($this->search['roles'] ?? false) {
+            $query->where('roles.name', 'like', '%'.$this->search['roles'].'%');
         }
-
-
-
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
-
-
-
-
-
 
         return $query;
     }
@@ -128,63 +119,61 @@ class DatatableUsers extends Datatable
         return [
             'id' => [
                 'label' => 'ID',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'first_name' => [
                 'label' => 'First Name',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'last_name' => [
                 'label' => 'Last Name',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
-              'email' =>
-            [
+            'email' => [
                 'label' => 'email',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'roles' => [
                 'label' => 'Roles',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-                ],
-               'created_at' => [
+                'searchable' => true,
+            ],
+            'created_at' => [
                 'label' => 'created_at',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
 
-
-                'updated_at' => [
+            'updated_at' => [
                 'label' => 'updated_at',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-                ]
+                'searchable' => true,
+            ],
 
         ];
     }
@@ -194,7 +183,4 @@ class DatatableUsers extends Datatable
         User::find($id)->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'User deleted successfully']);
     }
-
-
-
 }

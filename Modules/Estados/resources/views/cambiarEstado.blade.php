@@ -175,7 +175,7 @@
                             <box-icon name='time-five'></box-icon>
                         </ul>
 
-                        <livewire:estados::estados-email  :pedido="$pedido->id"/>
+                        <livewire:estados::estados-email  :pedido="$pedido->id" model='pedido' />
 
                     </div>
 

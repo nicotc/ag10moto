@@ -1,21 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Livewire;
-use Illuminate\Contracts\View\View;
+
 use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
-
 class QuillEdit extends Component
 {
-
     protected $listeners = ['valueUpdated' => 'updatedValue'];
 
     #[Modelable]
-    public string | null $value = '';
+    public ?string $value = '';
 
     #[Locked]
     public string $quillId;
@@ -32,7 +31,6 @@ class QuillEdit extends Component
     {
         $this->value = $value;
     }
-
 
     public function render()
     {

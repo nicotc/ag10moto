@@ -2,19 +2,14 @@
 
 namespace Modules\Idiomas\Livewire;
 
-use Carbon\Language;
-
 use Modules\Idiomas\Models\Lang;
-
 use Nicotc\Datatable\Http\Livewire\Datatable;
-
 
 class IdiomasDatatable extends Datatable
 {
     public $dropdown = true;
 
     protected $listeners = ['deleteConfirmed', 'notify'];
-
 
     public function config()
     {
@@ -24,7 +19,7 @@ class IdiomasDatatable extends Datatable
             'lang',
             'iso',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
 
         $this->create = true;
@@ -34,20 +29,20 @@ class IdiomasDatatable extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editModal'
+                'event' => 'editModal',
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'delete'
-            ]
+                'event' => 'delete',
+            ],
         ];
         $this->createAction = [
             'label' => 'Create ',
             'icon' => 'bx bx-plus',
             'event' => 'createModal',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
@@ -55,8 +50,7 @@ class IdiomasDatatable extends Datatable
     public function buildQuery()
     {
 
-
-        $query =  Lang::select(
+        $query = Lang::select(
             'id',
             'lang',
             'iso',
@@ -64,10 +58,9 @@ class IdiomasDatatable extends Datatable
             'updated_at',
         );
 
-
         // where funcion group
         $query->where(function ($query) {
-            $query->where('lang', 'like', '%' . $this->searchTerm . '%');
+            $query->where('lang', 'like', '%'.$this->searchTerm.'%');
         });
 
         if ($this->search['id'] ?? false) {
@@ -75,9 +68,8 @@ class IdiomasDatatable extends Datatable
         }
 
         if ($this->search['name'] ?? false) {
-            $query->where('name', 'like', '%' . $this->search['name'] . '%');
+            $query->where('name', 'like', '%'.$this->search['name'].'%');
         }
-
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
 
@@ -93,7 +85,7 @@ class IdiomasDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'lang' => [
                 'label' => 'lang',
@@ -101,7 +93,7 @@ class IdiomasDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'iso' => [
                 'label' => 'iso',
@@ -109,7 +101,7 @@ class IdiomasDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'created_at' => [
                 'label' => 'Created At',
@@ -117,7 +109,7 @@ class IdiomasDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'updated_at' => [
                 'label' => 'Updated At',
@@ -125,15 +117,11 @@ class IdiomasDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
-            ]
-
-
-
+                'searchable' => true,
+            ],
 
         ];
     }
-
 
     public function deleteConfirmed($id)
     {

@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GetDataController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-   return redirect('/login');
+    return redirect('/login');
 });
 
 Route::middleware([
@@ -17,9 +16,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-
 });
-
 
 Route::get('/get/pedidos', [GetDataController::class, 'pedidos'])->name('getPedidos');
 Route::get('/get/otros', [GetDataController::class, 'items'])->name('getitems');

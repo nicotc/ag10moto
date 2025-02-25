@@ -7,10 +7,9 @@ use Spatie\Permission\Models\Permission;
 
 class DatatablePermission extends Datatable
 {
-
     public $dropdown = true;
-    protected $listeners = ['deletePermissionConfirmed', 'notify'];
 
+    protected $listeners = ['deletePermissionConfirmed', 'notify'];
 
     public function config()
     {
@@ -19,7 +18,7 @@ class DatatablePermission extends Datatable
             'id',
             'name',
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
 
         $this->create = true;
@@ -29,47 +28,45 @@ class DatatablePermission extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editPermission'
+                'event' => 'editPermission',
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'deletePermission'
-            ]
+                'event' => 'deletePermission',
+            ],
         ];
         $this->createAction = [
             'label' => 'Create Permission',
             'icon' => 'bx bx-plus',
             'event' => 'createPermission',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
 
     public function buildQuery()
     {
-        $query =  Permission::select(
+        $query = Permission::select(
             'id',
             'name',
             'created_at',
             'updated_at',
         );
 
-
         // where funcion group
         $query->where(function ($query) {
-            $query->where('name', 'like', '%' . $this->searchTerm . '%');
+            $query->where('name', 'like', '%'.$this->searchTerm.'%');
         });
 
-        if($this->search['id'] ?? false) {
+        if ($this->search['id'] ?? false) {
             $query->where('id', $this->search['id']);
         }
 
-        if($this->search['name'] ?? false) {
-            $query->where('name', 'like', '%' . $this->search['name'] . '%');
+        if ($this->search['name'] ?? false) {
+            $query->where('name', 'like', '%'.$this->search['name'].'%');
         }
-
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
 
@@ -81,51 +78,43 @@ class DatatablePermission extends Datatable
         return [
             'id' => [
                 'label' => 'ID',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
-             'name' => [
+            'name' => [
                 'label' => 'name',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-                ],
+                'searchable' => true,
+            ],
             'created_at' => [
                 'label' => 'Created At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'updated_at' => [
                 'label' => 'Updated At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-            ]
-
-
-
+                'searchable' => true,
+            ],
 
         ];
     }
-
 
     public function deletePermissionConfirmed($id)
     {
         Permission::find($id)->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Permission deleted successfully']);
     }
-
-
-
 }
-

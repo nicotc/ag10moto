@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pedidos extends Model
 {
     protected $table = 'pedidos';
+
     protected $fillable = [
         'id_pedidos',
         'nombre',
@@ -16,13 +17,7 @@ class Pedidos extends Model
         'imagenes',
         'aceptacion',
         'lang',
-        'fv_form_id'
+        'fv_form_id',
+        'status',
     ];
-
-
-
-
-
-
-
 }

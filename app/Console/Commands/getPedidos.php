@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Http\Controllers\GetDataController;
+use Illuminate\Console\Command;
 
 class getPedidos extends Command
 {
@@ -27,8 +27,6 @@ class getPedidos extends Command
     public function handle()
     {
         GetDataController::pedidos();
-
-        
 
     }
 }

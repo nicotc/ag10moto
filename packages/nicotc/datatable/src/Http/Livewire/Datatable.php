@@ -2,56 +2,63 @@
 
 namespace Nicotc\Datatable\Http\Livewire;
 
-
 use Livewire\Component;
 use Livewire\WithPagination;
-
-use Nicotc\Datatable\Http\ExcelExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Nicotc\Datatable\Http\ExcelExport;
 
 class Datatable extends Component
 {
+    use WithPagination;
 
-  use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
+    public $hydrate;
 
-  protected $paginationTheme = 'bootstrap';
+    public $sortColumn = 'id';
 
-  public $hydrate;
-  public $sortColumn = 'id';
-  public $sortDirection = 'asc';
-  public $searchTerm = '';
-  public $itmesPerPage = 10;
-  public $itemsSelecetPerPage = [10, 25, 50, 100];
-  public $visibleColumns = [];
-  public $search = [];
-  public $create  = true;
-  public $export = true;
-  public $actions = [];
-  public $createAction = [];
-  public $modelDelete;
-  public $downloadFileName = 'data.xlsx';
+    public $sortDirection = 'asc';
 
+    public $searchTerm = '';
 
-  // lissteners
-  protected $listeners = ['delete', 'notify'];
+    public $itmesPerPage = 10;
 
+    public $itemsSelecetPerPage = [10, 25, 50, 100];
 
-  public function notify($message)
-  {
-    $this->getData();
-  }
+    public $visibleColumns = [];
 
-    public function updated(){
-      $this->resetPage();
+    public $search = [];
+
+    public $create = true;
+
+    public $export = true;
+
+    public $actions = [];
+
+    public $createAction = [];
+
+    public $modelDelete;
+
+    public $downloadFileName = 'data.xlsx';
+
+    // lissteners
+    protected $listeners = ['delete', 'notify'];
+
+    public function notify($message)
+    {
+        $this->getData();
+    }
+
+    public function updated()
+    {
+        $this->resetPage();
     }
 
     public function mount()
     {
-      $this->visibleColumns = array_keys($this->getHeaders());
-      $this->config();
+        $this->visibleColumns = array_keys($this->getHeaders());
+        $this->config();
     }
-
 
     public function sort($column)
     {
@@ -61,7 +68,7 @@ class Datatable extends Component
         $this->sortColumn = $column;
     }
 
-    protected  function getData()
+    protected function getData()
     {
         return $this->buildQuery()->paginate($this->itmesPerPage);
 
@@ -78,29 +85,27 @@ class Datatable extends Component
         }
     }
 
-
     public function render()
     {
-      return view('datatable::livewire.datatable', [
-          'data' => $this->getData(),
-          'headers' => $this->getHeaders(),
-      ]);
+        return view('datatable::livewire.datatable', [
+            'data' => $this->getData(),
+            'headers' => $this->getHeaders(),
+        ]);
     }
 
-    public function exportExcel(){
-      $data = $this->buildQuery()->get()->toArray();
-      $headers = $this->getHeaders();
-      $headers  = array_keys($headers);
-      return Excel::download(new ExcelExport($data, $headers), $this->downloadFileName);
+    public function exportExcel()
+    {
+        $data = $this->buildQuery()->get()->toArray();
+        $headers = $this->getHeaders();
+        $headers = array_keys($headers);
+
+        return Excel::download(new ExcelExport($data, $headers), $this->downloadFileName);
 
     }
 
     public function delete($id)
     {
-       $this->modelDelete::destroy($id);
+        $this->modelDelete::destroy($id);
 
     }
-
-
-
 }

@@ -3,21 +3,24 @@
 namespace Modules\Email\Livewire\Template;
 
 use Livewire\Component;
-use Modules\Idiomas\Models\Lang;
 use Modules\Email\Models\EmailTemplate;
-
+use Modules\Idiomas\Models\Lang;
 
 class Edit extends Component
 {
-
     public $templateId;
-    public  $langs = [];
+
+    public $langs = [];
+
     public $lang;
+
     public $name;
 
     public $subject;
 
     public $body;
+
+    public $content;
 
     protected $listeners = ['editModal'];
 
@@ -36,10 +39,9 @@ class Edit extends Component
         $this->body = $template->body;
         $this->lang = $template->langs_id;
 
-
+        $this->dispatch('contentUpdated', $this->body);
 
     }
-
 
     public function render()
     {
@@ -66,7 +68,7 @@ class Edit extends Component
 
         $this->dispatch('notify', [
             'message' => 'Template created successfully',
-            'type' => 'success'
+            'type' => 'success',
         ]);
 
     }

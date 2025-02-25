@@ -57,7 +57,9 @@
 
                     <label class="form-label " for="body">Body</label>
 
-                    <livewire:quill-text-editor wire:model.live="body" theme="snow" />
+                    <livewire:quill-text-editor
+                    wire:model.live="body"
+                    theme="snow" />
 
                     <div class="mt-4 text-center col-12">
                         <button type="submit" class="btn btn-primary me-sm-3 me-1"

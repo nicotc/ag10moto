@@ -2,8 +2,9 @@
 
 namespace Modules\Estados\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 // use Modules\Estados\Database\Factories\StatusFactory;
 
 class Status extends Model
@@ -17,9 +18,7 @@ class Status extends Model
         'id',
         'name',
         'color',
-        'email'
-
-
+        'email',
 
     ];
 

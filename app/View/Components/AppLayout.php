@@ -4,7 +4,6 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
-use Psy\Output\Theme;
 
 class AppLayout extends Component
 {

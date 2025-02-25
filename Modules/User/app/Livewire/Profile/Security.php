@@ -6,9 +6,10 @@ use Livewire\Component;
 
 class Security extends Component
 {
-
     public $currentPassword;
+
     public $newPassword;
+
     public $confirmPassword;
 
     public function render()
@@ -25,13 +26,11 @@ class Security extends Component
             'confirmPassword' => 'required|same:newPassword',
         ]);
 
-
         $user = auth()->user();
 
-
-
-        if (!\Hash::check($this->currentPassword, $user->password)) {
+        if (! \Hash::check($this->currentPassword, $user->password)) {
             $this->addError('currentPassword', 'Current password is incorrect.');
+
             return;
         }
 
@@ -41,7 +40,7 @@ class Security extends Component
         $this->currentPassword = '';
         $this->newPassword = '';
         $this->confirmPassword = '';
-        
+
         $this->dispatch('notify', ['message' => 'Password updated successfully.',
             'type' => 'success']);
     }

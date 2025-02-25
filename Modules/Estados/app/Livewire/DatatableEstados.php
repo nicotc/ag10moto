@@ -2,16 +2,13 @@
 
 namespace Modules\Estados\Livewire;
 
-
 use Modules\Estados\Models\Status;
-
 use Nicotc\Datatable\Http\Livewire\Datatable;
-
-
 
 class DatatableEstados extends Datatable
 {
     public $dropdown = true;
+
     protected $listeners = ['deleteConfirmed', 'notify'];
 
     public function config()
@@ -20,11 +17,11 @@ class DatatableEstados extends Datatable
         $this->visibleColumns = [
             'id',
             'name',
-            'color',
+            // 'color',
             'email',
 
             'created_at',
-            'updated_at'
+            'updated_at',
         ];
 
         $this->create = true;
@@ -34,45 +31,42 @@ class DatatableEstados extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editModal'
+                'event' => 'editModal',
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'delete'
-            ]
+                'event' => 'delete',
+            ],
         ];
         $this->createAction = [
             'label' => 'Create ',
             'icon' => 'bx bx-plus',
             'event' => 'createModal',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
 
     public function buildQuery()
     {
-        $query =  Status::select(
+        $query = Status::select(
             'id',
             'name',
-            'color',
+            // 'color',
             'email'
 
         );
 
-
         // where funcion group
         $query->where(function ($query) {
-            $query->where('name', 'like', '%' . $this->searchTerm . '%');
+            $query->where('name', 'like', '%'.$this->searchTerm.'%');
         });
 
-
         if ($this->search['name'] ?? false) {
-            $query->where('name', 'like', '%' . $this->search['name'] . '%');
+            $query->where('name', 'like', '%'.$this->search['name'].'%');
         }
-
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
 
@@ -88,7 +82,7 @@ class DatatableEstados extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'name' => [
                 'label' => 'Type',
@@ -96,29 +90,24 @@ class DatatableEstados extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
-            'color' => [
-                'label' => 'Color',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true
-            ],
+            // 'color' => [
+            //     'label' => 'Color',
+            //     'func' => function ($value) {
+            //         return $value;
+            //     },
+            //     'sortable' => true,
+            //     'searchable' => true
+            // ],
             'email' => [
                 'label' => 'Email',
                 'func' => function ($value) {
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
-
-
-
-
-
 
             'created_at' => [
                 'label' => 'Created At',
@@ -126,7 +115,7 @@ class DatatableEstados extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'updated_at' => [
                 'label' => 'Updated At',
@@ -134,11 +123,8 @@ class DatatableEstados extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
-            ]
-
-
-
+                'searchable' => true,
+            ],
 
         ];
     }

@@ -6,14 +6,15 @@ use Livewire\Component;
 
 class RolesEdit extends Component
 {
-
     public $roleId;
+
     public $name;
+
     public $permissions = [];
+
     public $perm = [];
 
     protected $listeners = ['editRole', 'notify'];
-
 
     public function editRole($id)
     {
@@ -30,7 +31,6 @@ class RolesEdit extends Component
         }
     }
 
-
     public function mount()
     {
         $permissions = \Spatie\Permission\Models\Permission::all();
@@ -40,8 +40,6 @@ class RolesEdit extends Component
             $this->permissions[$module][] = $permission;
         }
     }
-
-
 
     public function render()
     {
@@ -53,10 +51,8 @@ class RolesEdit extends Component
 
         $id = $this->roleId;
 
-
-
         $this->validate([
-            'name' => 'required|unique:roles,name,' . $id
+            'name' => 'required|unique:roles,name,'.$id,
         ]);
 
         $role = \Spatie\Permission\Models\Role::find($id);
@@ -66,7 +62,7 @@ class RolesEdit extends Component
         $permisos = [];
 
         foreach ($this->perm as $permission => $value) {
-            if($value == true){
+            if ($value == true) {
                 $permisos[] = $permission;
             }
         }
@@ -76,7 +72,7 @@ class RolesEdit extends Component
         $this->reset('name', 'perm');
         $this->dispatch('notify', [
             'type' => 'success',
-            'message' => 'Role updated successfully'
+            'message' => 'Role updated successfully',
         ]);
     }
 }

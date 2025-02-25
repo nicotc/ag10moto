@@ -23,11 +23,10 @@ return new class extends Migration
             $table->string('lang')->nullable();
             $table->string('item')->nullable();
             $table->string('fv_form_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
-
-
 
     /**
      * Reverse the migrations.

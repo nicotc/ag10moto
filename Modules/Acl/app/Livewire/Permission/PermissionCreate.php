@@ -7,7 +7,6 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionCreate extends Component
 {
-
     public $name;
 
     public function render()
@@ -18,15 +17,15 @@ class PermissionCreate extends Component
     public function createPermission()
     {
         $this->validate([
-            'name' => 'required|unique:permissions'
+            'name' => 'required|unique:permissions',
         ]);
 
         $permission = Permission::create([
-            'name' => $this->name
+            'name' => $this->name,
         ]);
 
         $this->reset(['name']);
-        
+
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Permission created successfully']);
     }
 }

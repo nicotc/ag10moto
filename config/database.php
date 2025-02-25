@@ -62,7 +62,6 @@ return [
             ]) : [],
         ],
 
-
         'mysqlWeb' => [
             'driver' => 'mysql',
             'url' => env('DB_URL_WEB'),
@@ -82,8 +81,6 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
-
 
         'mariadb' => [
             'driver' => 'mariadb',

@@ -4,24 +4,22 @@ namespace Modules\Contacproduct\Livewire;
 
 use App\Models\Otros;
 use Nicotc\Datatable\Http\Livewire\Datatable;
-use Spatie\Permission\Models\Permission;
-
 
 class ContactDatatable extends Datatable
 {
-
     public $sortColumn = 'id';
+
     public $sortDirection = 'desc';
 
-    public $dropdown = true;
-    protected $listeners = ['deletePermissionConfirmed', 'notify'];
+    public $dropdown = false;
 
+    protected $listeners = ['deletePermissionConfirmed', 'notify'];
 
     public function config()
     {
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
-
+            'status',
             'nombre',
             'email',
             'telefono',
@@ -33,31 +31,27 @@ class ContactDatatable extends Datatable
         $this->create = true;
         $this->export = true;
         $this->actions = [
-            'edit' => [
-                'icon' => 'edit',
-                'isModal' => true,
+            'Edit' => [
+                'icon' => 'bx bx-edit',
                 'params' => ['id'],
-                'event' => 'editPermission'
+                'event' => 'edit',
+                'isModal' => false,
+                'route' => 'contactproduct.edit',
             ],
-            'delete' => [
-                'icon' => 'trash',
-                'isModal' => true,
-                'params' => ['id'],
-                'event' => 'deletePermission'
-            ]
+
         ];
         $this->createAction = [
-            'label' => 'Create Permission',
+            'label' => 'Create product',
             'icon' => 'bx bx-plus',
             'event' => 'createPermission',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
 
     public function buildQuery()
     {
-        $query =  Otros::select(
+        $query = Otros::select(
             'id',
             'id_pedidos',
             'nombre',
@@ -68,37 +62,34 @@ class ContactDatatable extends Datatable
             'item',
             'created_at',
             'updated_at',
+            'status'
         );
-
 
         // where funcion group
         $query->where(function ($query) {
-            $query->where('nombre', 'like', '%' . $this->searchTerm . '%');
+            $query->where('nombre', 'like', '%'.$this->searchTerm.'%');
         });
 
-
         if ($this->search['nombre'] ?? false) {
-            $query->where('nombre', 'like', '%' . $this->search['nombre'] . '%');
+            $query->where('nombre', 'like', '%'.$this->search['nombre'].'%');
         }
 
         if ($this->search['email'] ?? false) {
-            $query->where('email', 'like', '%' . $this->search['email'] . '%');
+            $query->where('email', 'like', '%'.$this->search['email'].'%');
         }
-
 
         if ($this->search['telefono'] ?? false) {
-            $query->where('telefono', 'like', '%' . $this->search['telefono'] . '%');
+            $query->where('telefono', 'like', '%'.$this->search['telefono'].'%');
         }
         if ($this->search['horallamada'] ?? false) {
-            $query->where('horallamada', 'like', '%' . $this->search['horallamada'] . '%');
+            $query->where('horallamada', 'like', '%'.$this->search['horallamada'].'%');
         }
         if ($this->search['lang'] ?? false) {
-            $query->where('lang', 'like', '%' . $this->search['lang'] . '%');
+            $query->where('lang', 'like', '%'.$this->search['lang'].'%');
         }
         if ($this->search['item'] ?? false) {
-            $query->where('item', 'like', '%' . $this->search['item'] . '%');
+            $query->where('item', 'like', '%'.$this->search['item'].'%');
         }
-
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
 
@@ -114,7 +105,19 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
+            ],
+            'status' => [
+                'label' => 'status',
+                'func' => function ($value) {
+                    if($value == 0){
+                        return 'Pendiente';
+                    }else{
+                        return $value;
+                    }
+                },
+                'sortable' => true,
+                'searchable' => true,
             ],
             'item' => [
                 'label' => 'item',
@@ -122,7 +125,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'nombre' => [
                 'label' => 'nombre',
@@ -130,7 +133,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'email' => [
                 'label' => 'email',
@@ -138,7 +141,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'telefono' => [
                 'label' => 'telefono',
@@ -146,7 +149,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'horallamada' => [
                 'label' => 'hora llamada',
@@ -154,7 +157,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'lang' => [
                 'label' => 'lang',
@@ -162,7 +165,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'created_at' => [
                 'label' => 'Created At',
@@ -170,7 +173,7 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
 
             'updated_at' => [
@@ -179,8 +182,8 @@ class ContactDatatable extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
-            ]
+                'searchable' => true,
+            ],
         ];
     }
 }

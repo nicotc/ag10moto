@@ -7,8 +7,8 @@ use Modules\Notes\Models\Notes;
 
 class EditNote extends Component
 {
-
     public $noteId;
+
     public $note;
 
     protected $listeners = ['openEditNoteModal'];
@@ -28,16 +28,16 @@ class EditNote extends Component
     public function update()
     {
         $this->validate([
-            'note' => 'required'
+            'note' => 'required',
         ]);
 
         Notes::find($this->noteId)->update([
-            'note' => $this->note
+            'note' => $this->note,
         ]);
 
         $this->dispatch('notify', [
             'message' => 'Note updated successfully',
-            'type' => 'success'
+            'type' => 'success',
         ]);
     }
 }

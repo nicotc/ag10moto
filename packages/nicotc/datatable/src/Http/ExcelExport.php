@@ -1,4 +1,5 @@
 <?php
+
 namespace Nicotc\Datatable\Http;
 
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -7,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class ExcelExport implements FromArray, WithHeadings
 {
     protected $data;
+
     protected $headers;
 
     public function __construct($data, $headers)

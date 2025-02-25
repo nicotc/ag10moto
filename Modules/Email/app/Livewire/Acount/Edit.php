@@ -3,36 +3,34 @@
 namespace Modules\Email\Livewire\Acount;
 
 use Livewire\Component;
-use Modules\Idiomas\Models\Lang;
 use Modules\Email\Models\EmailConfiguration;
+use Modules\Idiomas\Models\Lang;
 
 class Edit extends Component
 {
     public $mail_id;
+
     public $mail_host;
+
     public $mail_port;
+
     public $mail_username;
+
     public $mail_password;
+
     public $mail_encryption;
+
     public $mail_from_address;
+
     public $mail_from_name;
 
     protected $listeners = ['edit'];
 
-
     public $langs = [];
+
     public $lang;
 
-
-
-
-
-
-
-
-
-
-public function edit($id)
+    public function edit($id)
     {
         $this->langs = Lang::pluck('lang', 'id')->toArray();
 
@@ -48,11 +46,10 @@ public function edit($id)
         $this->mail_password = $email->mail_password;
         $this->lang = $email->langs_id;
 
-
-  
     }
 
-public function create(){
+    public function create()
+    {
 
         $this->validate([
             'mail_host' => 'required',
@@ -62,7 +59,7 @@ public function create(){
             'mail_encryption' => 'required',
             'mail_from_address' => 'required',
             'mail_from_name' => 'required',
-            'lang' => 'required'
+            'lang' => 'required',
         ]);
 
         $email = EmailConfiguration::find($this->mail_id);
@@ -78,21 +75,12 @@ public function create(){
 
         $email->save();
 
+        $this->dispatch('notify', ['type' => 'success', 'message' => 'Email Configuration Updated Successfully']);
 
-
-       $this->dispatch('notify', ['type' => 'success', 'message' => 'Email Configuration Updated Successfully']);
-
-
-
-
-}
-
+    }
 
     public function render()
     {
         return view('email::livewire.acount.edit');
     }
-
-
-
 }

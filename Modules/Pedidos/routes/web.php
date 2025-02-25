@@ -15,7 +15,7 @@ use Modules\Pedidos\Http\Controllers\PedidosController;
 */
 
 Route::group(['middleware' => 'auth', 'prefix' => 'pedidos'], function () {
-    Route::view('pedidos', 'pedidos::index')->name('pedidos-list');
+    Route::get('pedidos', [PedidosController::class, 'index'])->name('pedidos-list');
     // Route::view('crear-pedidos', 'pedidos::crear-pedidos')->name('crear-pedidos');
-    Route::get('edit/{id}', [PedidosController::class, 'edit'] )->name('pedidos.edit');
+    Route::get('edit/{id}', [PedidosController::class, 'edit'])->name('pedidos.edit');
 });

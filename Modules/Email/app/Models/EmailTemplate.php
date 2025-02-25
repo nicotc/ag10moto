@@ -2,8 +2,9 @@
 
 namespace Modules\Email\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 // use Modules\Email\Database\Factories\EmailTemplateFactory;
 
 class EmailTemplate extends Model
@@ -21,7 +22,7 @@ class EmailTemplate extends Model
         foreach ($variables as $key => $value) {
             $body = str_replace("{{ $key }}", $value, $body);
         }
+
         return $body;
     }
-
 }

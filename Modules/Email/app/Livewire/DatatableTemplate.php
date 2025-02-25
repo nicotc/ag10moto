@@ -2,13 +2,11 @@
 
 namespace Modules\Email\Livewire;
 
-use Livewire\Component;
 use Modules\Email\Models\EmailTemplate;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableTemplate extends Datatable
 {
-
     public $dropdown = true;
 
     protected $listeners = ['deleteConfirmed', 'notify'];
@@ -26,15 +24,16 @@ class DatatableTemplate extends Datatable
         );
 
         $query = $query->where(function ($query) {
-            $query->where('name', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('subject', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('body', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('langs_id', 'like', '%' . $this->searchTerm . '%');
+            $query->where('name', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('subject', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('body', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('langs_id', 'like', '%'.$this->searchTerm.'%');
         });
 
         return $query;
 
     }
+
     public function getHeaders()
     {
         return [
@@ -44,7 +43,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'name' => [
                 'label' => 'Name',
@@ -52,7 +51,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'subject' => [
                 'label' => 'Subject',
@@ -60,7 +59,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'body' => [
                 'label' => 'Body',
@@ -68,7 +67,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'langs_id' => [
                 'label' => 'Language',
@@ -76,7 +75,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'created_at' => [
                 'label' => 'Created At',
@@ -84,7 +83,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'updated_at' => [
                 'label' => 'Updated At',
@@ -92,7 +91,7 @@ class DatatableTemplate extends Datatable
                     return $value;
                 },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
         ];
     }
@@ -116,27 +115,21 @@ class DatatableTemplate extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'editModal'
+                'event' => 'editModal',
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'deleteModal'
-            ]
+                'event' => 'deleteModal',
+            ],
         ];
         $this->createAction = [
             'label' => 'Create Template',
             'icon' => 'bx bx-plus',
             'event' => 'createModal',
-            'isModal' => true
+            'isModal' => true,
 
         ];
     }
-
-
-
-
-
-
 }

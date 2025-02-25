@@ -7,9 +7,8 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionEdit extends Component
 {
-
-
     public $permission;
+
     public $name;
 
     protected $listeners = ['editPermission'];
@@ -30,15 +29,15 @@ class PermissionEdit extends Component
     public function updatePermission()
     {
         $this->validate([
-            'name' => 'required|unique:permissions,name,' . $this->permission->id
+            'name' => 'required|unique:permissions,name,'.$this->permission->id,
         ]);
 
         $this->permission->name = $this->name;
         $this->permission->save();
 
-         $this->dispatch('notify', [
-                'type' => 'success',
-                'message' => 'Permission updated successfully'
-            ]);
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => 'Permission updated successfully',
+        ]);
     }
 }

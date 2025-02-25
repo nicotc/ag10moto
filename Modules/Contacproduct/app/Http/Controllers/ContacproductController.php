@@ -3,6 +3,7 @@
 namespace Modules\Contacproduct\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Otros;
 use Illuminate\Http\Request;
 
 class ContacproductController extends Controller
@@ -13,6 +14,22 @@ class ContacproductController extends Controller
     public function index()
     {
         return view('contacproduct::index');
+    }
+
+    public function notas($id)
+    {
+        $pedido = Otros::find($id);
+
+        return view('contacproduct::notas', compact('pedido'));
+    }
+
+    public function status($id)
+    {
+        $pedido = Otros::find($id);
+
+        // return view('contacproduct::notas', compact('pedido'));
+
+        return view('contacproduct::status', compact('pedido'));
     }
 
     /**
@@ -44,7 +61,9 @@ class ContacproductController extends Controller
      */
     public function edit($id)
     {
-        return view('contacproduct::edit');
+        $pedido = Otros::find($id);
+
+        return view('contacproduct::edit', compact('pedido'));
     }
 
     /**

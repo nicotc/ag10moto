@@ -182,7 +182,7 @@
 
                         <!-- Activity Timeline -->
 
-                 <livewire:notes::note-list :pedido="$pedido->id" />
+                 <livewire:notes::note-list :pedido="$pedido->id" model='pedido' />
                  {{-- <livewire:pedidos::change-status /> --}}
                         <!-- /Activity Timeline -->
 
@@ -197,7 +197,7 @@
 
     </div>
 
-    <livewire:notes::create-note :pedido="$pedido->id" />
+    <livewire:notes::create-note :pedido="$pedido->id" model='pedido'/>
     <livewire:notes::edit-note />
 
 

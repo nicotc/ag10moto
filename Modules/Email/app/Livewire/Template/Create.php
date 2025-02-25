@@ -3,12 +3,11 @@
 namespace Modules\Email\Livewire\Template;
 
 use Livewire\Component;
-use Modules\Idiomas\Models\Lang;
 use Modules\Email\Models\EmailTemplate;
+use Modules\Idiomas\Models\Lang;
 
 class Create extends Component
 {
-
     public $language;
 
     public $name;
@@ -16,11 +15,10 @@ class Create extends Component
     public $subject;
 
     public $body;
+
     public $langs = [];
+
     public $lang;
-
-
-
 
     public function render()
     {
@@ -47,12 +45,10 @@ class Create extends Component
 
         $this->dispatch('notify', [
             'message' => 'Template created successfully',
-            'type' => 'success'
+            'type' => 'success',
         ]);
 
-
         $this->reset();
-
 
     }
 }

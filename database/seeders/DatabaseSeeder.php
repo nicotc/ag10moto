@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Modules\Idiomas\Models\Lang;
@@ -24,12 +23,10 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Nicolás',
             'last_name' => 'Testagrossa',
             'email' => 'nicotestagrossa@gmail.com',
-            'password' => bcrypt('12345678')
+            'password' => bcrypt('12345678'),
         ]);
 
         $user->assignRole('Super Admin');
-
-
 
         $rol = \Spatie\Permission\Models\Role::create(['name' => 'Admin']);
         $rol = \Spatie\Permission\Models\Role::create(['name' => 'User']);
@@ -43,7 +40,6 @@ class DatabaseSeeder extends Seeder
             'lang' => 'Inglés',
             'iso' => 'en',
         ]);
-
 
         Lang::create([
             'lang' => 'Francés',

@@ -14,7 +14,6 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-
         return view('user::index', compact('user'));
     }
 

@@ -2,8 +2,8 @@
 
 namespace Modules\Email\Services;
 
-use Modules\Email\Models\EmailConfiguration;
 use Illuminate\Support\Facades\Config;
+use Modules\Email\Models\EmailConfiguration;
 
 class EmailService
 {
@@ -27,5 +27,4 @@ class EmailService
     {
         return Config::get('mail');
     }
-
 }

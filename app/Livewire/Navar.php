@@ -6,13 +6,13 @@ use Livewire\Component;
 
 class Navar extends Component
 {
-
     public $full_name;
+
     public $user_name;
+
     public $pofile_photo_path;
 
     protected $listeners = ['refresh-user' => '$refresh'];
-
 
     public function mount()
     {
@@ -20,9 +20,6 @@ class Navar extends Component
         $this->user_name = auth()->user()->user_name;
         $this->pofile_photo_path = auth()->user()->profile_photo_path;
     }
-
-
-
 
     public function render()
     {

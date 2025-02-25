@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Otros extends Model
 {
     protected $table = 'otros';
+
     protected $fillable = [
         'id_pedidos',
         'nombre',
@@ -15,13 +16,7 @@ class Otros extends Model
         'horallamada',
         'lang',
         'item',
-        'fv_form_id'
+        'fv_form_id',
+        'status',
     ];
-
-
-
-
-
-
-
 }

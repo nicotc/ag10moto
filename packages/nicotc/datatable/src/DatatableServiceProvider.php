@@ -26,9 +26,6 @@ use Nicotc\Datatable\Http\Livewire\Datatable;
 //         // Registrar los componentes de Livewire
 //         Livewire::component('datatable', Datatable::class);
 
-
-
-
 //         // Publishing is only necessary when using the CLI.
 //         if ($this->app->runningInConsole()) {
 //             $this->bootForConsole();
@@ -48,7 +45,7 @@ class DatatableServiceProvider extends ServiceProvider
     public function register()
     {
         // Registrar configuración (opcional si tienes un archivo config).
-        $this->mergeConfigFrom(__DIR__ . '/../config/datatable.php', 'datatable');
+        $this->mergeConfigFrom(__DIR__.'/../config/datatable.php', 'datatable');
 
         // Registrar el servicio del paquete (opcional).
         $this->app->singleton('datatable', function ($app) {
@@ -59,7 +56,7 @@ class DatatableServiceProvider extends ServiceProvider
     public function boot()
     {
         // Cargar vistas del paquete.
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'datatable');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'datatable');
 
         // Registrar los componentes de Livewire.
         Livewire::component('datatable', Datatable::class);
@@ -74,7 +71,7 @@ class DatatableServiceProvider extends ServiceProvider
     {
         // Publicar las vistas.
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/datatable'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/datatable'),
         ], 'datatable-views');
     }
 }

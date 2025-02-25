@@ -2,8 +2,9 @@
 
 namespace Modules\Notes\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 // use Modules\Notes\Database\Factories\NotesFactory;
 
 class Notes extends Model
@@ -15,9 +16,10 @@ class Notes extends Model
      */
     protected $fillable = [
         'pedido_id',
+        'pedido_model',
         'note',
         'created_by',
-        'status'
+        'status',
     ];
 
     // protected static function newFactory(): NotesFactory

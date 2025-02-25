@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class EstadosProductos extends Model
 {
     protected $table = 'estados_productos';
-    protected $fillable = ['type', 'estado_id', 'producto_id', 'user_id', 'email'];
+
+    protected $fillable = [
+        'type',
+        'estado_id',
+        'producto_id',
+        'user_id',
+        'email'];
 
     public function estado()
     {
@@ -24,6 +30,4 @@ class EstadosProductos extends Model
 
         return $this->belongsTo('App\Models\User', 'user_id');
     }
-
-   
 }

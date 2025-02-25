@@ -11,7 +11,7 @@ class NotesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Pedidos  $pedidoId)
+    public function index(Pedidos $pedidoId)
     {
 
         $imagenes = $pedidoId->imagenes;
@@ -20,25 +20,20 @@ class NotesController extends Controller
 
         $img = [];
         foreach ($imagenes as $key => $value) {
-           if(strstr($value, 'https')){
-            $getImage = file_get_contents($value);
-            // content type
-            $finfo = new \finfo(FILEINFO_MIME_TYPE);
-            $mime = $finfo->buffer($getImage);
-            // base64 encode
-            $base64 = base64_encode($getImage);
-            $base64 = 'data:'.$mime.';base64,'.$base64;
+            if (strstr($value, 'https')) {
+                $getImage = file_get_contents($value);
+                // content type
+                $finfo = new \finfo(FILEINFO_MIME_TYPE);
+                $mime = $finfo->buffer($getImage);
+                // base64 encode
+                $base64 = base64_encode($getImage);
+                $base64 = 'data:'.$mime.';base64,'.$base64;
                 $img[] = $base64;
 
                 // $img[] = $value;
 
-
-           }
+            }
         }
-
-
-
-
 
         return view('notes::index', ['pedido' => $pedidoId, 'img' => $img]);
     }

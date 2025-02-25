@@ -2,8 +2,9 @@
 
 namespace Modules\Estados\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 // use Modules\Estados\Database\Factories\StatusFactory;
 
 class StatusTraducciones extends Model
@@ -21,7 +22,6 @@ class StatusTraducciones extends Model
         'status_id',
         'langs_id',
         'nombre',
-
 
     ];
 

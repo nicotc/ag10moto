@@ -2,7 +2,7 @@
     <x-slot:styles>
     </x-slot:styles>
     <x-slot:title>
-        ACL / Roles List
+        Productos / Listado
     </x-slot:title>
     <x-slot:scripts>
         <script type="module">

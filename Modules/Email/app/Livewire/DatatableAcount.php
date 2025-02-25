@@ -2,20 +2,18 @@
 
 namespace Modules\Email\Livewire;
 
-
 use Modules\Email\Models\EmailConfiguration;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableAcount extends Datatable
 {
-
     public $dropdown = true;
-    protected $listeners = ['deleteConfirmed', 'notify'];
 
+    protected $listeners = ['deleteConfirmed', 'notify'];
 
     public function buildQuery()
     {
-        $query =  EmailConfiguration::select(
+        $query = EmailConfiguration::select(
             'id',
             'mail_host',
             'mail_port',
@@ -29,14 +27,13 @@ class DatatableAcount extends Datatable
         );
 
         $query = $query->where(function ($query) {
-            $query->where('mail_host', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('mail_port', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('mail_username', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('mail_encryption', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('mail_from_address', 'like', '%' . $this->searchTerm . '%')
-                ->orWhere('mail_from_name', 'like', '%' . $this->searchTerm . '%');
+            $query->where('mail_host', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('mail_port', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('mail_username', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('mail_encryption', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('mail_from_address', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('mail_from_name', 'like', '%'.$this->searchTerm.'%');
         });
-
 
         $query = $query->orderBy($this->sortColumn, $this->sortDirection);
 
@@ -48,76 +45,76 @@ class DatatableAcount extends Datatable
         return [
             'id' => [
                 'label' => 'ID',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'mail_host' => [
                 'label' => 'Host',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'mail_port' => [
                 'label' => 'Port',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'mail_username' => [
                 'label' => 'Username',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'mail_encryption' => [
                 'label' => 'Encryption',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'mail_from_address' => [
                 'label' => 'From Address',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'mail_from_name' => [
                 'label' => 'From Name',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'created_at' => [
                 'label' => 'Created At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
+                'searchable' => true,
             ],
             'updated_at' => [
                 'label' => 'Updated At',
-                'func' => function($value) {
+                'func' => function ($value) {
                     return $value;
-                 },
+                },
                 'sortable' => true,
-                'searchable' => true
-            ]
+                'searchable' => true,
+            ],
         ];
     }
 
@@ -143,26 +140,24 @@ class DatatableAcount extends Datatable
                 'icon' => 'edit',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'edit'
+                'event' => 'edit',
             ],
             'delete' => [
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'delete'
-            ]
+                'event' => 'delete',
+            ],
         ];
         $this->createAction = [
             'label' => 'Create Account',
             'icon' => 'bx bx-plus',
             'event' => 'create',
-            'isModal' => true
+            'isModal' => true,
 
         ];
 
-
     }
-
 
     public function deleteConfirmed($id)
     {
@@ -170,5 +165,4 @@ class DatatableAcount extends Datatable
         $email->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Email Configuration Deleted Successfully']);
     }
-
 }

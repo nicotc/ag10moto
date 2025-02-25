@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pedido_id')->constrained('pedidos');
+            $table->string('pedido_model');
             $table->text('note');
             $table->string('created_by'); // User who created the note
             $table->integer('status')->default(1);

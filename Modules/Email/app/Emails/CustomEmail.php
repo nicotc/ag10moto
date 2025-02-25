@@ -5,13 +5,13 @@ namespace Modules\Email\Emails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CustomEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $subject;
+
     public $body;
 
     /**
@@ -23,7 +23,6 @@ class CustomEmail extends Mailable
         $this->body = $body;
     }
 
-
     /**
      * Build the message.
      */
@@ -32,7 +31,7 @@ class CustomEmail extends Mailable
         return $this->view('email::emails.custom')
             ->subject($this->subject)
             ->with([
-                'body' => $this->body
+                'body' => $this->body,
             ]);
     }
 }

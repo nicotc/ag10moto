@@ -43,11 +43,11 @@
               <div data-i18n="Roles">Roles</div>
             </a>
           </li>
-          <li class="menu-item">
+          {{-- <li class="menu-item">
             <a href="{{ route('permission-list') }}" class="menu-link">
               <div data-i18n="Permission">Permission</div>
             </a>
-          </li>
+          </li> --}}
           <li class="menu-item">
             <a href="{{ route('user-list') }}" class="menu-link">
               <div data-i18n="Users">Users</div>

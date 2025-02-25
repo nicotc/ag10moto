@@ -7,28 +7,25 @@ use Livewire\Component;
 
 class UserPassword extends Component
 {
-
     public $user;
+
     public $password;
+
     public $password_confirmation;
 
     protected $listeners = ['editPassword'];
-
 
     public function editPassword($id)
     {
         $this->resetValidation();
         $this->user = User::find($id);
 
-
     }
-
 
     public function render()
     {
         return view('acl::livewire.user.user-password');
     }
-
 
     public function updatePassword()
     {

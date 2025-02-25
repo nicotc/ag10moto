@@ -15,10 +15,10 @@ use Modules\Email\Http\Controllers\EmailController;
 */
 
 Route::group([
-   'middleware' => ['auth', 'role:Admin|Super Admin'],
+    'middleware' => ['auth', 'role:Admin|Super Admin'],
     'prefix' => 'email'], function () {
-    // Route::resource('email', EmailController::class)->names('email');
-    Route::get('email', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
-    Route::view('AccountEmail', 'email::EmailAcount')->name('email.AccountEmail');
-    Route::view('TemplateEmail', 'email::EmailTemplate')->name('email.TemplateEmail');
-});
+        // Route::resource('email', EmailController::class)->names('email');
+        Route::get('email', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
+        Route::view('AccountEmail', 'email::EmailAcount')->name('email.AccountEmail');
+        Route::view('TemplateEmail', 'email::EmailTemplate')->name('email.TemplateEmail');
+    });

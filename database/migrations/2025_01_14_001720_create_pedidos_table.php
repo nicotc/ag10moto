@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('aceptacion')->nullable();
             $table->string('lang')->nullable();
             $table->string('fv_form_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

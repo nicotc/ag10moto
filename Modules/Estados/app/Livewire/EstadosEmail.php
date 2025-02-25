@@ -2,32 +2,35 @@
 
 namespace Modules\Estados\Livewire;
 
-use Livewire\Component;
 use App\Models\EstadosProductos;
+use App\Models\Otros;
 use App\Models\Pedidos;
-use Modules\Idiomas\Models\Lang;
-use Modules\Estados\Models\Status;
-use Modules\Email\Models\EmailTemplate;
+use Livewire\Component;
 use Modules\Email\Http\Controllers\EmailController;
 use Modules\Email\Models\EmailConfiguration;
+use Modules\Email\Models\EmailTemplate;
+use Modules\Estados\Models\Status;
+use Modules\Idiomas\Models\Lang;
 
 class EstadosEmail extends Component
 {
     public $estados;
+
     public $content;
+
     public $selectedEstado;
+
     public $subject;
+
     public $pedido;
 
-
-
+    public $model;
 
     protected $listeners = ['contenidoUpdated'];
 
-
     public function contenidoUpdated($content = null)
     {
-      // Asegúrate de que $content sea un string y no un array o objeto
+        // Asegúrate de que $content sea un string y no un array o objeto
         if (is_string($content)) {
             $this->content = $content;
         } else {
@@ -40,118 +43,129 @@ class EstadosEmail extends Component
     {
 
 
-        $lang  = Pedidos::find($this->pedido)->lang;
-        $idLang = Lang::where('iso', $lang)->first()->id;
+        $lang = Pedidos::find($this->pedido)->lang;
 
+        $idLang = Lang::where('iso', $lang)->first();
+        if ($idLang) {
+            $idLang = $idLang->id;
+        } else {
+            $idLang = 1;
+        }
+
+        if ($this->model == 'pedido') {
+            $NAME = 'Pedido';
+        } else {
+            $NAME = 'Producto';
+        }
 
         $estados = Status::join('status_traducciones', 'statuses.id', '=', 'status_traducciones.status_id')
-
-        ->join('langs', 'status_traducciones.langs_id', '=', 'langs.id')
-        ->where('langs_id', $idLang)
-        ->where('name', 'Pedido')
-        ->pluck('status_traducciones.nombre', 'statuses.id')->toArray();
-
+            ->join('langs', 'status_traducciones.langs_id', '=', 'langs.id')
+            ->where('langs_id', $idLang)
+            ->where('name', $NAME)
+            ->pluck('status_traducciones.nombre', 'statuses.id')->toArray();
 
         $this->estados = $estados;
 
     }
 
-
     public function updatedSelectedEstado()
     {
 
+        if($this->model == 'pedido'){
+            $lang = Pedidos::find($this->pedido)->lang;
+        }else{
+            $lang = Otros::find($this->pedido)->lang;
+        }
+        $lang = Pedidos::find($this->pedido)->lang;
+        $idLang = Lang::where('iso', $lang)->first();
+
+        if($idLang){
+            $idLang = $idLang->id;
+        }else{
+            $idLang = 1;
+        }
 
 
-       $lang = Pedidos::find($this->pedido)->lang;
-       $idLang = Lang::where('iso', $lang)->first()->id;
 
-
-
-
-    //    dd($this->selectedEstado, $idLang);
+        //    dd($this->selectedEstado, $idLang);
 
         $EstatusName = Status::find($this->selectedEstado);
-            if(!$EstatusName){
-            $this->dispatch('contentUpdated', "");
-                $this->dispatch('notify',
+
+
+        if (! $EstatusName) {
+            $this->dispatch('contentUpdated', '');
+            $this->dispatch('notify',
                 [
                     'type' => 'error',
-                    'message' => 'No se encontró el estado'
+                    'message' => 'No se encontró el estado',
                 ]);
-                return;
-            }
-        $EstatusName =  $EstatusName->email;
+
+            return;
+        }
+        $EstatusName = $EstatusName->email;
 
         $email = EmailTemplate::where('name', $EstatusName)
-        ->where('langs_id', $idLang)
-        ->first();
+            ->where('langs_id', $idLang)
+            ->first();
 
+      
 
-        // Dd($email->body);
         if ($email) {
-            $emailx =  $email->body;
+            $emailx = $email->body;
             $this->subject = $email->subject;
         } else {
-            $emailx = "";
-            $this->subject = "";
+            $emailx = '';
+            $this->subject = '';
         }
 
         $this->dispatch('contentUpdated', $emailx);
     }
 
-
-
-
     public function sendEmail()
     {
 
-
-        if($this->selectedEstado != 0){
+        if ($this->selectedEstado != 0) {
 
             EstadosProductos::create([
-                'type' => 'email',
+                'type' => $this->model,
                 'estado_id' => $this->selectedEstado,
-                'producto_id' =>  $this->pedido,
+                'producto_id' => $this->pedido,
                 'user_id' => auth()->user()->id,
-                'email' => $this->content
+                'email' => $this->content ?? '',
             ]);
 
             $this->dispatch('notify', ['type' => 'success',  'message' => 'Estado guardado']);
 
-
-            if($this->content != "" && $this->subject != ""){
+            if ($this->content != '' && $this->subject != '') {
                 $pedido = Pedidos::find($this->pedido);
                 $lang = $pedido->lang;
-                $idLang = Lang::where('iso', $lang)->first()->id;
-                $emailConfigId = EmailConfiguration::where('langs_id',  $idLang )->first()->id;
+                $idLang = Lang::where('iso', $lang)->first();
+                if ($idLang) {
+                    $idLang = $idLang->id;
+                } else {
+                    $idLang = 1;
+                }
+                $emailConfigId = EmailConfiguration::where('langs_id', $idLang)->first()->id;
                 $emailController = app(EmailController::class);
 
-
-                try{
+                try {
                     $emailController->sendEmail($emailConfigId, $pedido->email, $this->subject, $this->content);
 
-                }catch(\Exception $e){
+                } catch (\Exception $e) {
                     $this->dispatch('notify', ['type' => 'error',  'message' => $e->getMessage()]);
                 }
 
                 $this->dispatch('notify',
-                ['type' => 'success',  'message' => 'Email enviado']);
-
-
+                    ['type' => 'success',  'message' => 'Email enviado']);
 
             }
 
-
-
-        }else{
-            $this->dispatch('notify', ['type' => 'error',  'message' => "Estado no valido"]);
+        } else {
+            $this->dispatch('notify', ['type' => 'error',  'message' => 'Estado no valido']);
 
         }
 
-
         //
-
-
 
         // $this->dispatch('notify', ['type' => 'success',  'message' => 'Email enviado']);
     }

@@ -9,7 +9,6 @@ use Modules\Idiomas\Models\Lang;
 
 class StatusPedidos extends Component
 {
-
     public $pedido;
 
     public $estados;
@@ -19,36 +18,30 @@ class StatusPedidos extends Component
 
         // carbon para formatear la fecha de creacion
         Carbon::setLocale('es');
-        $carbon  = Carbon::parse($pedido->created_at)->format('d/m/Y H:i:s');
+        $carbon = Carbon::parse($pedido->created_at)->format('d/m/Y H:i:s');
 
         $estado[] = [
-            'create' =>  $carbon,
+            'create' => $carbon,
             'estado' => 'Inicial',
         ];
 
-
         // dd(EstadosProductos::get());
         $estados = EstadosProductos::where('producto_id', $pedido->id)
-        ->get();
+            ->where('type', 'pedido')
+            ->get();
 
+        $lang = $pedido->lang;
 
-
-    $lang = $pedido->lang;
-
-    $idLang = Lang::where('iso', $lang)->first()->id;
-
-
-
-
+        $idLang = Lang::where('iso', $lang)->first()->id;
 
         foreach ($estados as $key => $value) {
             Carbon::setLocale('es');
-            $carbon  = Carbon::parse($value->created_at)->format('d/m/Y H:i:s');
+            $carbon = Carbon::parse($value->created_at)->format('d/m/Y H:i:s');
 
             $estado[] = [
                 'create' => $carbon,
                 'estado' => getEstado($value->estado_id, $idLang),
-                'user' => $value->user->first_name . ' ' . $value->user->last_name,
+                'user' => $value->user->first_name.' '.$value->user->last_name,
                 // 'email' => $value->email
             ];
         }
@@ -56,8 +49,6 @@ class StatusPedidos extends Component
         $this->estados = $estado;
 
     }
-
-
 
     public function render()
     {

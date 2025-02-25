@@ -5,17 +5,14 @@ namespace Modules\Idiomas\Livewire;
 use Livewire\Component;
 use Modules\Idiomas\Models\Lang;
 
-
-
 class IdiomaEdit extends Component
 {
-
     public $lang;
 
     public $iso;
 
     public $lang_id;
-    
+
     protected $listeners = ['editModal'];
 
     public function editModal($id)
@@ -28,32 +25,29 @@ class IdiomaEdit extends Component
 
     }
 
-
     public function render()
     {
         return view('idiomas::livewire.idioma-edit');
     }
-
 
     public function update()
     {
         $id = $this->lang_id;
         $this->validate([
             'lang' => 'required',
-            'iso' => 'required'
+            'iso' => 'required',
         ]);
 
         $lang = Lang::find($id);
 
-
         $lang->update([
             'lang' => $this->lang,
-            'iso' => $this->iso
+            'iso' => $this->iso,
         ]);
 
         $this->dispatch('notify', [
             'type' => 'success',
-            'message' => 'Idioma actualizado correctamente'
+            'message' => 'Idioma actualizado correctamente',
         ]);
     }
 }

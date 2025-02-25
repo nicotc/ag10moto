@@ -3,25 +3,27 @@
 namespace Modules\Pedidos\Livewire;
 
 use App\Models\Pedidos;
-
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Modules\Idiomas\Models\Lang;
-
-
 
 class CrearPedidos extends Component
 {
     use WithFileUploads;
 
     public $nombre;
-    public $email;
-    public $telefono;
-    public $lang;
-    public $problema;
-    public $imagenes = [];
-    public $languages = [];
 
+    public $email;
+
+    public $telefono;
+
+    public $lang;
+
+    public $problema;
+
+    public $imagenes = [];
+
+    public $languages = [];
 
     public function render()
     {
@@ -30,9 +32,8 @@ class CrearPedidos extends Component
         return view('pedidos::livewire.crear-pedidos');
     }
 
-    public function create(){
-
-
+    public function create()
+    {
 
         $this->validate([
             'nombre' => 'required',
@@ -40,49 +41,43 @@ class CrearPedidos extends Component
             'telefono' => 'required',
             'lang' => 'required',
             'problema' => 'required',
-            'imagenes.*' => 'image|max:1024'
+            'imagenes.*' => 'image|max:1024',
 
         ]);
 
-//  save images in storage
-// get path of images
-        if($this->imagenes != null){
+        //  save images in storage
+        // get path of images
+        if ($this->imagenes != null) {
 
             $uuid = uniqid();
 
+            foreach ($this->imagenes as $key => $imagen) {
 
-        foreach ($this->imagenes as $key => $imagen) {
+                // Storage disk public
 
+                $path = $imagen->store('public/imagenes/'.$uuid, 'public');
+                $imagenes[$key] = $path;
 
-            // Storage disk public
+            }
 
-            $path = $imagen->store('public/imagenes/'.$uuid, 'public');
-            $imagenes[$key] = $path;
-
-
+            $imagenes = implode(',', $imagenes);
+        } else {
+            $imagenes = null;
         }
 
-
-
-        $imagenes = implode(',', $imagenes);
-    }else{
-        $imagenes = null;
-    }
-
-        $pedido = new Pedidos();
+        $pedido = new Pedidos;
         $pedido->nombre = $this->nombre;
         $pedido->email = $this->email;
         $pedido->telefono = $this->telefono;
         $pedido->lang = $this->lang;
         $pedido->problema = $this->problema;
-        $pedido->imagenes =  $imagenes;
+        $pedido->imagenes = $imagenes;
         $pedido->save();
 
         $this->dispatch('notify', [
             'type' => 'success',
-            'message' => 'Pedido creado correctamente'
+            'message' => 'Pedido creado correctamente',
         ]);
 
     }
-
 }

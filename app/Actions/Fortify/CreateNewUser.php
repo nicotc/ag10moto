@@ -31,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'user_name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'profile_photo_path' => 'assets/img/avatars/1.png'
+            'profile_photo_path' => 'assets/img/avatars/1.png',
         ]);
 
         $user->assignRole('user');

@@ -2,8 +2,9 @@
 
 namespace Modules\Idiomas\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 // use Modules\Idiomas\Database\Factories\LangFactory;
 
 class Lang extends Model
