@@ -2,7 +2,7 @@
 
 namespace Modules\Pedidos\Livewire;
 
-use App\Models\EstadosProductos;
+use App\Models\ProductStates;
 use Carbon\Carbon;
 use Livewire\Component;
 use Modules\Idiomas\Models\Lang;
@@ -22,11 +22,11 @@ class StatusPedidos extends Component
 
         $estado[] = [
             'create' => $carbon,
-            'estado' => 'Inicial',
+            'estado' => 'Pendiente',
         ];
 
-        // dd(EstadosProductos::get());
-        $estados = EstadosProductos::where('producto_id', $pedido->id)
+        // dd(ProductStates::get());
+        $estados = ProductStates::where('producto_id', $pedido->id)
             ->where('type', 'pedido')
             ->get();
 

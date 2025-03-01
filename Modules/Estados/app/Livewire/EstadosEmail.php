@@ -2,13 +2,13 @@
 
 namespace Modules\Estados\Livewire;
 
-use App\Models\EstadosProductos;
+use App\Models\ProductStates;
 use App\Models\Otros;
 use App\Models\Pedidos;
 use Livewire\Component;
 use Modules\Email\Http\Controllers\EmailController;
 use Modules\Email\Models\EmailConfiguration;
-use Modules\Email\Models\EmailTemplate;
+
 use Modules\Estados\Models\Status;
 use Modules\Idiomas\Models\Lang;
 
@@ -62,6 +62,7 @@ class EstadosEmail extends Component
             ->join('langs', 'status_traducciones.langs_id', '=', 'langs.id')
             ->where('langs_id', $idLang)
             ->where('name', $NAME)
+            ->where('status_traducciones.type', $NAME)
             ->pluck('status_traducciones.nombre', 'statuses.id')->toArray();
 
         $this->estados = $estados;
@@ -87,6 +88,7 @@ class EstadosEmail extends Component
 
 
 
+
         //    dd($this->selectedEstado, $idLang);
 
         $EstatusName = Status::find($this->selectedEstado);
@@ -104,19 +106,19 @@ class EstadosEmail extends Component
         }
         $EstatusName = $EstatusName->email;
 
-        $email = EmailTemplate::where('name', $EstatusName)
-            ->where('langs_id', $idLang)
-            ->first();
+        // // $email = EmailTemplate::where('name', $EstatusName)
+        // //     ->where('langs_id', $idLang)
+        // //     ->first();
 
-      
 
-        if ($email) {
-            $emailx = $email->body;
-            $this->subject = $email->subject;
-        } else {
-            $emailx = '';
-            $this->subject = '';
-        }
+
+        // if ($email) {
+        //     $emailx = $email->body;
+        //     $this->subject = $email->subject;
+        // } else {
+        //     $emailx = '';
+        //     $this->subject = '';
+        // }
 
         $this->dispatch('contentUpdated', $emailx);
     }
@@ -126,13 +128,26 @@ class EstadosEmail extends Component
 
         if ($this->selectedEstado != 0) {
 
-            EstadosProductos::create([
+            ProductStates::create([
                 'type' => $this->model,
                 'estado_id' => $this->selectedEstado,
                 'producto_id' => $this->pedido,
                 'user_id' => auth()->user()->id,
                 'email' => $this->content ?? '',
             ]);
+
+            if($this->model == 'pedido'){
+                // dd($this->pedido, $this->selectedEstado);
+                $pedido = Pedidos::find($this->pedido);
+                $pedido->status = $this->selectedEstado;
+                $pedido->save();
+            }else{
+                $pedido = Otros::find($this->pedido);
+                $pedido->status = $this->selectedEstado;
+                $pedido->save();
+            }
+
+
 
             $this->dispatch('notify', ['type' => 'success',  'message' => 'Estado guardado']);
 

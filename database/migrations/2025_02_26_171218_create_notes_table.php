@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('status_traducciones', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
-            $table->foreignId('langs_id')->constrained('langs')->onDelete('cascade');
-            $table->string('nombre');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->text('note');
+            $table->string('model_name');
+            $table->unsignedBigInteger('model_id');
+            $table->integer('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('statuses');
+        Schema::dropIfExists('notes');
     }
 };

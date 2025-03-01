@@ -3,7 +3,7 @@
 namespace Modules\Email\Livewire\Template;
 
 use Livewire\Component;
-use Modules\Email\Models\EmailTemplate;
+
 use Modules\Idiomas\Models\Lang;
 
 class Edit extends Component
@@ -32,12 +32,12 @@ class Edit extends Component
 
         $this->resetValidation();
 
-        $template = EmailTemplate::find($id);
+        // $template = EmailTemplate::find($id);
 
-        $this->name = $template->name;
-        $this->subject = $template->subject;
-        $this->body = $template->body;
-        $this->lang = $template->langs_id;
+        // $this->name = $template->name;
+        // $this->subject = $template->subject;
+        // $this->body = $template->body;
+        // $this->lang = $template->langs_id;
 
         $this->dispatch('contentUpdated', $this->body);
 
@@ -57,14 +57,14 @@ class Edit extends Component
             'lang' => 'required',
         ]);
 
-        $template = EmailTemplate::find($this->templateId);
+        // $template = EmailTemplate::find($this->templateId);
 
-        $template->update([
-            'name' => $this->name,
-            'subject' => $this->subject,
-            'body' => $this->body,
-            'langs_id' => $this->lang,
-        ]);
+        // $template->update([
+        //     'name' => $this->name,
+        //     'subject' => $this->subject,
+        //     'body' => $this->body,
+        //     'langs_id' => $this->lang,
+        // ]);
 
         $this->dispatch('notify', [
             'message' => 'Template created successfully',

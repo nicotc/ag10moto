@@ -2,7 +2,8 @@
 
 namespace Modules\Estados\Livewire;
 
-use Modules\Estados\Models\Status;
+
+use App\Models\Status;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableEstados extends Datatable
@@ -16,10 +17,10 @@ class DatatableEstados extends Datatable
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',
+            'model_name',
             'name',
-            // 'color',
+            'color',
             'email',
-
             'created_at',
             'updated_at',
         ];
@@ -53,9 +54,12 @@ class DatatableEstados extends Datatable
     {
         $query = Status::select(
             'id',
+            'model_name',
             'name',
-            // 'color',
-            'email'
+            'color',
+            'email',
+            'created_at',
+            'updated_at',
 
         );
 
@@ -84,6 +88,14 @@ class DatatableEstados extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
+            'model_name' => [
+                'label' => 'Type',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => false,
+                'searchable' => false,
+            ],
             'name' => [
                 'label' => 'Type',
                 'func' => function ($value) {
@@ -92,14 +104,14 @@ class DatatableEstados extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            // 'color' => [
-            //     'label' => 'Color',
-            //     'func' => function ($value) {
-            //         return $value;
-            //     },
-            //     'sortable' => true,
-            //     'searchable' => true
-            // ],
+            'color' => [
+                'label' => 'Color',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => false,
+                'searchable' => false,
+            ],
             'email' => [
                 'label' => 'Email',
                 'func' => function ($value) {

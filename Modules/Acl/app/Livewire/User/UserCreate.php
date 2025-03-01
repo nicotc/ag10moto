@@ -31,7 +31,7 @@ class UserCreate extends Component
 
     public function render()
     {
-        $this->langlist = Lang::pluck('lang', 'iso');
+        $this->langlist = Lang::pluck('lang', 'id');
 
         $this->roleslist = Role::pluck('name');
 
@@ -56,11 +56,11 @@ class UserCreate extends Component
             'email' => $this->email,
             'password' => bcrypt($this->password),
             'profile_photo_path' => 'assets/img/avatars/1.png',
-            'language' => $this->lang,
+            'langs_id' => $this->lang,
         ]);
         $this->user->assignRole($this->role);
         $this->reset(['firstName', 'lastName', 'email', 'role', 'password', 'password_confirmation']);
         $this->dispatch('notify', ['type' => 'success', 'message' => 'User created successfully']);
-        $this->langlist = Lang::pluck('lang', 'iso');
+        $this->langlist = Lang::pluck('lang', 'id');
     }
 }

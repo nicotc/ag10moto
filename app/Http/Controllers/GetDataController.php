@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Orders;
 use App\Models\Otros;
-use App\Models\Pedidos;
+use App\Models\Repairs;
 use Illuminate\Support\Facades\DB;
 
 class GetDataController extends Controller
 {
-    public static function pedidos()
+    public static function repairs()
     {
+        $id = 0;
 
-        $id = Pedidos::select('id_pedidos')->orderBy('id_pedidos', 'desc')->first();
 
-        if ($id != null) {
-            $id = $id->id_pedidos;
+        $repairs = Repairs::select('id_repairs')->orderBy('id_repairs', 'desc')->first();
+
+
+        if ($repairs != null) {
+            $id = $repairs->id_repairs;
         }
 
-        if ($id == null) {
-            $id = 0;
-        }
+
 
         $Formularios = DB::connection('mysqlWeb')->select(
             'select
@@ -58,32 +60,37 @@ class GetDataController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                $pedidos = Pedidos::create([
-                    'id_pedidos' => $key,
-                    'nombre' => $value['nombre'],
+                if(!isset($value['lang'])){
+                    $value['lang'] = 'es';
+                }
+
+                $repairs = Repairs::create([
+                    'id_repairs' => $key,
+                    'name' => $value['nombre'],
                     'email' => $value['email'],
-                    'telefono' => $value['telefono'],
-                    'problema' => $value['problema'],
-                    'imagenes' => $value['imagenes'],
-                    'aceptacion' => $value['aceptacion'],
-                    'lang' => $value['lang'] ?? null,
+                    'phone' => $value['telefono'],
+                    'details' => $value['problema'],
+                    'images' => $value['imagenes'],
+                    'langs_id' => getLangIso($value['lang']),
                     'fv_form_id' => $value['fv_form_id'],
-                    'status' => 0,
+                    'status_id' => 1,
                 ]);
             }
+
+
         }
 
-        dd('Datos guardados correctamente');
+        // dd('Datos guardados correctamente');
     }
 
     public static function items()
     {
-        $monos = GetDataController::otros('Monos', '219e7a6');
-        $monos = GetDataController::otros('Chaquetas', '0ae026d');
-        $monos = GetDataController::otros('Caferacer', '1b3d82c');
-        $monos = GetDataController::otros('Guantes', '140cacc');
-        $monos = GetDataController::otros('Botas', '60ea4ce');
-        $monos = GetDataController::otros('Airbags', '3e7a75d');
+        $monos = GetDataController::orders('Monos', '219e7a6');
+        $monos = GetDataController::orders('Chaquetas', '0ae026d');
+        $monos = GetDataController::orders('Caferacer', '1b3d82c');
+        $monos = GetDataController::orders('Guantes', '140cacc');
+        $monos = GetDataController::orders('Botas', '60ea4ce');
+        $monos = GetDataController::orders('Airbags', '3e7a75d');
 
         // 219e7a6 monos
         // 0ae026d chaquetas
@@ -93,21 +100,23 @@ class GetDataController extends Controller
         // 3e7a75d airbags
     }
 
-    public static function otros($item, $form)
+    public static function orders($item, $form)
     {
 
-        $id = null;
-        $id = Otros::select('id_pedidos')
+        $id = 0;
+
+
+
+        $order = Orders::select('id_orders')
             ->where('item', $item)
-            ->orderBy('id_pedidos', 'desc')->first();
+            ->orderBy('id_orders', 'desc')->first();
 
-        if ($id != null) {
-            $id = $id->id_pedidos;
+
+        if ($order != null) {
+            $id = $order->id_orders;
         }
 
-        if ($id == null) {
-            $id = 0;
-        }
+
 
         $Formularios = DB::connection('mysqlWeb')->select(
             'select
@@ -143,15 +152,19 @@ class GetDataController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                $modelos = Otros::create([
-                    'id_pedidos' => $key,
-                    'nombre' => $value['nombre'],
+                if(!isset($value['lang'])){
+                    $value['lang'] = 'es';
+                }
+                $modelos = Orders::create([
+                    'id_orders' => $key,
+                    'name' => $value['nombre'],
                     'email' => $value['email'],
-                    'telefono' => $value['telefono'],
-                    'lang' => $value['lang'] ?? null,
+                    'phone' => $value['telefono'],
+                    'langs_id' => getLangIso($value['lang']),
                     'item' => $item,
+                    'details' => $value['detalles'] ?? null,
                     'fv_form_id' => $value['fv_form_id'],
-                    'status' => 0,
+                    'status_id' => 2,
                 ]);
             }
 

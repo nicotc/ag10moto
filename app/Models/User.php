@@ -39,10 +39,9 @@ class User extends Authenticatable
         'address',
         'state',
         'country',
-        'language',
+        'langs_id',
         'timezone',
         'profile_photo_path',
-
     ];
 
     /**
@@ -56,6 +55,8 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
+
+    public function lang() { return $this->belongsTo(Lang::class, 'langs_id'); }
 
     /**
      * The accessors to append to the model's array form.

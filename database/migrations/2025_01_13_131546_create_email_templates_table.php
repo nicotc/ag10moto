@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('email_templates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('langs_id')->constrained('langs')->onDelete('cascade');
             $table->string('name');
-            $table->text('subject');
+            $table->timestamps();
+        });
+
+        Schema::create('email_template_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('email_template_id')->constrained('email_templates')->onDelete('cascade');
+            $table->foreignId('langs_id')->constrained('langs')->onDelete('cascade');
+            $table->string('subject');
             $table->longText('body');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -26,6 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('email_template_translations');
         Schema::dropIfExists('email_templates');
     }
 };

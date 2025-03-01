@@ -3,9 +3,8 @@
 namespace Modules\Estados\Livewire;
 
 use Livewire\Component;
-use Modules\Email\Models\EmailTemplate;
-use Modules\Estados\Models\Status;
-use Modules\Estados\Models\StatusTraducciones;
+
+
 use Modules\Idiomas\Models\Lang;
 
 class EstadosCreate extends Component
@@ -24,40 +23,44 @@ class EstadosCreate extends Component
 
     public function render()
     {
-        $this->emails = array_unique(EmailTemplate::pluck('name')->toArray());
-        $this->idiomas = Lang::pluck('lang', 'id')->toArray();
 
+
+        // $this->emails = array_unique(EmailTemplate::pluck('name')->toArray());
+        // $this->idiomas = Lang::pluck('lang', 'id')->toArray();
+
+        $this->emails = [];
+        $this->idiomas = Lang::pluck('lang', 'id')->toArray();
         return view('estados::livewire.estados-create');
     }
 
-    public function create()
-    {
+    // public function create()
+    // {
 
-        $this->validate([
-            'name' => 'required',
-            // 'color' => 'required',
-        ]);
+    //     $this->validate([
+    //         'name' => 'required',
+    //         // 'color' => 'required',
+    //     ]);
 
-        $estado = new Status;
-        $estado->name = $this->name;
-        $estado->color = $this->color ?? 'primary';
-        $estado->email = $this->email;
-        $estado->save();
+    //     $estado = new Status;
+    //     $estado->name = $this->name;
+    //     $estado->color = $this->color ?? 'primary';
+    //     $estado->email = $this->email;
+    //     $estado->save();
 
-        foreach ($this->idioma as $key => $value) {
+    //     foreach ($this->idioma as $key => $value) {
 
-            StatusTraducciones::create([
-                'type' => 'status',
-                'status_id' => $estado->id,
-                'langs_id' => $key,
-                'nombre' => $value,
-            ]);
-        }
+    //         StatusTraducciones::create([
+    //             'type' => $this->name,
+    //             'status_id' => $estado->id,
+    //             'langs_id' => $key,
+    //             'nombre' => $value,
+    //         ]);
+    //     }
 
-        $this->reset();
-        $this->dispatch('notify', [
-            'type' => 'success',
-            'message' => 'Estado creado correctamente',
-        ]);
-    }
+    //     $this->reset();
+    //     $this->dispatch('notify', [
+    //         'type' => 'success',
+    //         'message' => 'Estado creado correctamente',
+    //     ]);
+    // }
 }

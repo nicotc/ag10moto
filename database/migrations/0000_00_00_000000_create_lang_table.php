@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estados_productos', function (Blueprint $table) {
+        // Id	nombre	email	telefono	problema	imagenes	aceptacion	fv_form_id
+
+        Schema::create('langs', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->integer('estado_id');
-            $table->integer('producto_id');
-            $table->integer('user_id');
-            $table->longText('email')->nullable();
+            $table->string('lang')->unique();
+            $table->string('iso')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estados_productos');
+        Schema::dropIfExists('langs');
     }
 };

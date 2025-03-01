@@ -13,17 +13,17 @@ return new class extends Migration
     {
         // Id	nombre	email	telefono	problema	imagenes	aceptacion	fv_form_id
 
-        Schema::create('otros', function (Blueprint $table) {
+        Schema::create('repairs', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_pedidos')->nullable();
-            $table->string('nombre')->nullable();
+            $table->integer('id_repairs')->nullable();
+            $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->string('telefono')->nullable();
-            $table->longText('horallamada')->nullable();
-            $table->string('lang')->nullable();
-            $table->string('item')->nullable();
+            $table->string('phone')->nullable();
+            $table->longText('details')->nullable();
+            $table->longText('images')->nullable();
+            $table->foreignId('langs_id')->constrained('langs')->onDelete('cascade');
             $table->string('fv_form_id')->nullable();
-            $table->string('status')->nullable();
+            $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('repairs');
     }
 };

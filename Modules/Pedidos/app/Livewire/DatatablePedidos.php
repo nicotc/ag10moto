@@ -20,31 +20,42 @@ class DatatablePedidos extends Datatable
 
 
         $query = Pedidos::select(
-            'id',
+            'pedidos.id',
             'id_pedidos',
-            'nombre',
+            'pedidos.nombre',
             'email',
             'telefono',
             'problema',
             'imagenes',
             'lang',
-            'created_at',
-            'updated_at',
-            'status'
+            'pedidos.created_at',
+            'pedidos.updated_at',
+            'status_traducciones.nombre as status'
+
 
         );
 
+
+        // leftJoin para traer el nombre de las traducciones cuando el lan sea el sel usuario y el status
+        $query = $query->leftJoin('status_traducciones', function ($join) {
+            $join->on('status_traducciones.status_id', '=', 'pedidos.status')
+                ->where('status_traducciones.langs_id', '=', 1)
+                ->where('status_traducciones.type', '=', 'Pedido');
+        });
+
         $query = $query->where(function ($query) {
-            $query = $query->where('id', 'like', '%'.$this->searchTerm.'%')
+            $query = $query->where('pedidos.id', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('id_pedidos', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('nombre', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('pedidos.nombre', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('email', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('telefono', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('problema', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('imagenes', 'like', '%'.$this->searchTerm.'%')
                 ->orWhere('lang', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('created_at', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('updated_at', 'like', '%'.$this->searchTerm.'%');
+                ->orWhere('status_traducciones.nombre', 'like', '%'.$this->searchTerm.'%')
+                ->orWhere('pedidos.created_at', 'like', '%'.$this->searchTerm.'%')
+
+                ->orWhere('pedidos.updated_at', 'like', '%'.$this->searchTerm.'%');
         });
 
 
@@ -58,7 +69,7 @@ class DatatablePedidos extends Datatable
         }
 
         if ($this->search['id'] ?? false) {
-            $query = $query->where('id', $this->search['id']);
+            $query = $query->where('pedidos.id', $this->search['id']);
         }
 
         if ($this->search['id_pedidos'] ?? false) {
@@ -66,7 +77,7 @@ class DatatablePedidos extends Datatable
         }
 
         if ($this->search['nombre'] ?? false) {
-            $query = $query->where('nombre', 'like', '%'.$this->search['nombre'].'%');
+            $query = $query->where('pedidos.nombre', 'like', '%'.$this->search['nombre'].'%');
         }
 
         if ($this->search['email'] ?? false) {
@@ -83,6 +94,10 @@ class DatatablePedidos extends Datatable
 
         if ($this->search['imagenes'] ?? false) {
             $query = $query->where('imagenes', 'like', '%'.$this->search['imagenes'].'%');
+        }
+
+        if($this->search['status'] ?? false){
+            $query = $query->where('status_traducciones.nombre', 'like', '%'.$this->search['status'].'%');
         }
 
         if ($this->search['lang'] ?? false) {
@@ -108,11 +123,12 @@ class DatatablePedidos extends Datatable
             'status' => [
                 'label' => 'status',
                 'func' => function ($value) {
-                    if($value == 0){
-                        return 'Pendiente';
+                    if($value == ""){
+                         return 'Pendiente';
                     }else{
                         return $value;
-                    }
+                     }
+
                 },
                 'sortable' => true,
                 'searchable' => true,

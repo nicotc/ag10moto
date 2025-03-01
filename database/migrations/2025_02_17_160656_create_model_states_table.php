@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Id	nombre	email	telefono	problema	imagenes	aceptacion	fv_form_id
-
-        Schema::create('langs', function (Blueprint $table) {
+        Schema::create('model_states', function (Blueprint $table) {
             $table->id();
-            $table->text('lang')->nullable();
-            $table->text('iso')->nullable();
+            $table->string('model_name');
+            $table->unsignedBigInteger('model_id');
+            $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('langs');
+        Schema::dropIfExists('model_states');
+
     }
 };

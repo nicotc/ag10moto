@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Lang;
 use Modules\Estados\Models\StatusTraducciones;
 
 function getUser($id)
@@ -8,6 +9,22 @@ function getUser($id)
 
     return $user->first_name.' '.$user->last_name;
 }
+
+
+
+function getLangIso($iso = 'es')
+{
+    // $iso todo en minuscula
+
+    $iso = strtolower($iso);
+
+    $lang = Lang::where('iso', $iso)->first();
+
+
+
+    return $lang->id;
+}
+
 
 function getEstado($id, $lag)
 {

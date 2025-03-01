@@ -2,6 +2,7 @@
 
 namespace Modules\Acl\Livewire\User;
 
+use App\Models\Lang;
 use App\Models\User;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
@@ -24,13 +25,17 @@ class UserEdit extends Component
 
     public $lang;
 
-    public $langlist = [
-        'en' => 'English',
-        'es' => 'Spanish',
-        'fr' => 'French',
-    ];
+    public $langlist = [];
 
     protected $listeners = ['editUser'];
+
+
+
+  public function mount()
+    {
+        $this->langlist = Lang::pluck('lang', 'id');
+    }
+
 
     public function editUser($id)
     {
@@ -40,7 +45,7 @@ class UserEdit extends Component
         $this->name = $this->user->user_name;
         $this->email = $this->user->email;
         $this->role = $this->user->roles->first()->name;
-        $this->lang = $this->user->language;
+        $this->lang = $this->user->langs_id;
         $this->firstName = $this->user->first_name;
         $this->lastName = $this->user->last_name;
 
@@ -72,7 +77,7 @@ class UserEdit extends Component
         ]);
 
         $this->user->email = $this->email;
-        $this->user->language = $this->lang;
+        $this->user->langs_id = $this->lang;
         $this->user->first_name = $this->firstName;
         $this->user->last_name = $this->lastName;
 

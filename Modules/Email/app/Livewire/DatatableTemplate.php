@@ -2,7 +2,7 @@
 
 namespace Modules\Email\Livewire;
 
-use Modules\Email\Models\EmailTemplate;
+
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableTemplate extends Datatable
@@ -13,15 +13,15 @@ class DatatableTemplate extends Datatable
 
     public function buildQuery()
     {
-        $query = EmailTemplate::select(
-            'id',
-            'name',
-            'subject',
-            'body',
-            'langs_id',
-            'created_at',
-            'updated_at',
-        );
+        // $query = EmailTemplate::select(
+        //     'id',
+        //     'name',
+        //     'subject',
+        //     'body',
+        //     'langs_id',
+        //     'created_at',
+        //     'updated_at',
+        // );
 
         $query = $query->where(function ($query) {
             $query->where('name', 'like', '%'.$this->searchTerm.'%')

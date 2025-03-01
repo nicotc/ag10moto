@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EstadosProductos extends Model
+class ProductStates extends Model
 {
-    protected $table = 'estados_productos';
+
+    protected $table = 'product_states';
 
     protected $fillable = [
         'type',
-        'estado_id',
-        'producto_id',
+        'status_id',
+        'product_id',
         'user_id',
         'email'];
 

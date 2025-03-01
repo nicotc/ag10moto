@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
-            $table->string('language')->nullable();
+            $table->foreignId('langs_id')->constrained('langs')->onDelete('cascade');
             $table->string('timezone')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
