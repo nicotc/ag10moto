@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->string('model_name');
-            $table->string('name');
             $table->string('color');
-            $table->string('email')->nullable();
+            // Template email id nulleable
+            $table->foreignId('email_template_id')->nullable()->constrained('email_templates')->onDelete('set null');
             $table->timestamps();
         });
 

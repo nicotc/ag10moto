@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmailConfig extends Model
 {
+    protected $table = 'email_configurations';
+
     protected $fillable = [
         'langs_id',
         'mail_host',
@@ -22,13 +24,10 @@ class EmailConfig extends Model
         return $this->belongsTo(Lang::class);
     }
 
-
     public function getMailPasswordAttribute($value)
     {
         return decrypt($value);
     }
-
-
 
     public function setMailPasswordAttribute($value)
     {

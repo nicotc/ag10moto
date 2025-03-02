@@ -26,9 +26,7 @@ class StatusPedidos extends Component
         ];
 
         // dd(ProductStates::get());
-        $estados = ProductStates::where('producto_id', $pedido->id)
-            ->where('type', 'pedido')
-            ->get();
+        $estados = [];
 
         $lang = $pedido->lang;
 

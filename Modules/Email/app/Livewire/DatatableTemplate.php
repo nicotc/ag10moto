@@ -2,7 +2,7 @@
 
 namespace Modules\Email\Livewire;
 
-
+use App\Models\EmailTemplate;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableTemplate extends Datatable
@@ -13,21 +13,14 @@ class DatatableTemplate extends Datatable
 
     public function buildQuery()
     {
-        // $query = EmailTemplate::select(
-        //     'id',
-        //     'name',
-        //     'subject',
-        //     'body',
-        //     'langs_id',
-        //     'created_at',
-        //     'updated_at',
-        // );
+
+        $query = EmailTemplate::select(
+            'id',
+            'model_name',
+        );
 
         $query = $query->where(function ($query) {
-            $query->where('name', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('subject', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('body', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('langs_id', 'like', '%'.$this->searchTerm.'%');
+            $query->where('model_name', 'like', '%'.$this->searchTerm.'%');
         });
 
         return $query;
@@ -45,7 +38,7 @@ class DatatableTemplate extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'name' => [
+            'model_name' => [
                 'label' => 'Name',
                 'func' => function ($value) {
                     return $value;
@@ -53,30 +46,7 @@ class DatatableTemplate extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'subject' => [
-                'label' => 'Subject',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
-            'body' => [
-                'label' => 'Body',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
-            'langs_id' => [
-                'label' => 'Language',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
+
             'created_at' => [
                 'label' => 'Created At',
                 'func' => function ($value) {
@@ -101,12 +71,7 @@ class DatatableTemplate extends Datatable
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',
-            'name',
-            'subject',
-            'body',
-            'langs_id',
-            'created_at',
-            'updated_at',
+            'model_name',
         ];
         $this->create = true;
         $this->export = false;

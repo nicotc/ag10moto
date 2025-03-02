@@ -7,15 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class EmailTemplate extends Model
 {
     protected $fillable = [
-        'name'
+        'model_name',
+        'name',
     ];
 
-
-
-
-
-    public function setMailPasswordAttribute($value)
+    public function emailTemplateTranslations()
     {
-        $this->attributes['mail_password'] = encrypt($value);
+        return $this->hasMany(EmailTemplateTranslations::class);
     }
 }

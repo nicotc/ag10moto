@@ -2,8 +2,8 @@
 
 namespace Modules\Email\Livewire\Acount;
 
+use App\Models\EmailConfig;
 use Livewire\Component;
-use Modules\Email\Models\EmailConfiguration;
 use Modules\Idiomas\Models\Lang;
 
 class Create extends Component
@@ -45,7 +45,7 @@ class Create extends Component
             'lang' => 'required',
         ]);
 
-        $email = new EmailConfiguration;
+        $email = new EmailConfig;
         $email->mail_host = $this->mail_host;
         $email->mail_port = $this->mail_port;
         $email->mail_username = $this->mail_username;

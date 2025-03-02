@@ -2,8 +2,8 @@
 
 namespace Modules\Email\Livewire\Acount;
 
+use App\Models\EmailConfig;
 use Livewire\Component;
-use Modules\Email\Models\EmailConfiguration;
 use Modules\Idiomas\Models\Lang;
 
 class Edit extends Component
@@ -35,7 +35,7 @@ class Edit extends Component
         $this->langs = Lang::pluck('lang', 'id')->toArray();
 
         $this->resetValidation();
-        $email = EmailConfiguration::find($id);
+        $email = EmailConfig::find($id);
         $this->mail_id = $email->id;
         $this->mail_host = $email->mail_host;
         $this->mail_port = $email->mail_port;
@@ -62,7 +62,7 @@ class Edit extends Component
             'lang' => 'required',
         ]);
 
-        $email = EmailConfiguration::find($this->mail_id);
+        $email = EmailConfig::find($this->mail_id);
 
         $email->mail_host = $this->mail_host;
         $email->mail_port = $this->mail_port;

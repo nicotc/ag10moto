@@ -2,7 +2,7 @@
 
 namespace Modules\Email\Livewire;
 
-use Modules\Email\Models\EmailConfiguration;
+use App\Models\EmailConfig;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
 class DatatableAcount extends Datatable
@@ -13,7 +13,7 @@ class DatatableAcount extends Datatable
 
     public function buildQuery()
     {
-        $query = EmailConfiguration::select(
+        $query = EmailConfig::select(
             'id',
             'mail_host',
             'mail_port',
@@ -21,9 +21,7 @@ class DatatableAcount extends Datatable
             'mail_password',
             'mail_encryption',
             'mail_from_address',
-            'mail_from_name',
-            'created_at',
-            'updated_at',
+            'mail_from_name'
         );
 
         $query = $query->where(function ($query) {
@@ -99,22 +97,7 @@ class DatatableAcount extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'created_at' => [
-                'label' => 'Created At',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
-            'updated_at' => [
-                'label' => 'Updated At',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
+
         ];
     }
 
@@ -129,8 +112,6 @@ class DatatableAcount extends Datatable
             'mail_encryption',
             'mail_from_address',
             'mail_from_name',
-            'created_at',
-            'updated_at',
         ];
 
         $this->create = true;
@@ -161,7 +142,7 @@ class DatatableAcount extends Datatable
 
     public function deleteConfirmed($id)
     {
-        $email = EmailConfiguration::find($id);
+        $email = EmailConfig::find($id);
         $email->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Email Configuration Deleted Successfully']);
     }

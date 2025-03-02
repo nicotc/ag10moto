@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Status;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\StatusTranslation;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Modules\Idiomas\Models\Lang;
 
@@ -48,11 +48,9 @@ class DatabaseSeeder extends Seeder
         $rol = \Spatie\Permission\Models\Role::create(['name' => 'Admin']);
         $rol = \Spatie\Permission\Models\Role::create(['name' => 'User']);
 
-
-       $status = Status::create([
+        $status = Status::create([
             'model_name' => 'Orders',
-            'name' => 'Pendiente',
-            'color' => 'red',
+            'color' => '#ff0000',
         ]);
 
         StatusTranslation::create([
@@ -72,12 +70,10 @@ class DatabaseSeeder extends Seeder
             'langs_id' => 3,
             'name' => 'En attente',
         ]);
-
 
         $status = Status::create([
             'model_name' => 'Repairs',
-            'name' => 'Pendiente',
-            'color' => 'red',
+            'color' => '#ff0000',
         ]);
 
         StatusTranslation::create([
@@ -97,7 +93,6 @@ class DatabaseSeeder extends Seeder
             'langs_id' => 3,
             'name' => 'En attente',
         ]);
-        
 
     }
 }

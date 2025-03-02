@@ -19,9 +19,14 @@ class Repairs extends Model
         'fv_form_id',
         'status_id',
     ];
-    public function status() { return $this->belongsTo(Status::class); }
-    public function langs() { return $this->belongsTo(Lang::class); }
 
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 
-
+    public function langs()
+    {
+        return $this->belongsTo(Lang::class);
+    }
 }

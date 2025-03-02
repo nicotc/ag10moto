@@ -13,12 +13,8 @@ class EmailTemplateTranslations extends Model
         'body',
     ];
 
-
-
     public function emailTemplate()
     {
         return $this->belongsTo(EmailTemplate::class);
     }
-
-
 }

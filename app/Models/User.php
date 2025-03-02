@@ -56,7 +56,10 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    public function lang() { return $this->belongsTo(Lang::class, 'langs_id'); }
+    public function lang()
+    {
+        return $this->belongsTo(Lang::class, 'langs_id');
+    }
 
     /**
      * The accessors to append to the model's array form.

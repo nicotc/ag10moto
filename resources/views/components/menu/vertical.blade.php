@@ -102,7 +102,7 @@
       <li class="menu-item">
         <a href="{{ route('pedidos-list') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-cart-alt"></i>
-          <div data-i18n="Pedidos">Pedidos</div>
+          <div data-i18n="ARREGLOS">ARREGLOS</div>
         </a>
       </li>
 
@@ -110,7 +110,7 @@
       <li class="menu-item">
         <a href="{{ route('contactproduct') }}" class="menu-link">
           <i class="menu-icon tf-icons bx bx-cart-alt"></i>
-          <div data-i18n="CONTACTOS PRODUCTO">CONTACTOS PRODUCTO</div>
+          <div data-i18n="VENTAS">VENTAS</div>
         </a>
       </li>
 

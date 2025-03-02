@@ -29,13 +29,10 @@ class UserEdit extends Component
 
     protected $listeners = ['editUser'];
 
-
-
-  public function mount()
+    public function mount()
     {
         $this->langlist = Lang::pluck('lang', 'id');
     }
-
 
     public function editUser($id)
     {

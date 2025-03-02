@@ -110,9 +110,9 @@ class ContactDatatable extends Datatable
             'status' => [
                 'label' => 'status',
                 'func' => function ($value) {
-                    if($value == 0){
+                    if ($value == 0) {
                         return 'Pendiente';
-                    }else{
+                    } else {
                         return $value;
                     }
                 },

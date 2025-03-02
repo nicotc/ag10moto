@@ -2,7 +2,6 @@
 
 namespace Modules\Estados\Livewire;
 
-
 use App\Models\Status;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
@@ -20,9 +19,10 @@ class DatatableEstados extends Datatable
             'model_name',
             'name',
             'color',
-            'email',
-            'created_at',
-            'updated_at',
+            'email_template_id',
+            'statusTranslation',
+            // 'created_at',
+            // 'updated_at',
         ];
 
         $this->create = true;
@@ -55,21 +55,19 @@ class DatatableEstados extends Datatable
         $query = Status::select(
             'id',
             'model_name',
-            'name',
             'color',
-            'email',
-            'created_at',
-            'updated_at',
-
-        );
+            'email_template_id',
+        )
+            ->with('emailTemplate')
+            ->with('statusTranslation');
 
         // where funcion group
         $query->where(function ($query) {
-            $query->where('name', 'like', '%'.$this->searchTerm.'%');
+            $query->where('model_name', 'like', '%'.$this->searchTerm.'%');
         });
 
-        if ($this->search['name'] ?? false) {
-            $query->where('name', 'like', '%'.$this->search['name'].'%');
+        if ($this->search['model_name'] ?? false) {
+            $query->where('model_name', 'like', '%'.$this->search['model_name'].'%');
         }
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
@@ -96,23 +94,18 @@ class DatatableEstados extends Datatable
                 'sortable' => false,
                 'searchable' => false,
             ],
-            'name' => [
-                'label' => 'Type',
-                'func' => function ($value) {
-                    return $value;
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
+
             'color' => [
                 'label' => 'Color',
                 'func' => function ($value) {
-                    return $value;
+
+                    return "<p style='background-color: $value; color: white; padding: 5px; border-radius: 5px;'>$value</p>";
+
                 },
                 'sortable' => false,
                 'searchable' => false,
             ],
-            'email' => [
+            'email_template_id' => [
                 'label' => 'Email',
                 'func' => function ($value) {
                     return $value;
@@ -120,19 +113,26 @@ class DatatableEstados extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-
-            'created_at' => [
-                'label' => 'Created At',
+            'statusTranslation' => [
+                'label' => 'Name',
                 'func' => function ($value) {
-                    return $value;
+                    $p = '';
+                    foreach ($value as $item) {
+                        $p .= '<b>'.getLagId($item->langs_id).'</b>: '.$item->name.'<br>';
+
+                    }
+
+                    return $p;
                 },
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'updated_at' => [
-                'label' => 'Updated At',
+
+            'emailTemplate' => [
+                'label' => 'Email',
                 'func' => function ($value) {
-                    return $value;
+                    return dump($value);
+
                 },
                 'sortable' => true,
                 'searchable' => true,

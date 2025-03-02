@@ -10,8 +10,6 @@ function getUser($id)
     return $user->first_name.' '.$user->last_name;
 }
 
-
-
 function getLangIso($iso = 'es')
 {
     // $iso todo en minuscula
@@ -20,11 +18,15 @@ function getLangIso($iso = 'es')
 
     $lang = Lang::where('iso', $iso)->first();
 
-
-
     return $lang->id;
 }
 
+function getLagId($id)
+{
+    $lang = Lang::find($id);
+
+    return $lang->iso;
+}
 
 function getEstado($id, $lag)
 {

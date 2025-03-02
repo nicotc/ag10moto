@@ -3,7 +3,6 @@
 namespace Modules\Email\Livewire\Template;
 
 use Livewire\Component;
-
 use Modules\Idiomas\Models\Lang;
 
 class Create extends Component

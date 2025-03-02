@@ -2,7 +2,8 @@
 
 namespace Modules\Pedidos\Livewire;
 
-use App\Models\Pedidos;
+use App\Models\Repairs;
+use App\Models\StatusTranslation;
 use Illuminate\Support\Facades\Auth;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
@@ -10,93 +11,62 @@ class DatatablePedidos extends Datatable
 {
     public $dropdown = false;
 
+    public $statusTranslation;
+
     protected $listeners = ['deleteUserConfirmed', 'notify'];
 
     public function buildQuery()
     {
 
-
-
-
-
-        $query = Pedidos::select(
-            'pedidos.id',
-            'id_pedidos',
-            'pedidos.nombre',
+        $query = Repairs::select(
+            'repairs.id',
+            'id_repairs',
+            'repairs.name',
             'email',
-            'telefono',
-            'problema',
-            'imagenes',
-            'lang',
-            'pedidos.created_at',
-            'pedidos.updated_at',
-            'status_traducciones.nombre as status'
-
-
-        );
-
-
-        // leftJoin para traer el nombre de las traducciones cuando el lan sea el sel usuario y el status
-        $query = $query->leftJoin('status_traducciones', function ($join) {
-            $join->on('status_traducciones.status_id', '=', 'pedidos.status')
-                ->where('status_traducciones.langs_id', '=', 1)
-                ->where('status_traducciones.type', '=', 'Pedido');
-        });
-
-        $query = $query->where(function ($query) {
-            $query = $query->where('pedidos.id', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('id_pedidos', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('pedidos.nombre', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('email', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('telefono', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('problema', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('imagenes', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('lang', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('status_traducciones.nombre', 'like', '%'.$this->searchTerm.'%')
-                ->orWhere('pedidos.created_at', 'like', '%'.$this->searchTerm.'%')
-
-                ->orWhere('pedidos.updated_at', 'like', '%'.$this->searchTerm.'%');
-        });
-
-
+            'phone',
+            'details',
+            'images',
+            'repairs.langs_id',
+            'fv_form_id',
+            'repairs.status_id',
+            'repairs.created_at',
+            'repairs.updated_at'
+        )
+            ->with('status');
 
         if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('Super Admin')) {
 
         } else {
-            $userLang = Auth::user()->language;
-            $query = $query->where('lang', $userLang);
+            $userLang = Auth::user()->langs_id;
+            $query = $query->where('repairs.langs_id', $userLang);
 
         }
 
         if ($this->search['id'] ?? false) {
-            $query = $query->where('pedidos.id', $this->search['id']);
+            $query = $query->where('repairs.id', $this->search['id']);
         }
 
-        if ($this->search['id_pedidos'] ?? false) {
-            $query = $query->where('id_pedidos', 'like', '%'.$this->search['id_pedidos'].'%');
-        }
-
-        if ($this->search['nombre'] ?? false) {
-            $query = $query->where('pedidos.nombre', 'like', '%'.$this->search['nombre'].'%');
+        if ($this->search['name'] ?? false) {
+            $query = $query->where('repairs.name', 'like', '%'.$this->search['name'].'%');
         }
 
         if ($this->search['email'] ?? false) {
             $query = $query->where('email', 'like', '%'.$this->search['email'].'%');
         }
 
-        if ($this->search['telefono'] ?? false) {
-            $query = $query->where('telefono', 'like', '%'.$this->search['telefono'].'%');
+        if ($this->search['phone'] ?? false) {
+            $query = $query->where('phone', 'like', '%'.$this->search['phone'].'%');
         }
 
-        if ($this->search['problema'] ?? false) {
-            $query = $query->where('problema', 'like', '%'.$this->search['problema'].'%');
+        if ($this->search['details'] ?? false) {
+            $query = $query->where('details', 'like', '%'.$this->search['details'].'%');
         }
 
-        if ($this->search['imagenes'] ?? false) {
-            $query = $query->where('imagenes', 'like', '%'.$this->search['imagenes'].'%');
-        }
+        // if ($this->search['images'] ?? false) {
+        //     $query = $query->where('images', 'like', '%'.$this->search['images'].'%');
+        // }
 
-        if($this->search['status'] ?? false){
+        if ($this->search['status'] ?? false) {
             $query = $query->where('status_traducciones.nombre', 'like', '%'.$this->search['status'].'%');
         }
 
@@ -123,17 +93,17 @@ class DatatablePedidos extends Datatable
             'status' => [
                 'label' => 'status',
                 'func' => function ($value) {
-                    if($value == ""){
-                         return 'Pendiente';
-                    }else{
-                        return $value;
-                     }
+
+                    $status = $this->statusTranslation[$value['id']];
+                    $color = $value['color'];
+
+                    return "<p style='background-color: $color; color: white; padding: 5px; border-radius: 5px;'>$status</p>";
 
                 },
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'id_pedidos' => [
+            'id_repairs' => [
                 'label' => 'ID Pedidos',
                 'func' => function ($value) {
                     return $value;
@@ -141,7 +111,7 @@ class DatatablePedidos extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'nombre' => [
+            'name' => [
                 'label' => 'Nombre',
                 'func' => function ($value) {
                     return $value;
@@ -157,7 +127,7 @@ class DatatablePedidos extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'telefono' => [
+            'phone' => [
                 'label' => 'Telefono',
                 'func' => function ($value) {
                     return $value;
@@ -165,7 +135,7 @@ class DatatablePedidos extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'problema' => [
+            'details' => [
                 'label' => 'Problema',
                 'func' => function ($value) {
                     return $value;
@@ -181,7 +151,7 @@ class DatatablePedidos extends Datatable
             //     'sortable' => false,
             //     'searchable' => false,
             // ],
-            'lang' => [
+            'lang_id' => [
                 'label' => 'Lang',
                 'func' => function ($value) {
                     return $value;
@@ -195,6 +165,10 @@ class DatatablePedidos extends Datatable
 
     public function config()
     {
+
+        $this->statusTranslation = StatusTranslation::where('langs_id', Auth::user()->langs_id)
+            ->pluck('name', 'status_id');
+
         $this->sortColumn = 'id';
         $this->sortDirection = 'desc';
         $this->itmesPerPage = 50;
@@ -202,10 +176,10 @@ class DatatablePedidos extends Datatable
 
             // 'id_pedidos',
             'status',
-            'nombre',
+            'name',
             'email',
-            'telefono',
-            'problema',
+            'phone',
+            'details',
             // 'imagenes',
             // 'lang',
             // 'created_at',
@@ -232,7 +206,4 @@ class DatatablePedidos extends Datatable
 
         ];
     }
-
-
-
 }

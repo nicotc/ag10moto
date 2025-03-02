@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orders;
-use App\Models\Otros;
 use App\Models\Repairs;
 use Illuminate\Support\Facades\DB;
 
@@ -13,15 +12,11 @@ class GetDataController extends Controller
     {
         $id = 0;
 
-
         $repairs = Repairs::select('id_repairs')->orderBy('id_repairs', 'desc')->first();
-
 
         if ($repairs != null) {
             $id = $repairs->id_repairs;
         }
-
-
 
         $Formularios = DB::connection('mysqlWeb')->select(
             'select
@@ -60,7 +55,7 @@ class GetDataController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                if(!isset($value['lang'])){
+                if (! isset($value['lang'])) {
                     $value['lang'] = 'es';
                 }
 
@@ -76,7 +71,6 @@ class GetDataController extends Controller
                     'status_id' => 1,
                 ]);
             }
-
 
         }
 
@@ -105,18 +99,13 @@ class GetDataController extends Controller
 
         $id = 0;
 
-
-
         $order = Orders::select('id_orders')
             ->where('item', $item)
             ->orderBy('id_orders', 'desc')->first();
 
-
         if ($order != null) {
             $id = $order->id_orders;
         }
-
-
 
         $Formularios = DB::connection('mysqlWeb')->select(
             'select
@@ -152,7 +141,7 @@ class GetDataController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                if(!isset($value['lang'])){
+                if (! isset($value['lang'])) {
                     $value['lang'] = 'es';
                 }
                 $modelos = Orders::create([

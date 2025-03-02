@@ -2,7 +2,7 @@
 
 namespace Modules\Pedidos\Livewire;
 
-use App\Models\Pedidos;
+use App\Models\Repairs;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Modules\Idiomas\Models\Lang;
@@ -27,7 +27,7 @@ class CrearPedidos extends Component
 
     public function render()
     {
-        $this->languages = Lang::pluck('lang', 'iso');
+        $this->languages = Lang::pluck('lang', 'id');
 
         return view('pedidos::livewire.crear-pedidos');
     }
@@ -65,13 +65,14 @@ class CrearPedidos extends Component
             $imagenes = null;
         }
 
-        $pedido = new Pedidos;
-        $pedido->nombre = $this->nombre;
+        $pedido = new Repairs;
+        $pedido->name = $this->nombre;
         $pedido->email = $this->email;
-        $pedido->telefono = $this->telefono;
-        $pedido->lang = $this->lang;
-        $pedido->problema = $this->problema;
-        $pedido->imagenes = $imagenes;
+        $pedido->phone = $this->telefono;
+        $pedido->langs_id = $this->lang;
+        $pedido->details = $this->problema;
+        $pedido->images = $imagenes;
+        $pedido->status_id = 2;
         $pedido->save();
 
         $this->dispatch('notify', [

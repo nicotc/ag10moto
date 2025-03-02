@@ -2,10 +2,9 @@
 
 namespace Modules\Pedidos\Http\Controllers;
 
-use App\Models\Pedidos;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Repairs;
+use Illuminate\Http\Request;
 
 class PedidosController extends Controller
 {
@@ -14,7 +13,6 @@ class PedidosController extends Controller
      */
     public function index()
     {
-
 
         return view('pedidos::index');
     }
@@ -41,18 +39,16 @@ class PedidosController extends Controller
     public function show($id)
     {
 
-
-
         return view('pedidos::show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pedidos $id)
+    public function edit(Repairs $id)
     {
 
-        $imagenes = $id->imagenes;
+        $imagenes = $id->images;
 
         $imagenes = explode(',', $imagenes);
 

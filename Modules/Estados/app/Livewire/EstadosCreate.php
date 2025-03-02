@@ -2,14 +2,15 @@
 
 namespace Modules\Estados\Livewire;
 
+use App\Models\EmailTemplate;
+use App\Models\Status;
+use App\Models\StatusTranslation;
 use Livewire\Component;
-
-
 use Modules\Idiomas\Models\Lang;
 
 class EstadosCreate extends Component
 {
-    public $name;
+    public $type;
 
     public $color;
 
@@ -24,43 +25,40 @@ class EstadosCreate extends Component
     public function render()
     {
 
+        $this->emails = EmailTemplate::pluck('id', 'id')->toArray();
 
-        // $this->emails = array_unique(EmailTemplate::pluck('name')->toArray());
-        // $this->idiomas = Lang::pluck('lang', 'id')->toArray();
-
-        $this->emails = [];
         $this->idiomas = Lang::pluck('lang', 'id')->toArray();
+
         return view('estados::livewire.estados-create');
     }
 
-    // public function create()
-    // {
+    public function create()
+    {
 
-    //     $this->validate([
-    //         'name' => 'required',
-    //         // 'color' => 'required',
-    //     ]);
+        $this->validate([
+            'type' => 'required',
+            'color' => 'required',
+        ]);
 
-    //     $estado = new Status;
-    //     $estado->name = $this->name;
-    //     $estado->color = $this->color ?? 'primary';
-    //     $estado->email = $this->email;
-    //     $estado->save();
+        $estado = new Status;
+        $estado->model_name = $this->type;
+        $estado->color = $this->color ?? '#000000';
+        $estado->email_template_id = $this->email ?? null;
+        $estado->save();
 
-    //     foreach ($this->idioma as $key => $value) {
+        foreach ($this->idioma as $key => $value) {
 
-    //         StatusTraducciones::create([
-    //             'type' => $this->name,
-    //             'status_id' => $estado->id,
-    //             'langs_id' => $key,
-    //             'nombre' => $value,
-    //         ]);
-    //     }
+            StatusTranslation::create([
+                'status_id' => $estado->id,
+                'langs_id' => $key,
+                'name' => $value,
+            ]);
+        }
 
-    //     $this->reset();
-    //     $this->dispatch('notify', [
-    //         'type' => 'success',
-    //         'message' => 'Estado creado correctamente',
-    //     ]);
-    // }
+        $this->reset();
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => 'Estado creado correctamente',
+        ]);
+    }
 }

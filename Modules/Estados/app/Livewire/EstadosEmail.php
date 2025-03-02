@@ -2,13 +2,12 @@
 
 namespace Modules\Estados\Livewire;
 
-use App\Models\ProductStates;
 use App\Models\Otros;
 use App\Models\Pedidos;
+use App\Models\ProductStates;
 use Livewire\Component;
 use Modules\Email\Http\Controllers\EmailController;
 use Modules\Email\Models\EmailConfiguration;
-
 use Modules\Estados\Models\Status;
 use Modules\Idiomas\Models\Lang;
 
@@ -42,7 +41,6 @@ class EstadosEmail extends Component
     public function mount()
     {
 
-
         $lang = Pedidos::find($this->pedido)->lang;
 
         $idLang = Lang::where('iso', $lang)->first();
@@ -72,27 +70,23 @@ class EstadosEmail extends Component
     public function updatedSelectedEstado()
     {
 
-        if($this->model == 'pedido'){
+        if ($this->model == 'pedido') {
             $lang = Pedidos::find($this->pedido)->lang;
-        }else{
+        } else {
             $lang = Otros::find($this->pedido)->lang;
         }
         $lang = Pedidos::find($this->pedido)->lang;
         $idLang = Lang::where('iso', $lang)->first();
 
-        if($idLang){
+        if ($idLang) {
             $idLang = $idLang->id;
-        }else{
+        } else {
             $idLang = 1;
         }
-
-
-
 
         //    dd($this->selectedEstado, $idLang);
 
         $EstatusName = Status::find($this->selectedEstado);
-
 
         if (! $EstatusName) {
             $this->dispatch('contentUpdated', '');
@@ -109,8 +103,6 @@ class EstadosEmail extends Component
         // // $email = EmailTemplate::where('name', $EstatusName)
         // //     ->where('langs_id', $idLang)
         // //     ->first();
-
-
 
         // if ($email) {
         //     $emailx = $email->body;
@@ -136,18 +128,16 @@ class EstadosEmail extends Component
                 'email' => $this->content ?? '',
             ]);
 
-            if($this->model == 'pedido'){
+            if ($this->model == 'pedido') {
                 // dd($this->pedido, $this->selectedEstado);
                 $pedido = Pedidos::find($this->pedido);
                 $pedido->status = $this->selectedEstado;
                 $pedido->save();
-            }else{
+            } else {
                 $pedido = Otros::find($this->pedido);
                 $pedido->status = $this->selectedEstado;
                 $pedido->save();
             }
-
-
 
             $this->dispatch('notify', ['type' => 'success',  'message' => 'Estado guardado']);
 
