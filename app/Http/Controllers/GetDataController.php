@@ -56,9 +56,11 @@ class GetDataController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                if (! isset($value['lang'])) {
+                if (!isset($value['lang']) || $value['lang'] == '') {
                     $value['lang'] = 'es';
                 }
+
+
 
                 $repairs = Repairs::create([
                     'id_repairs' => $key,
@@ -142,7 +144,7 @@ class GetDataController extends Controller
             }
 
             foreach ($data as $key => $value) {
-                if (! isset($value['lang'])) {
+                if (!isset($value['lang']) || $value['lang'] == '') {
                     $value['lang'] = 'es';
                 }
                 $modelos = Orders::create([
