@@ -25,6 +25,8 @@ class Edit extends Component
 
     public function editModal($id)
     {
+
+
         $this->templateId = $id;
 
         $this->langs = Lang::pluck('lang', 'id')->toArray();
