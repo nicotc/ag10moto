@@ -18,9 +18,6 @@ class GetDataController extends Controller
             $id = $repairs->id_repairs;
         }
 
-        if($id == null){
-            $id = 0;
-        }
 
         $Formularios = DB::connection('mysqlWeb')->select(
             'select
