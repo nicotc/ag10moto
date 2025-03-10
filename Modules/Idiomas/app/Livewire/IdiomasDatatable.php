@@ -35,7 +35,7 @@ class IdiomasDatatable extends Datatable
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'delete',
+                'event' => 'deleteModal',
             ],
         ];
         $this->createAction = [
