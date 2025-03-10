@@ -13,6 +13,7 @@ class DatatableEstados extends Datatable
 
     public function config()
     {
+       
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',

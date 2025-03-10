@@ -23,8 +23,8 @@ class TemplateTranslateDatatable extends Datatable
             'langs_id',
             'subject',
             // 'body',
-
-        );
+        )
+        ->where('email_template_id', $this->templateId);
 
         $query = $query->where(function ($query) {
             $query->where('subject', 'like', '%'.$this->searchTerm.'%');

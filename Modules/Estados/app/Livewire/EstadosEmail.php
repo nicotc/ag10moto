@@ -77,6 +77,8 @@ class EstadosEmail extends Component
     public function updatedSelectedEstado()
     {
 
+        // dd($this->selectedEstado, $this->pedido, $this->model);
+
         if($this->model == 'Repairs'){
             $pedido =  Repairs::find($this->pedido);
         }else{
@@ -138,15 +140,6 @@ if($EstatusName->email_template_id != null && $EstatusName->email_template_id !=
 
         if ( $estadoSave != 0) {
 
-            // ProductStates::create([
-            //     'type' => $this->model,
-            //     'estado_id' => $this->selectedEstado,
-            //     'producto_id' => $this->pedido,
-            //     'user_id' => auth()->user()->id,
-            //     'email' => $this->content ?? '',
-            // ]);
-
-
 
             if ($this->model == 'Repairs') {
                 // dd($this->pedido, $this->selectedEstado);
@@ -181,7 +174,7 @@ if($EstatusName->email_template_id != null && $EstatusName->email_template_id !=
                     ['type' => 'success',  'message' => 'Email enviado']);
             }
 
- 
+
             $historico = historyStatus::create([
                 'model_id' => $this->pedido,
                 'model_name' => $this->model,
