@@ -53,6 +53,14 @@ class TemplateTranslateDatatable extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
+            'langs_id' => [
+                'label' => 'Lang',
+                'func' => function ($value) {
+                    return getLagId($value);
+                },
+                'sortable' => true,
+                'searchable' => true,
+            ],
 
             'created_at' => [
                 'label' => 'Created At',
@@ -75,12 +83,14 @@ class TemplateTranslateDatatable extends Datatable
 
     public function config()
     {
-        
+
 
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',
             'name',
+            'subject',
+            'langs_id',
         ];
         $this->create = true;
         $this->export = false;
@@ -91,8 +101,8 @@ class TemplateTranslateDatatable extends Datatable
 
             'edit' => [
                 'icon' => 'edit',
-                'isModal' => false,
-                'route' => 'email.template.edit',
+                'isModal' => true,
+                // 'route' => 'email.template.edit',
                 'params' => ['id'],
                 'event' => 'editModal',
             ],

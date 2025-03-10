@@ -57,7 +57,8 @@ class Create extends Component
         $email->save();
 
         $this->reset();
-
+        $this->langs = Lang::pluck('lang', 'id')->toArray();
+        
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Email Configuration Updated Successfully']);
     }
 

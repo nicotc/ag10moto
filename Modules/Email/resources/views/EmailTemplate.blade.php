@@ -48,7 +48,7 @@
                         toastr.error(msg);
                     }
 
-                    const createModal = bootstrap.Modal.getInstance(document.getElementById('createModal'));
+                    const createModal = bootstrap.Modal.getInstance(document.getElementById('createModalTemplateName'));
                         if (createModal) {
                             createModal.hide();
                         }
