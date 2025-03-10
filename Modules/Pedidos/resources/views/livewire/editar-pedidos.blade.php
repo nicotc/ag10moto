@@ -12,88 +12,63 @@
             <div class="modal-body">
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               <div class="mb-4 text-center">
-                <h3>Editar cuentas de email </h3>
+                <h3>Editar Pedido </h3>
 
               </div>
               <form id="" class="row g-3" onsubmit="return false">
 
-                <div class="col-12">
-                    <label class="form-label" for="mail_host">Host</label>
-                    <input
-                      type="text"
-                      id="mail_host"
-                      wire:model="mail_host"
-                      name="mail_host"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_host') {{ $message }} @enderror</span>
+
+{{-- error lista --}}
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+
+
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="nombre" wire:model="nombre">
                 </div>
-                <div class="col-12">
-                    <label class="form-label" for="mail_port">Port</label>
-                    <input
-                      type="text"
-                      id="mail_port"
-                      wire:model="mail_port"
-                      name="mail_port"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_port') {{ $message }} @enderror</span>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" wire:model="email">
                 </div>
-                <div class="col-12">
-                    <label class="form-label" for="mail_username">Username</label>
-                    <input
-                      type="text"
-                      id="mail_username"
-                      wire:model="mail_username"
-                      name="mail_username"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_username') {{ $message }} @enderror</span>
+                <div class="col-md-6">
+                  <label for="telefono" class="form-label">Telefono</label>
+                  <input type="text" class="form-control" id="telefono" wire:model="telefono">
                 </div>
-                <div class="col-12">
-                    <label class="form-label" for="mail_password">Password</label>
-                    <input
-                      type="text"
-                      id="mail_password"
-                      wire:model="mail_password"
-                      name="mail_password"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_password') {{ $message }} @enderror</span>
+                <div class="col-md-6">
+                    <label for="lang" class="form-label">Lang</label>
+                    <select id="lang" class="form-select" wire:model="lang">
+                      <option selected>Choose...</option>
+                      @foreach ($languages as $key => $value)
+                      <option value="{{$key}}">{{$value}}</option>
+
+
+                      @endforeach
+
+                    </select>
+                  </div>
+
+                <div class="col-md-12">
+                  <label for="problema" class="form-label">Problema</label>
+                  <textarea class="form-control" id="problema" wire:model="problema"></textarea>
                 </div>
-                <div class="col-12">
-                    <label class="form-label" for="mail_encryption">Encryption</label>
-                    <input
-                      type="text"
-                      id="mail_encryption"
-                      wire:model="mail_encryption"
-                      name="mail_encryption"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_encryption') {{ $message }} @enderror</span>
+                <div class="col-md-12">
+                  <label for="imagenes" class="form-label">Imagenes</label>
+                  <input type="file" class="form-control" id="imagenes" wire:model="imagenes" multiple>
                 </div>
-                <div class="col-12">
-                    <label class="form-label" for="mail_from_address">From Address</label>
-                    <input
-                      type="text"
-                      id="mail_from_address"
-                      wire:model="mail_from_address"
-                      name="mail_from_address"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_from_address') {{ $message }} @enderror</span>
-                </div>
-                <div class="col-12">
-                    <label class="form-label" for="mail_from_name">From Name</label>
-                    <input
-                      type="text"
-                      id="mail_from_name"
-                      wire:model="mail_from_name"
-                      name="mail_from_name"
-                      class="form-control"
-                      placeholder="" />
-                      <span class="text-danger">@error('mail_from_name') {{ $message }} @enderror</span>
-                </div>
+
+
+
+
 
 
 
@@ -102,7 +77,7 @@
                 <div class="mt-4 text-center col-12">
                   <button type="submit"
                    class="btn btn-primary me-sm-3 me-1"
-                   wire:click="create"
+                   wire:click="updatePedido"
                    >Submit</button>
 
                    <button
@@ -118,4 +93,4 @@
           </div>
         </div>
     </div>
-    </div>
+</div>

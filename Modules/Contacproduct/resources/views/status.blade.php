@@ -116,8 +116,8 @@
 
                                     </ul>
                                     <div class="pt-3 d-flex justify-content-center">
-                                        <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
-                                            data-bs-toggle="modal">Edit</a>
+                                        {{-- <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
+                                            data-bs-toggle="modal">Edit</a> --}}
                                         {{-- <a href="javascript:;" class="btn btn-label-danger suspend-user">Suspended</a> --}}
                                     </div>
                                 </div>
