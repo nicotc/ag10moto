@@ -2,6 +2,7 @@
 
 namespace Modules\Email\Services;
 
+use App\Models\EmailConfig;
 use Illuminate\Support\Facades\Config;
 use Modules\Email\Models\EmailConfiguration;
 
@@ -9,7 +10,7 @@ class EmailService
 {
     public function setMailConfig($configId)
     {
-        $emailConfig = EmailConfiguration::find($configId);
+        $emailConfig = EmailConfig::find($configId);
 
         if ($emailConfig) {
             Config::set('mail.default', 'smtp');

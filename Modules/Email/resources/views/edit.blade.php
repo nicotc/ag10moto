@@ -21,7 +21,7 @@
                     editModal.show();
                 });
                 Livewire.on('createModal', (event) => {
-                    var createModal = new bootstrap.Modal(document.getElementById('createModalTemplateName'));
+                    var createModal = new bootstrap.Modal(document.getElementById('createModal'));
                     createModal.show();
                 });
                 Livewire.on('deleteModal', (event) => {
@@ -79,7 +79,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <livewire:email::datatable-template />
+                            <livewire:email::template-translate-datatable :templateId="$id" />
                         </div>
                     </div>
                 </div>
@@ -90,12 +90,11 @@
 
     </div>
 
-    <livewire:email::template-name />
 
 
-    <livewire:email::template.create />
+    <livewire:email::template.create :templateId="$id" />
 
-    <livewire:email::template.edit />
+    <livewire:email::template.edit :templateId="$id" />
 
 
 

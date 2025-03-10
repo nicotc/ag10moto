@@ -15,10 +15,10 @@ class Notes extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'pedido_id',
-        'pedido_model',
+        'model_id',
+        'model_name',
         'note',
-        'created_by',
+        'user_id',
         'status',
     ];
 

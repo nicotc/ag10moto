@@ -35,6 +35,7 @@ class CrearPedidos extends Component
     public function create()
     {
 
+
         $this->validate([
             'nombre' => 'required',
             'email' => 'required',
@@ -47,6 +48,8 @@ class CrearPedidos extends Component
 
         //  save images in storage
         // get path of images
+
+     
         if ($this->imagenes != null) {
 
             $uuid = uniqid();

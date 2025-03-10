@@ -3,13 +3,18 @@
 namespace Modules\Estados\Livewire;
 
 use App\Models\Otros;
+use App\Models\Orders;
+use App\Models\Status;
 use App\Models\Pedidos;
-use App\Models\ProductStates;
+use App\Models\Repairs;
 use Livewire\Component;
-use Modules\Email\Http\Controllers\EmailController;
+use App\Models\EmailConfig;
+use App\Models\historyStatus;
+use App\Models\ProductStates;
+use App\Models\EmailTemplateTranslations;
 use Modules\Email\Models\EmailConfiguration;
-use Modules\Estados\Models\Status;
-use Modules\Idiomas\Models\Lang;
+use Modules\Email\Http\Controllers\EmailController;
+
 
 class EstadosEmail extends Component
 {
@@ -41,52 +46,48 @@ class EstadosEmail extends Component
     public function mount()
     {
 
-        $lang = Pedidos::find($this->pedido)->lang;
-
-        $idLang = Lang::where('iso', $lang)->first();
-        if ($idLang) {
-            $idLang = $idLang->id;
-        } else {
-            $idLang = 1;
+        if($this->model == 'Repairs'){
+            $pedido =  Repairs::find($this->pedido);
+        }else{
+            $pedido =  Orders::find($this->pedido);
         }
 
-        if ($this->model == 'pedido') {
-            $NAME = 'Pedido';
-        } else {
-            $NAME = 'Producto';
-        }
 
-        $estados = Status::join('status_traducciones', 'statuses.id', '=', 'status_traducciones.status_id')
-            ->join('langs', 'status_traducciones.langs_id', '=', 'langs.id')
-            ->where('langs_id', $idLang)
-            ->where('name', $NAME)
-            ->where('status_traducciones.type', $NAME)
-            ->pluck('status_traducciones.nombre', 'statuses.id')->toArray();
+
+
+        $estados = Status::select(
+            'status_translations.name',
+            'status_translations.langs_id',
+            'statuses.model_name',
+            'statuses.id'
+        )
+        ->join('status_translations', 'statuses.id', '=', 'status_translations.status_id')
+        ->where('model_name', $this->model)
+        ->where('status_translations.langs_id', $pedido->langs_id)
+        ->pluck('name', 'id');
+
+
 
         $this->estados = $estados;
+
+
 
     }
 
     public function updatedSelectedEstado()
     {
 
-        if ($this->model == 'pedido') {
-            $lang = Pedidos::find($this->pedido)->lang;
-        } else {
-            $lang = Otros::find($this->pedido)->lang;
-        }
-        $lang = Pedidos::find($this->pedido)->lang;
-        $idLang = Lang::where('iso', $lang)->first();
-
-        if ($idLang) {
-            $idLang = $idLang->id;
-        } else {
-            $idLang = 1;
+        if($this->model == 'Repairs'){
+            $pedido =  Repairs::find($this->pedido);
+        }else{
+            $pedido =  Orders::find($this->pedido);
         }
 
-        //    dd($this->selectedEstado, $idLang);
+
 
         $EstatusName = Status::find($this->selectedEstado);
+
+
 
         if (! $EstatusName) {
             $this->dispatch('contentUpdated', '');
@@ -98,59 +99,75 @@ class EstadosEmail extends Component
 
             return;
         }
-        $EstatusName = $EstatusName->email;
 
-        // // $email = EmailTemplate::where('name', $EstatusName)
-        // //     ->where('langs_id', $idLang)
-        // //     ->first();
+if($EstatusName->email_template_id != null && $EstatusName->email_template_id != 0){
 
-        // if ($email) {
-        //     $emailx = $email->body;
-        //     $this->subject = $email->subject;
-        // } else {
-        //     $emailx = '';
-        //     $this->subject = '';
-        // }
 
-        $this->dispatch('contentUpdated', $emailx);
+
+    $emailx = EmailTemplateTranslations::where('email_template_id', $EstatusName->email_template_id)->where('langs_id', $pedido->langs_id)->first();
+
+    // "subject" => "Subject"
+    // "body" => "<p>assdas</p>"
+
+
+    if($emailx){
+        $body = $emailx->body;
+        $subject = $emailx->subject;
+    }else{
+        $body = null;
+        $subject = null;
+    }
+
+
+}else{
+    $emailx = null;
+
+}
+    $this->content = $body ?? '';
+    $this->subject = $subject ?? '';
+    $this->dispatch('contentUpdated', $this->content);
     }
 
     public function sendEmail()
     {
 
-        if ($this->selectedEstado != 0) {
+        // integer
+    $estadoSave = (int) $this->selectedEstado;
 
-            ProductStates::create([
-                'type' => $this->model,
-                'estado_id' => $this->selectedEstado,
-                'producto_id' => $this->pedido,
-                'user_id' => auth()->user()->id,
-                'email' => $this->content ?? '',
-            ]);
 
-            if ($this->model == 'pedido') {
+
+        if ( $estadoSave != 0) {
+
+            // ProductStates::create([
+            //     'type' => $this->model,
+            //     'estado_id' => $this->selectedEstado,
+            //     'producto_id' => $this->pedido,
+            //     'user_id' => auth()->user()->id,
+            //     'email' => $this->content ?? '',
+            // ]);
+
+
+
+            if ($this->model == 'Repairs') {
                 // dd($this->pedido, $this->selectedEstado);
-                $pedido = Pedidos::find($this->pedido);
-                $pedido->status = $this->selectedEstado;
+                $pedido = Repairs::find($this->pedido);
+                $pedido->status_id =  $estadoSave;
                 $pedido->save();
+
+
             } else {
-                $pedido = Otros::find($this->pedido);
-                $pedido->status = $this->selectedEstado;
+                $pedido = Orders::find($this->pedido);
+                $pedido->status_id =  $estadoSave;
                 $pedido->save();
+
             }
 
             $this->dispatch('notify', ['type' => 'success',  'message' => 'Estado guardado']);
 
             if ($this->content != '' && $this->subject != '') {
-                $pedido = Pedidos::find($this->pedido);
-                $lang = $pedido->lang;
-                $idLang = Lang::where('iso', $lang)->first();
-                if ($idLang) {
-                    $idLang = $idLang->id;
-                } else {
-                    $idLang = 1;
-                }
-                $emailConfigId = EmailConfiguration::where('langs_id', $idLang)->first()->id;
+                $emailConfigId = EmailConfig::where('langs_id', $pedido->langs_id)
+                ->first()->id;
+
                 $emailController = app(EmailController::class);
 
                 try {
@@ -162,8 +179,16 @@ class EstadosEmail extends Component
 
                 $this->dispatch('notify',
                     ['type' => 'success',  'message' => 'Email enviado']);
-
             }
+
+ 
+            $historico = historyStatus::create([
+                'model_id' => $this->pedido,
+                'model_name' => $this->model,
+                'status' => $estadoSave,
+                'user_id' => auth()->user()->id,
+                'email' => $this->content ?? '',
+            ]);
 
         } else {
             $this->dispatch('notify', ['type' => 'error',  'message' => 'Estado no valido']);

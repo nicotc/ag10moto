@@ -2,12 +2,15 @@
 
 namespace Modules\Email\Livewire;
 
-use App\Models\EmailTemplate;
-use App\Models\Lang;
+
+use App\Models\EmailTemplateTranslations;
 use Nicotc\Datatable\Http\Livewire\Datatable;
 
-class DatatableTemplate extends Datatable
+class TemplateTranslateDatatable extends Datatable
 {
+
+    public $templateId;
+
     public $dropdown = true;
 
     protected $listeners = ['deleteConfirmed', 'notify'];
@@ -15,14 +18,16 @@ class DatatableTemplate extends Datatable
     public function buildQuery()
     {
 
-        $query = EmailTemplate::select(
+        $query = EmailTemplateTranslations::select(
             'id',
+            'langs_id',
+            'subject',
+            // 'body',
 
-            'name'
         );
 
         $query = $query->where(function ($query) {
-            $query->where('name', 'like', '%'.$this->searchTerm.'%');
+            $query->where('subject', 'like', '%'.$this->searchTerm.'%');
         });
 
         return $query;
@@ -40,8 +45,8 @@ class DatatableTemplate extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'name' => [
-                'label' => 'Name',
+            'subject' => [
+                'label' => 'subject',
                 'func' => function ($value) {
                     return $value;
                 },
@@ -70,8 +75,7 @@ class DatatableTemplate extends Datatable
 
     public function config()
     {
-        $langs = Lang::pluck('lang', 'id')->toArray();
-
+        
 
         $this->itmesPerPage = 10;
         $this->visibleColumns = [

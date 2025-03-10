@@ -17,9 +17,17 @@ class NoteList extends Component
 
     public function notify($message)
     {
-        $this->notes = Notes::select('notes.id', 'notes.pedido_id', 'notes.note', 'notes.created_by', 'notes.status', 'notes.created_at')
-            ->where('pedido_id', $this->pedido)
-            ->where('pedido_model', $this->model)
+        $this->notes = Notes::select(
+            'notes.id',
+            'notes.model_id',
+            'notes.model_name',
+            'notes.note',
+            'notes.user_id',
+            'notes.status',
+            'notes.created_at'
+            )
+            ->where('model_id', $this->pedido)
+            ->where('model_name', $this->model)
             ->orderBy('notes.id', 'desc')
             ->get();
 
@@ -28,9 +36,18 @@ class NoteList extends Component
     public function mount($pedido)
     {
 
-        $this->notes = Notes::select('notes.id', 'notes.pedido_id', 'notes.note', 'notes.created_by', 'notes.status', 'notes.created_at')
-            ->where('pedido_id', $this->pedido)
-            ->where('pedido_model', $this->model)
+        // dd($pedido, $this->model);
+
+        $this->notes = Notes::select(
+            'notes.id',
+            'notes.model_id',
+            'notes.note',
+            'notes.user_id',
+            'notes.status',
+            'notes.created_at'
+            )
+            ->where('model_id', $this->pedido)
+            ->where('model_name', $this->model)
             ->orderBy('notes.id', 'desc')
             ->get();
     }

@@ -3,7 +3,7 @@
 namespace Modules\Estados\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pedidos;
+use App\Models\Repairs;
 
 class EstadosController extends Controller
 {
@@ -12,8 +12,9 @@ class EstadosController extends Controller
         return view('estados::index');
     }
 
-    public function cambiarEstado(Pedidos $id)
+    public function cambiarEstado($id)
     {
+        $id = Repairs::find($id);
 
         $imagenes = $id->imagenes;
 

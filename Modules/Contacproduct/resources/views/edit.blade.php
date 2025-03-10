@@ -40,7 +40,7 @@
                                 <ul class="list-unstyled">
                                   <li class="mb-3">
                                     <span class="fw-bold me-2">Nombre:</span>
-                                    <span>{{ $pedido->nombre }}</span>
+                                    <span>{{ $pedido->name }}</span>
                                   </li>
                                   <li class="mb-3">
                                     <span class="fw-bold me-2">Email:</span>
@@ -48,11 +48,20 @@
                                   </li>
                                   <li class="mb-3">
                                     <span class="fw-bold me-2">Telefono:</span>
-                                    <span>{{ $pedido->telefono }}</span>
+                                    <span>
+
+                                        {{ $pedido->phone }}
+                                        <a
+                                        style="text-decoration: none !important; color: #25D366 !important;"
+                                            href="https://api.whatsapp.com/send/?phone={{ $pedido->phone }}" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Whatsapp">
+                                                <i class='bx bxl-whatsapp'></i>
+                                            </a>
+
+                                    </span>
                                   </li>
                                   <li class="mb-3">
                                     <span class="fw-bold me-2">Idioma:</span>
-                                    <span>{{ $pedido->lang }}</span>
+                                    <span>{{ getLagId($pedido->langs_id) }}</span>
                                   </li>
 
                                   <li class="mb-3">
@@ -63,7 +72,7 @@
                                 </ul>
                                 <div class="pt-3 d-flex justify-content-center">
                                   <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser" data-bs-toggle="modal">Edit</a>
-                                  <a href="javascript:;" class="btn btn-label-danger suspend-user">Suspended</a>
+                                  {{-- <a href="javascript:;" class="btn btn-label-danger suspend-user">Suspended</a> --}}
                                 </div>
                               </div>
 

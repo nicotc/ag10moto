@@ -19,7 +19,7 @@
                         <div class="mb-3 d-flex align-items-center mb-sm-0">
                             <div class="flex-grow-1 ms-1">
                                 <span class="badge bg-primary">
-                                    {{ getUser($note->created_by) }}
+                                    {{ getUser($note->user_id) }}
                                 </span><br>
                                 <small class="text-muted">
                                     {{ $note->created_at->diffForHumans() }}

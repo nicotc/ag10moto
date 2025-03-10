@@ -2,10 +2,10 @@
 
 namespace Modules\Contacproduct\Livewire;
 
-use App\Models\ProductStates;
-use Carbon\Carbon;
+
 use Livewire\Component;
-use Modules\Idiomas\Models\Lang;
+use App\Models\historyStatus;
+
 
 class StatusContacproduct extends Component
 {
@@ -16,43 +16,18 @@ class StatusContacproduct extends Component
     public function mount($pedido)
     {
 
-        // carbon para formatear la fecha de creacion
-        Carbon::setLocale('es');
-        $carbon = Carbon::parse($pedido->created_at)->format('d/m/Y H:i:s');
 
-        $estado[] = [
-            'create' => $carbon,
-            'estado' => 'Pendiente',
-        ];
+        $historico = historyStatus::
+        where('model_id', $pedido->id)
+        ->where('model_name', 'Orders')
+        ->orderBy('id', 'desc')
+        ->get();
 
-        // dd(ProductStates::get());
-        $estados = ProductStates::where('producto_id', $pedido->id)
-            ->where('type', 'productos')
-            ->get();
 
-        $lang = $pedido->lang;
+    $this->estados = $historico;
 
-        $idLang = Lang::where('iso', $lang)->first();
 
-        if ($idLang) {
-            $idLang = $idLang->id;
-        } else {
-            $idLang = 1;
-        }
 
-        foreach ($estados as $key => $value) {
-            Carbon::setLocale('es');
-            $carbon = Carbon::parse($value->created_at)->format('d/m/Y H:i:s');
-
-            $estado[] = [
-                'create' => $carbon,
-                'estado' => getEstado($value->estado_id, $idLang),
-                'user' => $value->user->first_name.' '.$value->user->last_name,
-                // 'email' => $value->email
-            ];
-        }
-
-        $this->estados = $estado;
 
     }
 

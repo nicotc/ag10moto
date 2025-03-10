@@ -23,16 +23,7 @@
 
                             </select>
                         </div>
-                        <div class="col-12">
-                            <label class="form-label " for="name">Name</label>
-                            <input type="text" id="name" wire:model="name" name="name" class="form-control"
-                                placeholder="" />
-                            <span class="text-danger">
-                                @error('name')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
+
                         <div class="col-12">
                             <label class="form-label" for="subject">Subject</label>
                             <input type="text" id="subject" wire:model="subject" name="subject"

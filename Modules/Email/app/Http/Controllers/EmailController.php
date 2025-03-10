@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Modules\Email\Emails\CustomEmail;
 use Modules\Email\Services\EmailService;
+use SebastianBergmann\Template\Template;
 
 class EmailController extends Controller
 {
@@ -15,6 +16,15 @@ class EmailController extends Controller
     {
         $this->emailService = $emailService;
     }
+
+
+
+    public function edit($id)
+    {
+
+        return view('email::edit', compact('id'));
+    }
+
 
     public function sendEmail($emailConfigId, $to, $subject, $body)
     {

@@ -26,14 +26,16 @@ class CreateNote extends Component
             'note' => 'required',
         ]);
 
+        // dd($this->pedido, $this->model, $this->note);
         Notes::create([
-            'pedido_id' => $this->pedido,
-            'pedido_model' => $this->model,
-
+            'model_id' => $this->pedido,
+            'model_name' => $this->model,
             'note' => $this->note,
-            'created_by' => auth()->id(),
+            'user_id' => auth()->id(),
             'status' => 1,
         ]);
+
+
 
         $this->note = '';
         $this->dispatch('notify', [

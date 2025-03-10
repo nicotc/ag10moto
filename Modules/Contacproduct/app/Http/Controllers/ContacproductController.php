@@ -2,9 +2,10 @@
 
 namespace Modules\Contacproduct\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Otros;
+use App\Models\Orders;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ContacproductController extends Controller
 {
@@ -18,14 +19,14 @@ class ContacproductController extends Controller
 
     public function notas($id)
     {
-        $pedido = Otros::find($id);
+        $pedido = Orders::find($id);
 
         return view('contacproduct::notas', compact('pedido'));
     }
 
     public function status($id)
     {
-        $pedido = Otros::find($id);
+        $pedido = Orders::find($id);
 
         // return view('contacproduct::notas', compact('pedido'));
 
@@ -61,7 +62,8 @@ class ContacproductController extends Controller
      */
     public function edit($id)
     {
-        $pedido = Otros::find($id);
+        $pedido = Orders::find($id);
+      
 
         return view('contacproduct::edit', compact('pedido'));
     }

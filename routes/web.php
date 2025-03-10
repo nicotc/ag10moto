@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\GetDataController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GetDataController;
+use App\Http\Controllers\DashboardConroller;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -12,9 +13,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardConroller::class, 'index' ])->name('dashboard');
 
 });
 

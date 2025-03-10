@@ -13,12 +13,15 @@
               <span class="timeline-point timeline-point-primary"></span>
               <div class="timeline-event">
                 <div class="mb-1 timeline-header">
-                  <h6 class="mb-0">{{ $estado['estado'] ?? "" }}</h6>
-                  <small class="text-muted">{{ $estado['create'] }}</small>
+                  <h6 class="mb-0">{{ getEstado($estado->status, Auth::user()->langs_id) }}</h6>
+                  <small class="text-muted">{{
+                    
+                    \Carbon\Carbon::parse($estado->created_at)->diffForHumans()
+                  }}</small>
                 </div>
                 <p class="mb-2">
 
-                    {{ $estado['user'] ?? '' }}
+                    {{ getUser($estado->user_id) }}
                 </p>
                 <div class="d-flex">
 
@@ -30,7 +33,7 @@
                 </div>
               </div>
             </li>
-            
+
             @endforeach
 
 

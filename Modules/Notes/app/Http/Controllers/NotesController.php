@@ -4,6 +4,7 @@ namespace Modules\Notes\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pedidos;
+use App\Models\Repairs;
 use Illuminate\Http\Request;
 
 class NotesController extends Controller
@@ -11,10 +12,12 @@ class NotesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Pedidos $pedidoId)
+    public function index( $id)
     {
 
-        $imagenes = $pedidoId->imagenes;
+        $id = Repairs::find($id);
+
+        $imagenes = $id->images;
 
         $imagenes = explode(',', $imagenes);
 
@@ -29,13 +32,13 @@ class NotesController extends Controller
                 $base64 = base64_encode($getImage);
                 $base64 = 'data:'.$mime.';base64,'.$base64;
                 $img[] = $base64;
-
-                // $img[] = $value;
-
+            } elseif (strstr($value, 'public/imagenes/')) {
+                $img[] = asset('storage/'.$value);
             }
         }
 
-        return view('notes::index', ['pedido' => $pedidoId, 'img' => $img]);
+
+        return view('notes::index', ['pedido' => $id, 'img' => $img]);
     }
 
     /**

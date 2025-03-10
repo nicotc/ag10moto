@@ -19,6 +19,7 @@ Route::group([
     'prefix' => 'email'], function () {
         // Route::resource('email', EmailController::class)->names('email');
         Route::get('email', [EmailController::class, 'sendEmail'])->name('email.sendEmail');
+        Route::get('email/{id}', [EmailController::class, 'edit'])->name('email.template.edit');
         Route::view('AccountEmail', 'email::EmailAcount')->name('email.AccountEmail');
         Route::view('TemplateEmail', 'email::EmailTemplate')->name('email.TemplateEmail');
     });
