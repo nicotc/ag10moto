@@ -8,6 +8,30 @@
         <script type="module">
             document.addEventListener('livewire:init', () => {
 
+                Livewire.on('editModal', (event) => {
+                    var editUser = new bootstrap.Modal(document.getElementById('editModal'));
+                    editUser.show();
+                });
+
+
+                Livewire.on('notify', (data) => {
+                    var type = data[0].type;
+                    var msg = data[0].message;
+                    if (type == 'success') {
+                        toastr.success(msg);
+                    } else {
+                        toastr.error(msg);
+                    }
+
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                    if (editModal) {
+                        editModal.hide();
+                    }
+
+                    // refresh page
+                    window.location.reload();
+
+                });
 
 
             });
@@ -71,7 +95,7 @@
 
                                 </ul>
                                 <div class="pt-3 d-flex justify-content-center">
-                                  <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser" data-bs-toggle="modal">Edit</a>
+                                  <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editModal" data-bs-toggle="modal">Edit</a>
 
                                   {{-- <a href="javascript:;" class="btn btn-label-danger suspend-user">Suspended</a> --}}
                                 </div>
@@ -128,6 +152,7 @@
 
 
 
+    <livewire:contacproduct::edit-product :product="$pedido" />
 
 
 

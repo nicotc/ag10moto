@@ -25,7 +25,7 @@ class EstadosCreate extends Component
     public function render()
     {
 
-        $this->emails = EmailTemplate::pluck('id', 'id')->toArray();
+        $this->emails = EmailTemplate::pluck('name', 'id')->toArray();
 
         $this->idiomas = Lang::pluck('lang', 'id')->toArray();
 

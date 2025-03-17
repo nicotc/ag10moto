@@ -17,7 +17,6 @@ class DatatableTemplate extends Datatable
 
         $query = EmailTemplate::select(
             'id',
-
             'name'
         );
 
@@ -85,6 +84,15 @@ class DatatableTemplate extends Datatable
 
         $this->actions = [
 
+            'rename' => [
+                'icon' => 'bx bx-rename',
+                'isModal' => true,
+                'route' => 'email.template.rename',
+                'params' => ['id'],
+                'event' => 'renameModal',
+            ],
+
+
             'edit' => [
                 'icon' => 'edit',
                 'isModal' => false,
@@ -92,8 +100,6 @@ class DatatableTemplate extends Datatable
                 'params' => ['id'],
                 'event' => 'editModal',
             ],
-
-
 
             'delete' => [
                 'icon' => 'trash',
@@ -110,5 +116,15 @@ class DatatableTemplate extends Datatable
             'isModal' => true,
 
         ];
+    }
+
+
+    public function deleteConfirmed($id)
+    {
+        EmailTemplate::find($id)->delete();
+        $this->dispatch('notify', [
+            'message' => 'Template deleted successfully',
+            'type' => 'success',
+        ]);
     }
 }

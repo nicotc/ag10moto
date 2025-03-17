@@ -13,7 +13,7 @@ class DatatableEstados extends Datatable
 
     public function config()
     {
-       
+
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',
@@ -22,6 +22,7 @@ class DatatableEstados extends Datatable
             'color',
             'email_template_id',
             'statusTranslation',
+            'emailTemplate'
             // 'created_at',
             // 'updated_at',
         ];
@@ -39,7 +40,7 @@ class DatatableEstados extends Datatable
                 'icon' => 'trash',
                 'isModal' => true,
                 'params' => ['id'],
-                'event' => 'delete',
+                'event' => 'deleteModal',
             ],
         ];
         $this->createAction = [
@@ -58,8 +59,8 @@ class DatatableEstados extends Datatable
             'model_name',
             'color',
             'email_template_id',
-        )
-            ->with('emailTemplate')
+    )->with('emailTemplate')
+
             ->with('statusTranslation');
 
         // where funcion group
@@ -72,6 +73,8 @@ class DatatableEstados extends Datatable
         }
 
         $query->orderBy($this->sortColumn, $this->sortDirection);
+
+
 
         return $query;
     }
@@ -106,10 +109,15 @@ class DatatableEstados extends Datatable
                 'sortable' => false,
                 'searchable' => false,
             ],
-            'email_template_id' => [
+            'emailTemplate' => [
                 'label' => 'Email',
                 'func' => function ($value) {
-                    return $value;
+                   if($value != null){
+                    return $value->name;
+                   }else{
+                    return 'No email';
+                   }
+
                 },
                 'sortable' => true,
                 'searchable' => true,
@@ -129,16 +137,25 @@ class DatatableEstados extends Datatable
                 'searchable' => true,
             ],
 
-            'emailTemplate' => [
-                'label' => 'Email',
-                'func' => function ($value) {
-                    return dump($value);
+            // 'emailTemplate' => [
+            //     'label' => 'Email',
+            //     'func' => function ($value) {
+            //         return dump($value);
 
-                },
-                'sortable' => true,
-                'searchable' => true,
-            ],
+            //     },
+            //     'sortable' => true,
+            //     'searchable' => true,
+            // ],
 
         ];
+    }
+
+    public function deleteConfirmed($id)
+    {
+        Status::find($id)->delete();
+        $this->dispatch('notify', [
+            'type' => 'success',
+            'message' => 'Estado eliminado',
+        ]);
     }
 }

@@ -7,15 +7,15 @@
     <x-slot:scripts>
         <script type="module">
             document.addEventListener('livewire:init', () => {
-                Livewire.on('editRole', (event) => {
-                    var editRoleModal = new bootstrap.Modal(document.getElementById('editRolesModal'));
-                    editRoleModal.show();
+                Livewire.on('editModal', (event) => {
+                    var editModalModal = new bootstrap.Modal(document.getElementById('editModal'));
+                    editModalModal.show();
                 });
-                Livewire.on('createRole', (event) => {
-                    var createRoleModal = new bootstrap.Modal(document.getElementById('createRolesModal'));
-                    createRoleModal.show();
+                Livewire.on('createModal', (event) => {
+                    var createModalModal = new bootstrap.Modal(document.getElementById('createModal'));
+                    createModalModal.show();
                 });
-                Livewire.on('deleteRole', (event) => {
+                Livewire.on('deleteModal', (event) => {
                     Swal.fire({
                         title: 'Are you sure?',
                         text: "You won't be able to revert this!",
@@ -26,7 +26,7 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Livewire.dispatch('deleteRoleConfirmed', { id: event.id });
+                            Livewire.dispatch('deleteModalConfirmed', { id: event.id });
                         }
                     })
                 });
@@ -39,14 +39,14 @@
                         toastr.error(msg);
                     }
 
-                    const createRoleModal = bootstrap.Modal.getInstance(document.getElementById('createRoleModal'));
-                        if (createRoleModal) {
-                            createRoleModal.hide();
+                    const createModal = bootstrap.Modal.getInstance(document.getElementById('createModal'));
+                        if (createModal) {
+                            createModal.hide();
                         }
 
-                    const editRoleModal = bootstrap.Modal.getInstance(document.getElementById('editRoleModal'));
-                        if (editRoleModal) {
-                            editRoleModal.hide();
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                        if (editModal) {
+                            editModal.hide();
                         }
 
                     });
@@ -80,7 +80,8 @@
 
     </div>
 
-
+    <livewire:contacproduct::create-product />
+    {{-- <livewire:contacproduct::edit-product /> --}}
 
 
 </x-layout>

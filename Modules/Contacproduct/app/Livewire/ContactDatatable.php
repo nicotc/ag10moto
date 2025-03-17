@@ -21,6 +21,7 @@ class ContactDatatable extends Datatable
 
         $query = Orders::select(
             'orders.id',
+            'item',
             'id_orders',
             'orders.name',
             'email',
@@ -38,24 +39,28 @@ class ContactDatatable extends Datatable
 
         } else {
             $userLang = Auth::user()->langs_id;
-            $query = $query->where('repairs.langs_id', $userLang);
+            $query = $query->where('orders.langs_id', $userLang);
 
         }
 
         if ($this->search['id'] ?? false) {
-            $query = $query->where('repairs.id', $this->search['id']);
+            $query = $query->where('orders.id', $this->search['id']);
+        }
+
+        if ($this->search['item'] ?? false) {
+            $query = $query->where('orders.item', 'like', '%'.$this->search['item'].'%');
         }
 
         if ($this->search['name'] ?? false) {
-            $query = $query->where('repairs.name', 'like', '%'.$this->search['name'].'%');
+            $query = $query->where('orders.name', 'like', '%'.$this->search['name'].'%');
         }
 
         if ($this->search['email'] ?? false) {
-            $query = $query->where('email', 'like', '%'.$this->search['email'].'%');
+            $query = $query->where('orders', 'like', '%'.$this->search['email'].'%');
         }
 
         if ($this->search['phone'] ?? false) {
-            $query = $query->where('phone', 'like', '%'.$this->search['phone'].'%');
+            $query = $query->where('orders', 'like', '%'.$this->search['phone'].'%');
         }
 
         if ($this->search['details'] ?? false) {
@@ -103,7 +108,8 @@ class ContactDatatable extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
-            'id_repairs' => [
+
+            'id_orders' => [
                 'label' => 'ID Pedidos',
                 'func' => function ($value) {
                     return $value;
@@ -111,6 +117,15 @@ class ContactDatatable extends Datatable
                 'sortable' => true,
                 'searchable' => true,
             ],
+            'item' => [
+                'label' => 'Item',
+                'func' => function ($value) {
+                    return $value;
+                },
+                'sortable' => true,
+                'searchable' => true,
+            ],
+
             'name' => [
                 'label' => 'Nombre',
                 'func' => function ($value) {
@@ -136,7 +151,7 @@ class ContactDatatable extends Datatable
                 'searchable' => true,
             ],
             'details' => [
-                'label' => 'Problema',
+                'label' => 'details',
                 'func' => function ($value) {
                     return $value;
                 },
@@ -176,6 +191,7 @@ class ContactDatatable extends Datatable
 
             // 'id_pedidos',
             'status',
+            'item',
             'name',
             'email',
             'phone',
@@ -193,16 +209,24 @@ class ContactDatatable extends Datatable
             'Edit' => [
                 'icon' => 'bx bx-edit',
                 'params' => ['id'],
-                'event' => 'edit',
+                'event' => 'editModal',
                 'isModal' => false,
                 'route' => 'contactproduct.edit',
+
             ],
+            // 'Delete' => [
+            //     'icon' => 'bx bx-trash',
+            //     'params' => ['id'],
+            //     'event' => 'deleteModal',
+            //     'isModal' => true,
+
+            // ],
 
         ];
         $this->createAction = [
             'label' => 'Create product',
             'icon' => 'bx bx-plus',
-            'event' => 'createPermission',
+            'event' => 'createModal',
             'isModal' => true,
 
         ];

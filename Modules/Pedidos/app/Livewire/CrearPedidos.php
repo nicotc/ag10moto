@@ -36,6 +36,7 @@ class CrearPedidos extends Component
     {
 
 
+
         $this->validate([
             'nombre' => 'required',
             'email' => 'required',
@@ -49,7 +50,7 @@ class CrearPedidos extends Component
         //  save images in storage
         // get path of images
 
-     
+
         if ($this->imagenes != null) {
 
             $uuid = uniqid();
@@ -77,6 +78,10 @@ class CrearPedidos extends Component
         $pedido->images = $imagenes;
         $pedido->status_id = 2;
         $pedido->save();
+
+        $this->reset();
+
+        // $this->resetValidation();
 
         $this->dispatch('notify', [
             'type' => 'success',

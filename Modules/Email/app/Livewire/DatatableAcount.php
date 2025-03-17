@@ -15,6 +15,7 @@ class DatatableAcount extends Datatable
     {
         $query = EmailConfig::select(
             'id',
+            'langs_id',
             'mail_host',
             'mail_port',
             'mail_username',
@@ -45,6 +46,14 @@ class DatatableAcount extends Datatable
                 'label' => 'ID',
                 'func' => function ($value) {
                     return $value;
+                },
+                'sortable' => true,
+                'searchable' => true,
+            ],
+            'langs_id' => [
+                'label' => 'Lang',
+                'func' => function ($value) {
+                    return getLagId($value);
                 },
                 'sortable' => true,
                 'searchable' => true,
@@ -106,6 +115,7 @@ class DatatableAcount extends Datatable
         $this->itmesPerPage = 10;
         $this->visibleColumns = [
             'id',
+            'langs_id',
             'mail_host',
             'mail_port',
             'mail_username',

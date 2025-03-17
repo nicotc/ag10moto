@@ -33,16 +33,7 @@
 
                     </select>
                 </div>
-                <div class="col-12">
-                    <label class="form-label " for="name">Name</label>
-                    <input type="text" id="name" wire:model="name" name="name" class="form-control"
-                        placeholder="" />
-                    <span class="text-danger">
-                        @error('name')
-                            {{ $message }}
-                        @enderror
-                    </span>
-                </div>
+
                 <div class="col-12">
                     <label class="form-label" for="subject">Subject</label>
                     <input type="text" id="subject" wire:model="subject" name="subject"
@@ -56,11 +47,8 @@
                 <div class="col-12 form-group">
 
                     <label class="form-label " for="body">Body</label>
-
-                    <livewire:quill-text-editor
-                    wire:model.live="body"
-                    theme="snow" />
-
+                    {{-- <livewire:quill-text-editor wire:model.live="body" theme="snow" /> --}}
+                    <livewire:quill-edit  wire:model.live="content"/>
                     <div class="mt-4 text-center col-12">
                         <button type="submit" class="btn btn-primary me-sm-3 me-1"
                             wire:click="save">Submit</button>
@@ -75,4 +63,6 @@
           </div>
         </div>
     </div>
+
+
     </div>

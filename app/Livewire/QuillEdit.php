@@ -29,6 +29,8 @@ class QuillEdit extends Component
 
     public function updatedValue($value): void
     {
+
+
         $this->value = $value;
     }
 

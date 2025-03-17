@@ -16,8 +16,10 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
         <script type="module">
             document.addEventListener('livewire:init', () => {
-                Livewire.on('editModal', (event) => {
-                    var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+
+                Livewire.on('renameModal', (event) => {
+                    var editModal = new bootstrap.Modal(document.getElementById('editModalTemplateName'));
                     editModal.show();
                 });
                 Livewire.on('createModal', (event) => {
@@ -39,6 +41,8 @@
                         }
                     })
                 });
+
+
                 Livewire.on('notify', (data) => {
                     var type = data[0].type;
                     var msg = data[0].message;
@@ -58,6 +62,12 @@
                             editModal.hide();
                         }
 
+                    const editModalTemplateName = bootstrap.Modal.getInstance(document.getElementById('editModalTemplateName'));
+                        if (editModalTemplateName) {
+                            editModalTemplateName.hide();
+                        }
+
+
                     });
             });
         </script>
@@ -71,7 +81,7 @@
                     <section class="content">
                         <div class="container-xxl flex-grow-1 container-p-y">
                           <h4 class="py-3 mb-1 breadcrumb-wrapper">
-                            <span class="text-muted fw-light">Email /</span> Template
+                            <span class="text-muted fw-light">Email /</span> Template Name
                           </h4>
 
                         </div>
@@ -92,10 +102,12 @@
 
     <livewire:email::template-name />
 
+    <livewire:email::editname-tamplate />
 
-    <livewire:email::template.create />
+{{--
+ <livewire:email::template.create />
 
-    <livewire:email::template.edit />
+    <livewire:email::template.edit /> --}}
 
 
 

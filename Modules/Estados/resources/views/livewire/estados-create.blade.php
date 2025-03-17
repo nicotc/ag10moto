@@ -50,8 +50,8 @@
                     <label class="form-label " for="modalCrateUserName">Email</label>
                     <select wire:model.change="email" class="form-select">
                         <option value="">Select</option>
-                        @foreach ($emails as $emailvalue)
-                            <option value="{{ $emailvalue}}">{{ $emailvalue }}</option>
+                        @foreach ($emails as $emailkey => $emailvalue)
+                            <option value="{{ $emailkey}}">{{ $emailvalue }}</option>
                         @endforeach
                     </select>
                       <span class="text-danger">@error('email') {{ $message }} @enderror</span>

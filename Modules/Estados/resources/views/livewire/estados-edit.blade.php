@@ -16,18 +16,23 @@
                   <p>Updating user details will receive a privacy audit.</p>
                 </div>
                 <form id="CrateUserForm" class="row g-3" onsubmit="return false">
+
+
+
+
                   <div class="col-12">
                       <label class="form-label" for="modalCrateUserName">type</label>
-                      <select wire:model.change="name" class="form-select">
+                      <select wire:model.change="type" class="form-select">
                           <option value="">Select</option>
-                          <option value="Pedido">Pedido</option>
-                          <option value="Producto">Producto</option>
+
+                          <option @if($type == "Orders" )  selected @endif value="Orders">Orders</option>
+                          <option  @if($type == "Repairs" )  selected @endif  value="Repairs">Repairs</option>
                       </select>
 
 
-                        <span class="text-danger">@error('name') {{ $message }} @enderror</span>
+                        <span class="text-danger">@error('type') {{ $message }} @enderror</span>
                   </div>
-                  {{-- <div class="col-12">
+                  <div class="col-12">
                       <label class="form-label " for="modalCrateUserName">Color</label>
 
                       <input
@@ -40,14 +45,14 @@
                         <span class="text-danger">@error('color') {{ $message }} @enderror</span>
 
 
-                  </div> --}}
+                  </div>
 
                   <div class="col-12">
                       <label class="form-label " for="modalCrateUserName">Email</label>
                       <select wire:model.change="email" class="form-select">
                           <option value="">Select</option>
-                          @foreach ($emails as $emailvalue)
-                              <option value="{{ $emailvalue}}">{{ $emailvalue }}</option>
+                          @foreach ($emails as $emailkey => $emailvalue)
+                              <option @if($email == $emailkey   ) selected @endif value="{{ $emailkey}}">{{ $emailvalue }}</option>
                           @endforeach
                       </select>
                         <span class="text-danger">@error('email') {{ $message }} @enderror</span>

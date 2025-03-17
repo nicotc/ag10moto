@@ -125,4 +125,15 @@ class TemplateTranslateDatatable extends Datatable
 
         ];
     }
+
+
+    public function deleteConfirmed($id)
+    {
+        $template = EmailTemplateTranslations::find($id);
+        $template->delete();
+        $this->dispatch('notify', [
+            'message' => 'Template deleted successfully',
+            'type' => 'success',
+        ]);
+    }
 }

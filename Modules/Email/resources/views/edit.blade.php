@@ -16,6 +16,12 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
         <script type="module">
             document.addEventListener('livewire:init', () => {
+
+
+
+
+
+
                 Livewire.on('editModal', (event) => {
                     var editModal = new bootstrap.Modal(document.getElementById('editModal'));
                     editModal.show();

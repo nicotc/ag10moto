@@ -4,6 +4,7 @@ namespace Modules\Email\Livewire\Template;
 
 use Livewire\Component;
 use Modules\Idiomas\Models\Lang;
+use App\Models\EmailTemplateTranslations;
 
 class Edit extends Component
 {
@@ -26,21 +27,19 @@ class Edit extends Component
     public function editModal($id)
     {
 
-
-        $this->templateId = $id;
-
-        $this->langs = Lang::pluck('lang', 'id')->toArray();
-
         $this->resetValidation();
+        $this->templateId = $id;
+        $this->langs = Lang::pluck('lang', 'id')->toArray();
+         $template = EmailTemplateTranslations::where('id', $this->templateId)->first();
 
-        // $template = EmailTemplate::find($id);
 
-        // $this->name = $template->name;
-        // $this->subject = $template->subject;
-        // $this->body = $template->body;
-        // $this->lang = $template->langs_id;
+        $this->subject = $template->subject;
+        $this->body = $template->body;
+        $this->content = $template->body;
+        $this->lang = $template->langs_id;
 
-        $this->dispatch('contentUpdated', $this->body);
+
+        $this->dispatch('contentUpdated', $this->content);
 
     }
 
@@ -52,20 +51,20 @@ class Edit extends Component
     public function save()
     {
         $this->validate([
-            'name' => 'required',
             'subject' => 'required',
-            'body' => 'required',
+            'content' => 'required',
             'lang' => 'required',
         ]);
 
-        // $template = EmailTemplate::find($this->templateId);
+        $template = EmailTemplateTranslations::where('id', $this->templateId)->first();
 
-        // $template->update([
-        //     'name' => $this->name,
-        //     'subject' => $this->subject,
-        //     'body' => $this->body,
-        //     'langs_id' => $this->lang,
-        // ]);
+        $template->subject = $this->subject;
+        $template->body = $this->content;
+        $template->langs_id = $this->lang;
+
+        $template->save();
+
+
 
         $this->dispatch('notify', [
             'message' => 'Template created successfully',
