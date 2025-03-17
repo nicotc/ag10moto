@@ -39,9 +39,17 @@
                 var msg = data[0].message;
                 if (type == 'success') {
                     toastr.success(msg);
-                } else {
+                } else if (type == 'successs') {
+                        toastr.success(msg);
+
+                    }
+                    else {
                     toastr.error(msg);
                 }
+                if(type == 'successs'){
+                        window.location.href = '/pedidos/edit/{{ $pedido->id }}';
+                    }
+
 
                 const createNoteModal = bootstrap.Modal.getInstance(document.getElementById('createNoteModal'));
                     if (createNoteModal) {

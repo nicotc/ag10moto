@@ -18,6 +18,10 @@ return new class extends Migration
             $table->integer('status')->default(1);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->longText('email')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('email_user')->nullable();
+            $table->string('sender')->nullable();
+            $table->boolean('send')->default(0);
             $table->timestamps();
         });
     }

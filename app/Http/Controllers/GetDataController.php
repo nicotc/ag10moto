@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Orders;
 use App\Models\Repairs;
+use App\Models\historyStatus;
 use Illuminate\Support\Facades\DB;
 
 class GetDataController extends Controller
@@ -165,4 +166,25 @@ class GetDataController extends Controller
         // dd($data);
 
     }
+
+    public function sendmail(){
+        $mails = historyStatus::where('send', 0)->where(sender, '!=', null)->get();
+
+        foreach ($mails as $mail) {
+            $emailConfig = EmailConfig::find($mail->sender);
+            $emailController = app(EmailController::class);
+
+            $email = $mail->email_user;
+            $subject = $mail->subject;
+            $content = $mail->email;
+
+            $emailController->sendEmail($emailConfigId, $email, $this->subject, $this->content);
+
+
+            $mail->send = 1;
+            $mail->save();
+        }
+    }
+
+
 }

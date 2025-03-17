@@ -15,6 +15,10 @@ class historyStatus extends Model
         'status',
         'user_id',
         'email',
+        'subject',
+        'email_user',
+        'sender',
+        'send',
     ];
 
     public function model()

@@ -154,24 +154,11 @@ if($EstatusName->email_template_id != null && $EstatusName->email_template_id !=
                 $pedido->save();
 
             }
-
-            $this->dispatch('notify', ['type' => 'success',  'message' => 'Estado guardado']);
-
             if ($this->content != '' && $this->subject != '') {
                 $emailConfigId = EmailConfig::where('langs_id', $pedido->langs_id)
                 ->first()->id;
-
-                $emailController = app(EmailController::class);
-
-                try {
-                    $emailController->sendEmail($emailConfigId, $pedido->email, $this->subject, $this->content);
-
-                } catch (\Exception $e) {
-                    $this->dispatch('notify', ['type' => 'error',  'message' => $e->getMessage()]);
-                }
-
-                $this->dispatch('notify',
-                    ['type' => 'success',  'message' => 'Email enviado']);
+            } else {
+                $emailConfigId = null;
             }
 
 
@@ -181,7 +168,37 @@ if($EstatusName->email_template_id != null && $EstatusName->email_template_id !=
                 'status' => $estadoSave,
                 'user_id' => auth()->user()->id,
                 'email' => $this->content ?? '',
+                'subject' => $this->subject ?? '',
+                'email_user' => $pedido->email,
+                'sender' => $emailConfigId,
+                'send' => 0,
             ]);
+
+
+            $this->dispatch('notify', ['type' => 'successs',  'message' => 'Estado guardado']);
+
+
+
+
+            // if ($this->content != '' && $this->subject != '') {
+            //     $emailConfigId = EmailConfig::where('langs_id', $pedido->langs_id)
+            //     ->first()->id;
+
+            //     $emailController = app(EmailController::class);
+
+            //     try {
+            //         $emailController->sendEmail($emailConfigId, $pedido->email, $this->subject, $this->content);
+
+            //     } catch (\Exception $e) {
+            //         $this->dispatch('notify', ['type' => 'error',  'message' => $e->getMessage()]);
+            //     }
+
+            //     $this->dispatch('notify',
+            //         ['type' => 'success',  'message' => 'Email enviado']);
+            // }
+
+
+
 
         } else {
             $this->dispatch('notify', ['type' => 'error',  'message' => 'Estado no valido']);
