@@ -29,13 +29,15 @@ class EmailController extends Controller
     public function sendEmail($emailConfigId, $to, $subject, $body)
     {
 
-        dd($emailConfigId, $to, $subject, $body);
+        // dd($emailConfigId, $to, $subject, $body);
 
         try {
 
             $this->emailService->setMailConfig($emailConfigId);
 
             $config = $this->emailService->getMailConfig();
+
+            dd($config);
 
             Mail::to($to)->send(new CustomEmail($subject, $body));
         } catch (\Exception $e) {
