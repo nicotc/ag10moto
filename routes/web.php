@@ -19,3 +19,4 @@ Route::middleware([
 
 Route::get('/get/repairs', [GetDataController::class, 'repairs'])->name('getPedidos');
 Route::get('/get/items', [GetDataController::class, 'items'])->name('getitems');
+Route::get('/sendmail', [GetDataController::class, 'sendmail'])->name('sendmail');
