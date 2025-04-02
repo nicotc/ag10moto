@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Orders;
 use App\Models\Repairs;
+use App\Models\EmailConfig;
 use App\Models\historyStatus;
 use Illuminate\Support\Facades\DB;
+use Modules\Email\Http\Controllers\EmailController;
 
 class GetDataController extends Controller
 {
