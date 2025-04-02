@@ -29,6 +29,8 @@ class EmailController extends Controller
     public function sendEmail($emailConfigId, $to, $subject, $body)
     {
 
+        dd($emailConfigId, $to, $subject, $body);
+
         try {
 
             $this->emailService->setMailConfig($emailConfigId);

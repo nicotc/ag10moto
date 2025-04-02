@@ -175,8 +175,8 @@ class GetDataController extends Controller
         foreach ($mails as $mail) {
             $emailConfig = EmailConfig::find($mail->sender);
 
-            dd($emailConfig);
-            
+            // dd($emailConfig);
+
             $emailController = app(EmailController::class);
 
             $email = $mail->email_user;
