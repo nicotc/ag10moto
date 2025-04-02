@@ -14,20 +14,14 @@ class EmailService
 
         if ($emailConfig) {
             Config::set('mail.default', 'smtp');
-            Config::set('mail.mailers.smtp.transport', 'smtp');
             Config::set('mail.mailers.smtp.host', $emailConfig->mail_host);
             Config::set('mail.mailers.smtp.port', $emailConfig->mail_port);
             Config::set('mail.mailers.smtp.username', $emailConfig->mail_username);
             Config::set('mail.mailers.smtp.password', $emailConfig->mail_password);
-            // Config::set('mail.mailers.smtp.encryption', $emailConfig->mail_encryption);
-            // Config::set('mail.from.address', $emailConfig->mail_from_address);
-            // Config::set('mail.from.name', $emailConfig->mail_from_name);
-            // Validar la encriptación
-    $encryption = in_array($emailConfig->mail_encryption, ['tls', 'ssl'], true) ? $emailConfig->mail_encryption : null;
-    Config::set('mail.mailers.smtp.encryption', $encryption);
+            Config::set('mail.mailers.smtp.encryption', $emailConfig->mail_encryption);
+            Config::set('mail.from.address', $emailConfig->mail_from_address);
+            Config::set('mail.from.name', $emailConfig->mail_from_name);
 
-    Config::set('mail.from.address', $emailConfig->mail_from_address);
-    Config::set('mail.from.name', $emailConfig->mail_from_name);
         }
     }
 
