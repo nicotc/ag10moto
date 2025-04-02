@@ -14,6 +14,7 @@ class EmailService
 
         if ($emailConfig) {
             Config::set('mail.default', 'smtp');
+            Config::set('mail.mailers.smtp.transport', 'smtp');
             Config::set('mail.mailers.smtp.host', $emailConfig->mail_host);
             Config::set('mail.mailers.smtp.port', $emailConfig->mail_port);
             Config::set('mail.mailers.smtp.username', $emailConfig->mail_username);
