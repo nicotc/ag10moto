@@ -168,7 +168,7 @@ class GetDataController extends Controller
     }
 
     public function sendmail(){
-        $mails = historyStatus::where('send', 0)->where(sender, '!=', null)->get();
+        $mails = historyStatus::where('send', 0)->where('sender', '!=', null)->get();
 
         foreach ($mails as $mail) {
             $emailConfig = EmailConfig::find($mail->sender);
