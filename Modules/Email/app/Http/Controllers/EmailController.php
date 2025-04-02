@@ -37,7 +37,7 @@ class EmailController extends Controller
 
             $config = $this->emailService->getMailConfig();
 
-            dd($config);
+            // dd($config);
 
             Mail::to($to)->send(new CustomEmail($subject, $body));
         } catch (\Exception $e) {
