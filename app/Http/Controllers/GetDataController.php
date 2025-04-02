@@ -180,7 +180,7 @@ class GetDataController extends Controller
             $subject = $mail->subject;
             $content = $mail->email;
 
-            $emailController->sendEmail($emailConfig->id, $email, $this->subject, $this->content);
+            $emailController->sendEmail($emailConfig->id, $email, $subject, $content);
 
 
             $mail->send = 1;
